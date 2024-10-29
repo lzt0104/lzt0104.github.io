@@ -1,146 +1,804 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="author" content="lzt">
-  <title>Zheng-Ting Liu</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About Lzt</title>
-  <!-- Bootstrap -->
-  <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>劉政廷的個人網站</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        /* 統一背景色系和文字色調 */
+        body {
+            background: linear-gradient(135deg, #ffffff, #ffffff);
+            color: #2c3e50;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: #1e88e5 !important;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: #2c3e50 !important;
+        }
+
+        .hero {
+            background: url('./images/DSC03451.jpg') center/cover no-repeat;
+            color: #ffffff;
+            padding: 100px 0;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            animation: fadeIn 1.6s ease-in-out;
+        }
+
+        .btn-custom {
+            background-color: #1e88e5;
+            color: #ffffff;
+            border-radius: 30px;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-custom:hover {
+            background-color: #1565c0;
+            transform: scale(1.05);
+        }
+
+        .section-title {
+            margin: 40px 0;
+            font-weight: bold;
+            color: #1e88e5;
+            text-align: left;
+        }
+
+
+
+        .card {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            border: none;
+            background: #ffffff;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            background-color: #f1f8fe;
+        }
+
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin-top: 20px;
+            padding-left: 60px;
+            /* background: linear-gradient(to bottom, #e0f7fa, #ffffff); */
+            padding-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 20px 0;
+            margin-left: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.03);
+            background-color: rgba(30, 136, 229, 0.05);
+            border-radius: 8px;
+            padding-left: 10px;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -25px;
+            top: 20px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            box-shadow: 0 0 10px rgba(30, 136, 229, 0.3);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .timeline-item:hover::before {
+            background-color: #0d47a1;
+            box-shadow: 0 0 15px rgba(30, 136, 229, 0.6);
+        }
+
+        .timeline-item h5 {
+            font-weight: bold;
+            color: #1e88e5;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .timeline-item:hover h5 {
+            color: #0d47a1;
+        }
+
+        .timeline-item p {
+            color: #555;
+            line-height: 1.6;
+            transition: color 0.3s;
+        }
+
+        .timeline-item:hover p {
+            color: #333;
+        }
+
+
+        /* Certifications */
+        .certification-badge {
+            background: #1e88e5;
+            color: #ffffff;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 0.9rem;
+            padding: 8px 14px;
+            border-radius: 20px;
+        }
+
+        .certification-badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Calendar */
+        #calendar iframe {
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            border: none;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /*技能樹*/
+        /* 調整技能樹 */
+        .skill-tree {
+        gap: 15px;
+    }
+
+    .skill-circle {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background-color: #e0e0e0;
+        color: #333;
+        border-radius: 50%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        overflow: hidden;
+        text-align: center;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .skill-circle span {
+        position: relative;
+        z-index: 1;
+        padding-bottom: 10px;
+        color: #333;
+    }
+
+    .skill-fill {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        border-radius: 50% 50% 0 0;
+    }
+
+    /* 各技能的填充顏色和百分比 */
+    .skill-python .skill-fill {
+        height: 90%;
+        background-color: #ff5722;
+    }
+
+    .skill-javascript .skill-fill {
+        height: 80%;
+        background-color: #ffc107;
+    }
+
+    .skill-html .skill-fill {
+        height: 85%;
+        background-color: #2196f3;
+    }
+
+    .skill-datasci .skill-fill {
+        height: 75%;
+        background-color: #4caf50;
+    }
+
+    .skill-ai .skill-fill {
+        height: 55%;
+        background-color: #9c27b0;
+    }
+
+    .skill-ml .skill-fill {
+        height: 50%;
+        background-color: #e91e63;
+    }
+
+    .skill-mo .skill-fill {
+        height: 99%;
+        background-color: #29f043;
+    }
+
+    /* 將左右卡片高度一致 */
+    .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    </style>
 </head>
-<style>
-  .calendar-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f8f9fa;
-  }
-  iframe {
-      border: solid 1px #777;
-      border-radius: 8px;
-      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
-  }
-</style>
 
 <body>
-  <div class="container">
-    <hr>
-    <div class="row">
-      <div class="col-6">
-        <h1>Zheng-Ting Liu&nbsp;</h1>
-      </div>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">劉政廷</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#whoami">Who am I?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experiences">經歷</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#competitions">參賽</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#trainings">研習</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#certifications">證照</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#calendar">行事曆</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>劉政廷的個人網站</h1>
+        <p>來了解我的經歷、成就與未來目標！</p>
+        <a href="#whoami" class="btn btn-custom btn-lg mt-3">開始探索</a>
     </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-8 col-sm-12">
-        <div class="media">
-          <img class="mr-3" src="images/bp.jpg" height="125" alt="Generic placeholder image">
-          <div class="media-body">
-            <h5 class="mt-0">About me</h5>
-            「沒有不可能只有無限可能」，這樣的信念，帶我走過高中三年，讓我在高三在技藝競賽上獲得金手獎的殊榮，也因為這句話讓我報名了特殊選才也如願上岸。勇於去面對各種困難並解決；主動精進自己的能力，當上選手訓練自己的抗壓性。
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-12">
-        <div class="row justify-content-md-around m-1">
-          <address>
-            <strong>Lzt&nbsp;</strong><br>
-            國立雲林科技大學 資訊管理系（人工智慧技優專班）&nbsp;<br>國立草屯商工 資料處理科<br>
-            <a href="mailto:#">zhengtingliu0104@gmail.com</a>
-          </address>
-        </div>
-      </div>
+
+    <div class="container mt-5">
+        <section id="whoami">
+            <div class="row align-items-stretch">
+                <!-- 左側：學歷經歷 -->
+                <div class="col-md-6 d-flex">
+                    <div class="card w-100 mb-4">
+                        <div class="card-body">
+                            <h2 class="section-title">Who am I?</h2>
+                            <p>我叫劉政廷，目前是 108 課綱第一屆的「白老鼠」。</p>
+                            <p><strong>學歷經歷：</strong></p>
+                            <ul class="mb-0 ps-3">
+                                <li><strong>111學年度</strong> — 畢業於國立草屯商工資料處理科（2019.09 - 2022.06）</li>
+                                <li><strong>111學年度特殊選材</strong> — 錄取國立高雄科技大學智慧商務系</li>
+                                <li><strong>112學年度</strong> — 修業於國立高雄科技大學智慧商務系（2019.09 - 2022.06）</li>
+                                <li><strong>113學年度技優甄審</strong> — 錄取國立雲林科技大學資訊管理系（人工智慧技優專班）</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- 右側：技能樹 -->
+                <div class="col-md-6 d-flex">
+                    <div class="card w-100 mb-4">
+                        <div class="card-body">
+                            <h2 class="section-title">技能樹</h2>
+                            <div class="skill-tree d-flex flex-wrap justify-content-around">
+                                <div class="skill-circle skill-python" title="Python - 90%">
+                                    <div class="skill-fill"></div>
+                                    <span>Python<br>90%</span>
+                                </div>
+                                <div class="skill-circle skill-javascript" title="JavaScript - 80%">
+                                    <div class="skill-fill"></div>
+                                    <span>JavaScript<br>80%</span>
+                                </div>
+                                <div class="skill-circle skill-html" title="HTML & CSS - 85%">
+                                    <div class="skill-fill"></div>
+                                    <span>HTML & CSS<br>85%</span>
+                                </div>
+                                <div class="skill-circle skill-datasci" title="Data Science - 75%">
+                                    <div class="skill-fill"></div>
+                                    <span>Data Science<br>75%</span>
+                                </div>
+                                <div class="skill-circle skill-ai" title="AI - 55%">
+                                    <div class="skill-fill"></div>
+                                    <span>AI<br>55%</span>
+                                </div>
+                                <div class="skill-circle skill-ml" title="Machine Learning - 50%">
+                                    <div class="skill-fill"></div>
+                                    <span>Machine Learning<br>50%</span>
+                                </div>
+                                <div class="skill-circle skill-mo" title="Microsoft Office - 99%">
+                                    <div class="skill-fill"></div>
+                                    <span>Microsoft Office<br>99%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section id="experiences" class="mt-5">
+            <h2 class="section-title">經歷</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon"></div>
+                    <div class="timeline-content">
+                        <h5>2019</h5>
+                        <p>本校交通服務隊 擔任 主哨</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon"></div>
+                    <div class="timeline-content">
+                        <h5>2020</h5>
+                        <p>中投高中職學生聯合會 擔任 籌備屆理事長 及 第一屆秘書長</p>
+                        <p>本校第17屆學生自治會 活動長</p>
+                        <p>第三屆 高級中等學校學生與署長有約活動 中2區 學生代表</p>
+                        <p>第二屆 高級中等以下學校課程審議會學生代表遴選委員會 遴選委員</p>
+                        <p>勞動部中彰投分署青年職涯發展中心擔任志工</p>
+                        <p>2020 AIGO 高中職生AI扎根系列活動 學員</p>
+                        <p>擔任本班服務股長</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon"></div>
+                    <div class="timeline-content">
+                        <h5>2021</h5>
+                        <p>南投縣自造基地冬令營 隊輔</p>
+                        <p>第八屆 十一校學生自治會聯合幹部訓練 機動長</p>
+                        <p>草商63週年校慶園遊會暨社團成果發表 總召</p>
+                        <p>2021 COSCUP 開源年會 擔任製播組組員</p>
+                        <p>2021 SITCON Camp 擔任隊輔組組員</p>
+                        <p>2021 AIGO 高中職生AI扎根系列活動 學員</p>
+                        <p>2021 PyConTW 擔任議程組組員 及 場務組組員</p>
+                        <p>勞動部中彰投分署青年職涯發展中心擔任志工</p>
+                        <p>擔任本班實習股長</p>
+                        <p>SITCON 2021 閃電講講者</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon"></div>
+                    <div class="timeline-content">
+                        <h5>2022</h5>
+                        <p>國立草屯商工第63屆 鎮長獎</p>
+                        <p>勞動部勞動力發展署中彰投分署第二屆 青年職涯大使</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon"></div>
+                    <div class="timeline-content">
+                        <h5>2023</h5>
+                        <p>國立高雄科技大學112學年智慧商務系學會 會長</p>
+                        <p>國立高雄科技大學112學年學生申訴評議委員會 學生代表</p>
+                        <p>國立高雄科技大學112學年服務教育課程委員會 學生代表</p>
+                        <p>國立高雄科技大學112學年圖書館諮詢委員會 學生代表</p>
+                        <p>國立高雄科技大學112學年系學會委員會 副主席</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon"></div>
+                    <div class="timeline-content">
+                        <h5>2024</h5>
+                        <p>通過113年國科會大專生研究計畫 — <strong>擬人化醫療聊天機器人於乳癌病患之照護：系統設計與有用性評估研究</strong></p>
+                        <div class="ms-3">
+                            <p class="mb-0">計畫編號：113-2813-C992-027-H</p>
+                            <p>通過等第：A | 核定金額：53,000</p>
+                        </div>
+                        <p>國立高雄科技大學113學年智慧商務系學會 顧問</p>
+                        <p>豐原高商資料處理科「超高效電腦技能教師研習」講師</p>
+                        <p>豐原高商資料處理科「資訊專業知能文書排版教師研習」講師</p>
+                        <p>國立高雄科技大學113學年社團負責人研習營籌備團隊 文書組組員</p>
+                        <p>國立高雄科技大學113學年社團負責人研習營自治屬性課程 講師</p>
+                        <p>國立雲林科技大學第一屆資訊安全研究社 出納兼文書</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="competitions" class="mt-5">
+            <h2 class="section-title">參賽</h2>
+            <div class="list-group list-group-flush">
+
+                <!-- 2019 年 -->
+                <div class="list-group-item">
+                    <h5 class="fw-bold text-primary">2019</h5>
+                    <ul class="mb-0">
+                        <li>MyFistCTF 資安競賽 <span class="fw-bold text-success">第192名</span></li>
+                        <li>108學年度校內資料處理科 Documents 2016 Essentials 文書處理競賽 <span class="fw-bold text-success">第五名</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 2020 年 -->
+                <div class="list-group-item">
+                    <h5 class="fw-bold text-primary">2020</h5>
+                    <ul class="mb-0">
+                        <li>2020全民e化運動會(秋季賽)中區賽 高中職組 文書處理類 <span class="fw-bold text-success">第二名</span></li>
+                        <li>2020全民e化運動會(秋季賽)全國賽 高中職組 文書處理類 <span class="fw-bold text-success">第一名</span></li>
+                        <li>109資訊月資訊應用競賽 商用專業編輯</li>
+                        <li>2020計算機多媒體綜合能力與人工智能素養及商務專業應用大賽 全國賽 文書處理項 大學(專)院校核心能力組 <span
+                                class="fw-bold text-success">季軍</span></li>
+                        <li>2020年民e化運動會(春季賽)全國賽 高中職組 雲端App程式設計(術科) <span class="fw-bold text-success">第二名</span></li>
+                        <li>2020年民e化運動會(春季賽)全國賽 高中職組 雲端App程式設計(學科) <span class="fw-bold text-success">第一名</span></li>
+                        <li>第六屆青年黑客松 參賽者</li>
+                        <li>109學年度文書處理校內競賽 <span class="fw-bold text-success">第六名</span></li>
+                    </ul>
+                </div>
+
+                <!-- 2021 年 -->
+                <div class="list-group-item">
+                    <h5 class="fw-bold text-primary">2021</h5>
+                    <ul class="mb-0">
+                        <li>109學年度校內專業英文詞彙 資訊類 <span class="fw-bold text-success">第三名</span></li>
+                        <li>109學年度校內專業英文詞彙 觀光類 <span class="fw-bold text-success">第三名</span></li>
+                        <li>2020高中職智慧型機器人與感測實務應用競賽 - 障礙競速賽類組 <span class="fw-bold text-success">佳作</span></li>
+                        <li>109學年度數位多媒體能力 <span class="fw-bold text-success">第一名</span></li>
+                        <li>109學年度計算機綜合能力 <span class="fw-bold text-success">第五名</span></li>
+                        <li>2020年全民資訊競賽 校內賽 中文看打 <span class="fw-bold text-success">第一名</span></li>
+                        <li>2020年全民資訊競賽 校內賽 英文看打 <span class="fw-bold text-success">第三名</span></li>
+                        <li>110年商管群專題及創意製作競賽 進入複賽</li>
+                        <li>典時成金2021分區友誼賽 <span class="fw-bold text-success">第三名</span></li>
+                        <li>2021智慧生活創意競賽-AI/AR/Arduino IT應用暨創意專題提案競賽 高中職組 <span class="fw-bold text-success">第一名</span>
+                        </li>
+                        <li>2021智慧生活創意競賽-AI/AR/Arduino IT應用暨創意專題提案競賽 高中職組 <span class="fw-bold text-success">佳作</span>
+                        </li>
+                        <li>2021中亞聯大U21人工智慧創意發明競賽 高中職組 <span class="fw-bold text-success">第二名</span></li>
+                        <li>2021中亞聯大U21人工智慧創意發明競賽 高中職組 <span class="fw-bold text-success">佳作</span></li>
+                        <li>109學年度校內專題競賽 創意專題製作組 <span class="fw-bold text-success">第一名</span></li>
+                        <li>109學年度校內語文競賽 河洛語演說 <span class="fw-bold text-success">第三名</span></li>
+                        <li>第七屆青年黑客松 參賽者</li>
+                        <li>110學年度資訊月競賽中區個人組 <span class="fw-bold text-success">第七名</span></li>
+                        <li>110學年度資訊月競賽中區團體組 <span class="fw-bold text-success">第二名</span></li>
+                        <li>110學年度資訊月競賽全國團體組 <span class="fw-bold text-success">第七名</span></li>
+                        <li>110學年度資訊月競賽全國個人組 <span class="fw-bold text-success">第二十名</span></li>
+                        <li>110典時成金賽前邀請賽文書處理職種金手 <span class="fw-bold text-success">第二名</span></li>
+                        <li>2021全民e化資訊運動會(秋季賽)全國賽 高中職組 資訊科技概論 <span class="fw-bold text-success">第一名</span></li>
+                        <li>2021全民e化資訊運動會(秋季賽)全國賽 高中職組 電子商務 標準級 <span class="fw-bold text-success">第五名</span></li>
+                        <li>110學年度全國高級中等學校商業類技藝競賽文書處理職種 金手獎 <span class="fw-bold text-success">第五名</span></li>
+                    </ul>
+                </div>
+
+                <!-- 2022 年 -->
+                <div class="list-group-item">
+                    <h5 class="fw-bold text-primary">2022</h5>
+                    <ul class="mb-0">
+                        <li>111年資訊月資訊應用技能競賽南區個人組 <span class="fw-bold text-success">第二名</span></li>
+                        <li>Microsoft Official Specialist Word Expert 組 初賽 <span class="fw-bold text-success">第一名</span>
+                        </li>
+                        <li>Microsoft Official Specialist Word Expert 組 決賽 <span class="fw-bold text-success">第六名</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 2023 年 -->
+                <div class="list-group-item">
+                    <h5 class="fw-bold text-primary">2023</h5>
+                    <ul class="mb-0">
+                        <li>技職盃黑客松競賽－南區 <span class="fw-bold text-success">佳作</span>（獲全國資格）</li>
+                        <li>「永續金融與淨零創新」影響力提案競賽製造業組 <span class="fw-bold text-success">第二名</span></li>
+                        <li>國立高雄科技大學111學年度【服務最樂、學習獨特】微電影競賽 <span class="fw-bold text-success">佳作</span></li>
+                        <li>第十七屆槓桿保證金模擬交易競賽（程式組） <span class="fw-bold text-success">第三名</span></li>
+                    </ul>
+                </div>
+
+                <!-- 2024 年 -->
+                <div class="list-group-item">
+                    <h5 class="fw-bold text-primary">2024</h5>
+                    <ul class="mb-0">
+                        <li>國立高雄科技大學112學年社團評鑑星傳獎 自治性特優獎</li>
+                        <li>國立高雄科技大學112學年社團評鑑星傳獎 組織運作獎</li>
+                        <li>國立高雄科技大學112學年社團評鑑星傳獎 資源管理獎</li>
+                        <li>國立高雄科技大學112學年社團評鑑星傳獎 行政管理獎</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="trainings" class="mt-5">
+            <h2 class="section-title">研習</h2>
+
+            <!-- 2019 年 -->
+            <div class="my-4 p-3 border-start border-3 border-primary">
+                <h5 class="text-primary fw-bold">2019</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">108學年度第一學期中興智能創作營隊</p>
+                            <span class="text-muted">6小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">108學年度第一學期中興靈藥魔法之旅</p>
+                            <span class="text-muted">18小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">108學年度第一學期中興地科暨化學科學營</p>
+                            <span class="text-muted">6小時</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2020 年 -->
+            <div class="my-4 p-3 border-start border-3 border-primary">
+                <h5 class="text-primary fw-bold">2020</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">3D列印四足機器人之學生增能研習</p>
+                            <span class="text-muted">7小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">108學年度第二學期中興智能創作營隊</p>
+                            <span class="text-muted">12小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">教育部學習歷程檔案審議計畫</p>
+                            <span class="text-muted">6小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">臺灣青年民主協會全國高級中等學校學生自治培力營</p>
+                            <span class="text-muted">16小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">CRC訓練宣導與兒少參與公共事務計畫</p>
+                            <span class="text-muted">3小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">109學年度第一學期中興智能創作營隊</p>
+                            <span class="text-muted">21小時</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2021 年 -->
+            <div class="my-4 p-3 border-start border-3 border-primary">
+                <h5 class="text-primary fw-bold">2021</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">2021人工智慧健康管理冬令營</p>
+                            <span class="text-muted">12小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">2021典時成金 暑期培訓營</p>
+                            <span class="text-muted">5天</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">技高、技專學習歷程檔案審議會議</p>
+                            <span class="text-muted">6小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">校園資安深耕營 Advanced CyberSecurity Day~基礎漏洞分析與測試</p>
+                            <span class="text-muted">12小時</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2023 年 -->
+            <div class="my-4 p-3 border-start border-3 border-primary">
+                <h5 class="text-primary fw-bold">2023</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">FISW2023金融資安研習營</p>
+                            <span class="text-muted">9小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">勞動部勞動力發展署中彰投分署第2屆青年職涯大使研習營</p>
+                            <span class="text-muted">14小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">國立高雄科技大學112學年度社團負責人研習營</p>
+                            <span class="text-muted">16小時</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2024 年 -->
+            <div class="my-4 p-3 border-start border-3 border-primary">
+                <h5 class="text-primary fw-bold">2024</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">救國團113年大專學生社團負責人研習營（歲寒三友會）</p>
+                            <span class="text-muted">32小時</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="p-3 bg-light rounded">
+                            <p class="mb-1 fw-bold">社團經營師第76期認證學分班</p>
+                            <span class="text-muted">15小時</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+
+
+        <section id="certifications" class="mt-5">
+            <h2 class="section-title">證照</h2>
+            <div class="p-3 border rounded-3 bg-light shadow-sm">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <span class="badge bg-primary certification-badge">會計事務人工記帳丙級</span>
+                            <span class="badge bg-primary certification-badge">電腦軟體應用丙級</span>
+                            <span class="badge bg-primary certification-badge">電腦硬體裝修丙級</span>
+                            <span class="badge bg-primary certification-badge">門市服務丙級</span>
+                            <span class="badge bg-primary certification-badge">商教會計三級</span>
+                            <span class="badge bg-primary certification-badge">商教英檢四級</span>
+                            <span class="badge bg-primary certification-badge">商教英檢三級</span>
+                            <span class="badge bg-primary certification-badge">GLAD BAP Presentations 2016 Essentials
+                                (簡報)</span>
+                            <span class="badge bg-primary certification-badge">GLAD BAP Documents 2016 Essentials
+                                (文書)</span>
+                            <span class="badge bg-primary certification-badge">GLAD BAP Spreadsheets 2016 Essentials
+                                (試算表)</span>
+                            <span class="badge bg-primary certification-badge">GLAD ICT計算機綜合能力 - Fundamentals
+                                (CHT)</span>
+                            <span class="badge bg-primary certification-badge">GLAD DMT數位多媒體綜合能力 - Fundamentals
+                                (CHT)</span>
+                            <span class="badge bg-primary certification-badge">GLAD 英文看打輸入 - English Typing</span>
+                            <span class="badge bg-primary certification-badge">MOCC 電子商務 標準級</span>
+                            <span class="badge bg-primary certification-badge">MOCC 計算機概論 標準級</span>
+                            <span class="badge bg-primary certification-badge">MOCC 英文輸入測驗專業認證-初級</span>
+                            <span class="badge bg-primary certification-badge">MOCC 中文看打輸入測驗專業能力-乙級</span>
+                            <span class="badge bg-primary certification-badge">MOCC App Inventor雲端手機程式設計</span>
+                            <span class="badge bg-primary certification-badge">MOCC App Inventor雲端手機應用程式設計師</span>
+                            <span class="badge bg-primary certification-badge">MOCC Word 2016 Enterprise 企業級認證</span>
+                            <span class="badge bg-primary certification-badge">PVQC Hospitality & Tourism
+                                Specialist觀光旅運類專業級</span>
+                            <span class="badge bg-primary certification-badge">PVQC ICT Specialist計算機類專業級</span>
+                            <span class="badge bg-primary certification-badge">TQC 創意App程式設計-專業級(App Inventor 2
+                                第2版)</span>
+                            <span class="badge bg-primary certification-badge">TQC 文書處理-專業級(Word 2016)</span>
+                            <span class="badge bg-primary certification-badge">TQC 文書處理-進階級(Word 2016)</span>
+                            <span class="badge bg-primary certification-badge">TQC 雲端技術及網路服務-進階級(雲端技術及網路服務)</span>
+                            <span class="badge bg-primary certification-badge">TQC 人工智慧應用與技術-進階級(人工智慧應用與技術)</span>
+                            <span class="badge bg-primary certification-badge">TQC 基礎程式語言-專業級(Python 3)</span>
+                            <span class="badge bg-primary certification-badge">TQC 中文輸入-進階級</span>
+                            <span class="badge bg-primary certification-badge">TQC 英文輸入-實用級</span>
+                            <span class="badge bg-primary certification-badge">Google Ads 搜尋廣告認證</span>
+                            <span class="badge bg-primary certification-badge">Google Ads 成效評估認證</span>
+                            <span class="badge bg-primary certification-badge">程式設計觀念題 五級</span>
+                            <span class="badge bg-primary certification-badge">程式設計實作題 四級</span>
+                            <span class="badge bg-primary certification-badge">NVIDIA CUDA Python 加速運算的基本原理</span>
+                            <span class="badge bg-primary certification-badge">NVIDIA Getting Started with AI on Jetson
+                                Nano</span>
+                            <span class="badge bg-primary certification-badge">NVIDIA Getting Started with DeepStream
+                                for Video Analytics on
+                                Jetson Nano</span>
+                            <span class="badge bg-primary certification-badge">NVIDIA 深度學習基礎理論與實踐</span>
+                            <span class="badge bg-primary certification-badge">MIT Creative Competence of App Inventor
+                                Programming</span>
+                            <span class="badge bg-primary certification-badge">AWS Educate Badge Competition Cloud
+                                Expert</span>
+                            <span class="badge bg-primary certification-badge">Microsoft Office Word Expert 2016</span>
+                            <span class="badge bg-primary certification-badge">社團經營師</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="calendar" class="mt-5">
+            <h2 class="section-title">行事曆</h2>
+            <div class="d-flex justify-content-center">
+                <!-- 將 iframe 的 src 替換為您的 Google 行事曆的內嵌連結 -->
+                <iframe
+                    src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FTaipei&bgcolor=%23ffffff&title=%E6%94%BF%E5%BB%B7%E7%9A%84%E8%A1%8C%E4%BA%8B%E6%9B%86&showPrint=0&showCalendars=0&mode=WEEK&src=emhlbmd0aW5nbGl1MDEwNEBnbWFpbC5jb20&src=NDYyZDAzZmEzMjE1OWM0ZjlhMjI3NzcyMjZmNTk4ZmExNjkwYjcwNGEyNDgzMjM1YTk1YmFmZDJkYWUwN2ZjZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aTUyYjlhZDlrNHBpZHFjZDcza3V2bXI1cm9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=YjdiMzRlZDI2MjY1NjdjYjkxZjFiYTdhZTM0NmJhNDQzYjkyZTgwNTUxYTkzYWI1MTIzYzc2N2ZhMzk5YzE0YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YWRjOWFrbXBqODhyNW9iYTg0Z2owZW1hZ3NAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=N2FmNzgwYjY0ZGU2YzM5Mzg5NGFiNWNmMWQyYmUyNGNjODY4NGY1MjE5ZGU4ZTAxMzU0NmE2OWEyYWIyMTkyZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=azI5Mm9jbjhvYmI5bjA5ZWRyNnJuNmVkYjRAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=NDk2MmFkNGY3N2MxYTBmMDViYTA2YTlhZDJiZGNmMjZmNmY3MmM4ODNjOGFlZDIxYjUwYjQxY2YwYTc1M2Q0ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDFwZXE1MHY1Z2ZiMmJvOTRscjkzNXJlNHNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=dXNqYXN1bWM2NTE4Nm10OGtpYjJrMHRwczlhdGJxODhAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=cTZqamkwOXVwZGN0bmF1ZnM5dGs2djJxdHJsZ2RoZGpAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=emgtdHcudGFpd2FuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZmFtaWx5MDY3NzgyMjg2NzY2OTQ4MzA1MzBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23008eaa&color=%230077c8&color=%2300205b&color=%23b60022&color=%23ae0061&color=%23F09300&color=%230085ad&color=%23c1c2c6&color=%2348a9c5&color=%23616161&color=%23795548&color=%230B8043&color=%23616161&color=%2333B679"
+                    style="width: 800px; height: 600px;" frameborder="0" scrolling="no"></iframe>
+            </div>
+        </section>
     </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-6 col-sm-12">
-        <h2><strong>特殊經歷</strong></h2>
-        <hr>
-        <div class="row">
-          <div class="col-6 col-lg-7">
-            <h4><strong>全國中等學校技藝競賽 </strong></h4>
-          </div>
-          <div class="col-6 offset-lg-0 col-lg-5">
-            <h5 class="text-left"><strong>全國第五名</strong><span aria-hidden="true"></span> </h5>
-          </div>
-        </div>
-        <h5><span class="badge badge-secondary">競賽</span></h5>
-        <p> 1.從99位選手中脫穎而出，獲取第五名<br>2.要自行學習技能，遇到問題要自己找出解答<br>3.學習到自學、解決問題、抗壓性、堅持能力 </p>
-        <div class="row">
-          <div class="col-6 col-lg-7">
-            <h4><strong>典時成金</strong></h4>
-          </div>
-          <div class="col-6 offset-lg-0 col-lg-5">
-            <h5 class="text-left"><span aria-hidden="true"></span><strong>課程講師</strong></h5>
-          </div>
-        </div>
-        <h5><span class="badge badge-secondary">教學&nbsp;</span></h5>
-        <p> 1.幫助技職教育，教育全國技藝競賽選手的團隊<br>
-          2.學習到上台表達、規劃課程、構思流程、了解學生需求能力<br>經歷：<br>
-          <li>2022暑期培訓營 課程組組員</li>
-          <li>2022賽前邀請賽 競賽組組員</li>
-        </p>
-      </div>
-      <div class="col-md-6 col-sm-12">
-        <h2><strong>技能樹</strong>&nbsp;</h2>
-        <hr>
-        <div class="progress mt-4">
-          <div class="progress-bar bg-success" role="progressbar" aria-valuenow="80" aria-valuemin="0"
-            aria-valuemax="100" style="width: 100%"> Word</div>
-        </div>
-        <div class="progress mt-4">
-          <div class="progress-bar bg-success" role="progressbar" aria-valuenow="80" aria-valuemin="0"
-            aria-valuemax="100" style="width: 95%"> Excel</div>
-        </div>
-        <div class="progress mt-4">
-          <div class="progress-bar bg-success" role="progressbar" aria-valuenow="70" aria-valuemin="0"
-            aria-valuemax="100" style="width: 70%"> PowerPoint</div>
-        </div>
-        <div class="progress mt-4">
-          <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-            style="width: 90%"> Python</div>
-        </div>
-        <div class="progress mt-4">
-          <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="55" aria-valuemin="0"
-            aria-valuemax="100" style="width: 60%"> HTML</div>
-        </div>
-        <div class="progress mt-4">
-          <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0"
-            aria-valuemax="100" style="width: 55%"> AI</div>
-        </div>
-        <div class="progress mt-4">
-          <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0"
-            aria-valuemax="100" style="width: 50%"> Machine Learning</div>
-        </div>
-        <p></p>
-        <p class="text-center h3"><span class="badge badge-info">沒有到最後一刻 我不會放棄</span></p>
-      </div>
-    </div>
-    <div class="container calendar-container">
-      <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FTaipei&bgcolor=%23ffffff&title=%E6%94%BF%E5%BB%B7%E7%9A%84%E8%A1%8C%E4%BA%8B%E6%9B%86&showPrint=0&showCalendars=0&mode=WEEK&src=emhlbmd0aW5nbGl1MDEwNEBnbWFpbC5jb20&src=NDYyZDAzZmEzMjE1OWM0ZjlhMjI3NzcyMjZmNTk4ZmExNjkwYjcwNGEyNDgzMjM1YTk1YmFmZDJkYWUwN2ZjZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=aTUyYjlhZDlrNHBpZHFjZDcza3V2bXI1cm9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=YjdiMzRlZDI2MjY1NjdjYjkxZjFiYTdhZTM0NmJhNDQzYjkyZTgwNTUxYTkzYWI1MTIzYzc2N2ZhMzk5YzE0YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YWRjOWFrbXBqODhyNW9iYTg0Z2owZW1hZ3NAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=N2FmNzgwYjY0ZGU2YzM5Mzg5NGFiNWNmMWQyYmUyNGNjODY4NGY1MjE5ZGU4ZTAxMzU0NmE2OWEyYWIyMTkyZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=azI5Mm9jbjhvYmI5bjA5ZWRyNnJuNmVkYjRAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=NDk2MmFkNGY3N2MxYTBmMDViYTA2YTlhZDJiZGNmMjZmNmY3MmM4ODNjOGFlZDIxYjUwYjQxY2YwYTc1M2Q0ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZDFwZXE1MHY1Z2ZiMmJvOTRscjkzNXJlNHNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=dXNqYXN1bWM2NTE4Nm10OGtpYjJrMHRwczlhdGJxODhAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=cTZqamkwOXVwZGN0bmF1ZnM5dGs2djJxdHJsZ2RoZGpAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=emgtdHcudGFpd2FuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZmFtaWx5MDY3NzgyMjg2NzY2OTQ4MzA1MzBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23008eaa&color=%230077c8&color=%2300205b&color=%23b60022&color=%23ae0061&color=%23F09300&color=%230085ad&color=%23c1c2c6&color=%2348a9c5&color=%23616161&color=%23795548&color=%230B8043&color=%23616161&color=%2333B679" style="width: 800px; height: 600px;" frameborder="0" scrolling="no"></iframe>
-  </div>
-    <hr>
-    
-    <footer class="text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <p>Copyright © LZT</p>
-          </div>
-        </div>
-      </div>
+
+    <footer class="bg-dark text-light text-center p-3 mt-5">
+        © 2024 劉政廷 | 由 Bootstrap 5 提供支持
     </footer>
-  </div>
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap-4.4.1.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
