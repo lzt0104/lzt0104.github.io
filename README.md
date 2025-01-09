@@ -36,8 +36,3 @@
 - **日曆功能**：嵌入 Google Calendar
 
 ---
-
-## 使用方法
-1. **clone此專案：**
-   ```bash
-   git clone https://github.com/your-repo/personal-website.git
