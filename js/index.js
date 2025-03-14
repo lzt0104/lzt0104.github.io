@@ -212,3 +212,61 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         });
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    // 設置初始計數和隨機增長
+    let visitorCount = 1;  // 設置初始訪客數
+    updateDigitDisplay(visitorCount);
+    
+    // 模擬隨機訪客計數增長
+    setInterval(() => {
+        if (Math.random() > 0.7) {  // 30%的機率增加計數
+            visitorCount++;
+            updateDigitDisplay(visitorCount);
+            
+            // 同時更新在線人數
+            let onlineCount = document.getElementById('online-count');
+            let currentOnline = parseInt(onlineCount.innerText);
+            
+            // 50%的機率增加或減少在線人數
+            if (Math.random() > 0.5) {
+                onlineCount.innerText = Math.min(currentOnline + 1, 12);
+            } else {
+                onlineCount.innerText = Math.max(currentOnline - 1, 1);
+            }
+            
+            // 更新今日訪問
+            let todayCount = document.getElementById('today-count');
+            todayCount.innerText = parseInt(todayCount.innerText) + 1;
+        }
+    }, 3000);
+    
+    // 啟用滾動動畫
+    const animateElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    animateElements.forEach(element => {
+        observer.observe(element);
+    });
+});
+
+// 更新數字顯示
+function updateDigitDisplay(number) {
+    const digits = number.toString().padStart(6, '0');
+    
+    for (let i = 0; i < 6; i++) {
+        const digitElement = document.getElementById(`digit-${6-i}`);
+        
+        // 添加動畫效果
+        digitElement.style.animation = 'none';
+        digitElement.offsetHeight; // 觸發重繪
+        digitElement.innerText = digits[i];
+        digitElement.style.animation = 'pulse 0.5s';
+    }
+}

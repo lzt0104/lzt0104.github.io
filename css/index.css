@@ -283,76 +283,108 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     transition: all 0.3s ease;
 }
 
+/* 技能進度條 - 使用偽元素實現 */
 .skill-ring::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    border: 5px solid transparent;
-    background-clip: padding-box;
+    z-index: 0;
 }
 
+/* Python技能 - 90% */
 .skill-python::before {
-    border-top: 5px solid var(--primary-color);
-    border-right: 5px solid var(--primary-color);
-    border-bottom: 5px solid transparent;
-    transform: rotate(calc(1.8 * 180deg));
+    background: conic-gradient(
+        var(--primary-color) 0%, 
+        var(--primary-color) 90%, 
+        transparent 90%, 
+        transparent 100%
+    );
 }
 
+/* JavaScript技能 - 80% */
 .skill-javascript::before {
-    border-top: 5px solid var(--accent-color);
-    border-right: 5px solid var(--accent-color);
-    border-bottom: 5px solid transparent;
-    transform: rotate(calc(1.6 * 180deg));
+    background: conic-gradient(
+        var(--accent-color) 0%, 
+        var(--accent-color) 80%, 
+        transparent 80%, 
+        transparent 100%
+    );
 }
 
+/* HTML技能 - 85% */
 .skill-html::before {
-    border-top: 5px solid var(--secondary-color);
-    border-right: 5px solid var(--secondary-color);
-    border-bottom: 5px solid transparent;
-    transform: rotate(calc(1.7 * 180deg));
+    background: conic-gradient(
+        var(--secondary-color) 0%, 
+        var(--secondary-color) 85%, 
+        transparent 85%, 
+        transparent 100%
+    );
 }
 
+/* 數據科學技能 - 75% */
 .skill-datasci::before {
-    border-top: 5px solid #4caf50;
-    border-right: 5px solid #4caf50;
-    border-bottom: 5px solid transparent;
-    transform: rotate(calc(1.5 * 180deg));
+    background: conic-gradient(
+        #4caf50 0%, 
+        #4caf50 75%, 
+        transparent 75%, 
+        transparent 100%
+    );
 }
 
+/* AI技能 - 55% */
 .skill-ai::before {
-    border-top: 5px solid #9c27b0;
-    border-right: 5px solid #9c27b0;
-    border-bottom: 5px solid transparent;
-    transform: rotate(calc(1.1 * 180deg));
+    background: conic-gradient(
+        #9c27b0 0%, 
+        #9c27b0 55%, 
+        transparent 55%, 
+        transparent 100%
+    );
 }
 
+/* 機器學習技能 - 50% */
 .skill-ml::before {
-    border-top: 5px solid #e91e63;
-    border-right: 5px solid #e91e63;
-    border-bottom: 5px solid transparent;
-    transform: rotate(calc(1.0 * 180deg));
+    background: conic-gradient(
+        #e91e63 0%, 
+        #e91e63 50%, 
+        transparent 50%, 
+        transparent 100%
+    );
 }
 
+/* Microsoft Office技能 - 99% */
 .skill-mo::before {
-    border-top: 5px solid #29f043;
-    border-right: 5px solid #29f043;
-    border-bottom: 5px solid #29f043;
-    transform: rotate(calc(1.98 * 180deg));
+    background: conic-gradient(
+        #29f043 0%, 
+        #29f043 99%, 
+        transparent 99%, 
+        transparent 100%
+    );
+}
+
+/* 內圓 - 創建環形效果 */
+.skill-ring::after {
+    content: '';
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background: rgba(25, 25, 25, 0.9);
+    border-radius: 50%;
+    z-index: 1;
 }
 
 .skill-ring .percent {
-    position: absolute;
+    position: relative;
     font-size: 1.5rem;
     font-weight: 700;
     color: white;
+    z-index: 2;
 }
 
 .skill-ring .skill-name {
@@ -363,6 +395,7 @@ body {
     color: rgba(255, 255, 255, 0.7);
     text-align: center;
     width: 100%;
+    z-index: 2;
 }
 
 .skill-ring:hover {
@@ -370,7 +403,6 @@ body {
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 0 15px rgba(0, 188, 212, 0.3);
 }
-
 /* 時間線樣式 */
 .timeline {
     position: relative;
@@ -760,5 +792,245 @@ body {
     .timeline-item .timeline-panel {
         width: calc(100% - 70px);
         margin-left: 70px !important;
+    }
+}
+.visitor-counter {
+    margin: 50px 0;
+}
+
+.counter-container {
+    background: rgba(25, 25, 25, 0.7);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.counter-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 188, 212, 0.2);
+    border-color: rgba(0, 188, 212, 0.3);
+}
+
+.counter-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+}
+
+.counter-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.counter-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.counter-subtitle {
+    font-size: 0.9rem;
+    color: rgba(224, 224, 224, 0.7);
+}
+
+.counter-display {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.digit-container {
+    position: relative;
+}
+
+.digit {
+    width: 50px;
+    height: 70px;
+    background: rgba(18, 18, 18, 0.9);
+    border: 1px solid rgba(0, 188, 212, 0.3);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.digit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.digit::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(0, 188, 212, 0.3);
+}
+
+.digit-separator {
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+}
+
+.digit-separator::before,
+.digit-separator::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    margin: 8px 0;
+}
+
+.counter-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: rgba(224, 224, 224, 0.7);
+}
+
+/* 計數動畫效果 */
+@keyframes countUp {
+    0% {
+        transform: translateY(0);
+    }
+    10% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+.visitor-counter-compact {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.counter-title-small {
+    font-size: 1rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.counter-display-compact {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.digit-small {
+    width: 30px;
+    height: 40px;
+    background: rgba(18, 18, 18, 0.9);
+    border: 1px solid rgba(0, 188, 212, 0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+}
+
+.digit-separator-small {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.digit-separator-small::before,
+.digit-separator-small::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.counter-stats-compact {
+    font-size: 0.8rem;
+    color: rgba(224, 224, 224, 0.7);
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* 調整現有footer樣式 */
+.footer {
+    padding: 40px 0 30px;
+}
+
+.social-links {
+    justify-content: flex-start;
+}
+
+@media (max-width: 768px) {
+    .copyright, .social-links {
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .counter-stats-compact {
+        flex-wrap: wrap;
     }
 }
