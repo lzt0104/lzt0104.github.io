@@ -144,11 +144,15 @@ body {
 .typewriter {
     overflow: hidden;
     border-right: 0.15em solid var(--primary-color);
-    white-space: nowrap;
+    white-space: pre-wrap; /* Changed from nowrap to pre-wrap */
     margin: 0 auto;
     letter-spacing: 0.1em;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    animation: 
+        typing 3.5s steps(40, end),
+        blink-caret 0.75s step-end infinite;
     display: inline-block;
+    max-width: 100%; /* Ensure it doesn't exceed container width */
+    width: fit-content; /* Use fit-content instead of fixed width */
 }
 
 @keyframes typing {
@@ -159,6 +163,14 @@ body {
 @keyframes blink-caret {
     from, to { border-color: transparent }
     50% { border-color: var(--primary-color) }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .typewriter {
+        animation-duration: 2s; /* Faster animation on mobile */
+        letter-spacing: normal; /* Remove extra letter spacing on small screens */
+    }
 }
 
 .btn-glow {
