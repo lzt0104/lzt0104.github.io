@@ -1,11 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>受保護的連結</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #link {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <a href="https://drive.google.com/drive/folders/14u7Dtya55OB_pd0jNeiLulmt7dLMzxC5?usp=sharing">MOS世界盃專屬</a>
+    <div class="container">
+        <h2>請輸入密碼</h2>
+        <input type="password" id="password" placeholder="輸入密碼">
+        <button onclick="checkPassword()">提交</button>
+        <div id="link">
+            <a href="https://drive.google.com/drive/folders/14u7Dtya55OB_pd0jNeiLulmt7dLMzxC5?usp=sharing">MOS世界盃專屬</a>
+        </div>
+    </div>
+
+    <script>
+        // 使用簡單的密碼雜湊（在實際應用中應使用後端驗證）
+        const correctHash = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"; // 對應密碼 "password" 的 SHA-256 雜湊
+
+        async function checkPassword() {
+            const input = document.getElementById("password").value;
+            const link = document.getElementById("link");
+
+            // 將輸入的密碼轉為 SHA-256 雜湊
+            const msgBuffer = new TextEncoder().encode(input);
+            const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+
+            if (hashHex === correctHash) {
+                link.style.display = "block";
+            } else {
+                alert("密碼錯誤，請重試！");
+                document.getElementById("password").value = "";
+            }
+        }
+    </script>
 </body>
 </html>
