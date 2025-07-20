@@ -34,7 +34,11 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 }
 .navbar-brand { font-weight: 700; color: var(--accent-color-2) !important; flex-shrink: 0; }
 .navbar-links a { margin: 0 10px; padding: 5px 10px; border-radius: 4px; white-space: nowrap; }
-.navbar-links a.active { background-color: var(--accent-color-1); color: var(--main-bg) !important; }
+/* 用於標示當前頁面的樣式 */
+.navbar-links a.active { 
+    background-color: var(--accent-color-1);
+    color: var(--main-bg) !important; 
+}
 
 /* RWD: 漢堡菜單按鈕 */
 .navbar-toggler { display: none; background: none; border: 1px solid var(--border-color); cursor: pointer; padding: 8px; border-radius: 4px; z-index: 1001; }
@@ -113,11 +117,16 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
     .navbar-toggler { display: block; }
     .navbar-links {
         display: none; flex-direction: column; width: 100%;
-        background-color: var(--title-bar-bg); position: absolute;
+        background-color: var(--window-bg); position: absolute;
         top: 100%; left: 0; border-top: 1px solid var(--border-color);
-        box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+        box-shadow: 0 10px 15px rgba(0,0,0,0.3); z-index: 1000;
     }
-    .navbar-links.active { display: flex; }
+    /* ▼▼▼▼▼ 修正點 ▼▼▼▼▼ */
+    /* 使用 .is-open 來控制菜單顯示，而不是 .active */
+    .navbar-links.is-open {
+        display: flex; 
+    }
+    /* ▲▲▲▲▲ 修正點 ▲▲▲▲▲ */
     .navbar-links a { padding: 15px 20px; width: 100%; text-align: center; margin: 0; border-bottom: 1px solid var(--border-color); }
     .navbar-links a:last-child { border-bottom: none; }
     .skill-list .skill-item { flex-direction: column; align-items: flex-start; }
