@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- 全局功能 ---
 
     // 訪客計數器 (所有頁面共用)
-    let visitorCount = 12345;
     const digits = document.querySelectorAll('.visitor-counter .digit');
-    function updateCounter(number) {
+
+    function updateCounterUI(number) {
         if (digits.length === 0) return;
         const numStr = number.toString().padStart(digits.length, '0');
         digits.forEach((digit, index) => {
@@ -14,17 +14,38 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    updateCounter(visitorCount);
-    setInterval(() => {
-        if (Math.random() > 0.5) {
-            visitorCount++;
-            updateCounter(visitorCount);
-            let onlineCount = document.getElementById('online-count');
-            let todayCount = document.getElementById('today-count');
-            if (onlineCount) onlineCount.innerText = Math.floor(Math.random() * 10) + 1;
-            if (todayCount) todayCount.innerText = parseInt(todayCount.innerText) + 1;
+
+    // NEW: 從 Cloudflare Worker 獲取並更新計數器
+    async function fetchAndUpdateVisitorCount() {
+        // ▼▼▼▼▼ 請將此處的網址替換為您自己的 Worker 網址 ▼▼▼▼▼
+        const workerUrl = 'https://visitor-counter.zhengtingliu0104.workers.dev'; 
+        // ▲▲▲▲▲ 請將此處的網址替換為您自己的 Worker 網址 ▲▲▲▲▲
+        
+        try {
+            const response = await fetch(workerUrl);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            if (data.count) {
+                updateCounterUI(data.count);
+            }
+        } catch (error) {
+            console.error('Failed to fetch visitor count:', error);
+            // 如果請求失敗，可以顯示一個錯誤或預設值
+            updateCounterUI('------'); 
         }
-    }, 3000);
+
+        // 模擬今日和在線人數
+        let onlineCount = document.getElementById('online-count');
+        let todayCount = document.getElementById('today-count');
+        if (onlineCount) onlineCount.innerText = Math.floor(Math.random() * 10) + 1;
+        if (todayCount) todayCount.innerText = parseInt(todayCount.innerText || 27) + 1;
+    }
+
+    // 頁面載入時執行一次
+    fetchAndUpdateVisitorCount();
+
 
     // 區塊標題打字機 (所有頁面共用)
     const typeWriterObserver = new IntersectionObserver((entries) => {
