@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 为当前页面的导航链接添加 active class
+    // 取得当前 URL 的最后一部分 (e.g., "about.html")
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     const navLinks = document.querySelectorAll('.navbar-links .nav-link');
     navLinks.forEach(link => {
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchAndUpdateVisitorCount() {
-        const workerUrl = 'visitor-counter.zhengtingliu0104.workers.dev'; 
+        const workerUrl = 'https://visitor-counter.zhengtingliu0104.workers.dev'; 
         
         try {
             const response = await fetch(workerUrl);

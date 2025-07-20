@@ -1,16 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
 
-/* --- Solarized Dark 佈景主題 --- */
 :root {
-    --main-bg: #002b36;
-    --main-text: #b8c9d0;
-    --accent-color-1: #268bd2;
-    --accent-color-2: #b58900;
-    --border-color: rgba(131, 148, 150, 0.25);
-    --window-bg: #073642;
-    --title-bar-bg: #001f27;
-    --font-mono: 'Fira Code', 'Courier New', Courier, monospace;
-    --scanline-opacity: 0.03;
+    --main-bg: #002b36; --main-text: #b8c9d0; --accent-color-1: #268bd2; --accent-color-2: #b58900;
+    --border-color: rgba(131, 148, 150, 0.25); --window-bg: #073642; --title-bar-bg: #001f27;
+    --font-mono: 'Fira Code', 'Courier New', Courier, monospace; --scanline-opacity: 0.03;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -31,61 +24,47 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 
 /* --- Navbar --- */
 .cmd-navbar {
-    position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(7, 54, 66, 0.8);
-    backdrop-filter: blur(5px); border-bottom: 1px solid var(--border-color);
+    position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(7, 54, 66, 0.85);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-color);
     padding: 10px 20px; z-index: 1000;
 }
 .navbar-content {
     display: flex; justify-content: space-between; align-items: center;
     max-width: 1200px; margin: 0 auto; position: relative;
 }
-.navbar-brand { font-weight: 700; color: var(--accent-color-2) !important; }
-.navbar-links a { margin: 0 10px; padding: 5px 10px; border-radius: 4px; }
-.navbar-links a.active {
-    background-color: var(--accent-color-1);
-    color: var(--main-bg) !important;
-}
+.navbar-brand { font-weight: 700; color: var(--accent-color-2) !important; flex-shrink: 0; }
+.navbar-links a { margin: 0 10px; padding: 5px 10px; border-radius: 4px; white-space: nowrap; }
+.navbar-links a.active { background-color: var(--accent-color-1); color: var(--main-bg) !important; }
 
-/* --- RWD: 汉堡菜单 --- */
-.navbar-toggler {
-    display: none; /* 默认隐藏 */
-    background: none; border: 1px solid var(--border-color);
-    cursor: pointer; padding: 8px; border-radius: 4px;
-}
-.navbar-toggler span {
-    display: block; width: 22px; height: 2px;
-    background-color: var(--main-text); margin: 5px 0;
-    transition: transform 0.3s, opacity 0.3s;
-}
+/* RWD: 漢堡菜單按鈕 */
+.navbar-toggler { display: none; background: none; border: 1px solid var(--border-color); cursor: pointer; padding: 8px; border-radius: 4px; z-index: 1001; }
+.navbar-toggler span { display: block; width: 22px; height: 2px; background-color: var(--main-text); margin: 5px 0; transition: transform 0.3s, opacity 0.3s; }
 
-/* --- Hero Section --- */
+/* Hero Section */
 .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: left; padding: 0 20px; }
-.hero-content { max-width: 800px; }
+.hero-content { max-width: 800px; width: 100%; }
 .prompt { font-size: 2.5rem; font-weight: 700; display: flex; align-items: center; flex-wrap: wrap; }
-.typewriter {
-    border-right: .15em solid var(--main-text); white-space: nowrap; overflow: hidden;
-    animation: typing 3s steps(30, end), blink-caret .75s step-end infinite;
-}
+.typewriter { border-right: .15em solid var(--main-text); white-space: nowrap; overflow: hidden; animation: typing 3s steps(30, end), blink-caret .75s step-end infinite; }
 @keyframes typing { from { width: 0 } to { width: 100% } }
 @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--main-text); } }
 .subtitle { font-size: 1.2rem; color: var(--main-text); opacity: 0.8; margin: 10px 0 30px; }
 .cmd-button { display: inline-block; padding: 10px 20px; border: 1px solid var(--accent-color-1); color: var(--accent-color-1); background-color: transparent; cursor: pointer; }
 .cmd-button:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 
-/* --- CMD Window Style --- */
+/* CMD Window Style */
 .cmd-section { padding: 40px 0; }
 .cmd-window { border: 1px solid var(--border-color); background-color: var(--window-bg); box-shadow: 0 0 15px rgba(0,0,0,0.5); }
 .title-bar { background-color: var(--title-bar-bg); padding: 5px 10px; border-bottom: 1px solid var(--border-color); }
 .title-bar .title { font-weight: 700; color: var(--main-text); }
-.cmd-window .content { padding: 25px; }
+.cmd-window .content { padding: 20px; }
 .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 25px; display: inline-block; color: var(--accent-color-1); }
 .section-title::after { content: '█'; animation: blink-caret .75s step-end infinite; }
 .row { display: flex; flex-wrap: wrap; margin: 0 -15px; }
 .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 { padding: 0 15px; margin-bottom: 20px; width: 100%; }
 
-/* --- Specific Sections --- */
+/* Specific Sections */
 #whoami ul { list-style-type: ' > '; padding-left: 20px; }
-.code-block { background-color: rgba(0,0,0,0.2); border-left: 3px solid var(--accent-color-1); padding: 15px; margin-top: 10px; font-size: 0.9em; }
+.code-block { background-color: rgba(0,0,0,0.2); border-left: 3px solid var(--accent-color-1); padding: 15px; margin-top: 10px; font-size: 0.9em; word-break: break-word; }
 .skill-list .skill-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.9em; flex-wrap: wrap; }
 .skill-list .skill-item .skill-name { width: 120px; flex-shrink: 0; }
 .skill-list .skill-item .skill-progress-bar { font-family: monospace; letter-spacing: 0; color: var(--accent-color-2); }
@@ -97,7 +76,7 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 .blog-reader .placeholder { color: rgba(184, 201, 208, 0.5); }
 .blog-reader h3 { color: var(--accent-color-2); }
 .blog-reader .date { font-size: 0.8em; color: rgba(184, 201, 208, 0.6); margin-bottom: 15px; }
-.blog-reader .content { white-space: pre-wrap; }
+.blog-reader .content { white-space: pre-wrap; word-break: break-word; }
 .timeline-cmd .entry { margin-bottom: 15px; }
 .timeline-cmd .year { font-weight: 700; color: var(--accent-color-2); }
 .timeline-cmd p { margin: 0 0 5px 15px; position: relative; }
@@ -106,13 +85,13 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 .list-container h4 { color: var(--accent-color-1); border-bottom: 1px solid var(--border-color); padding-bottom: 5px; margin-bottom: 10px; }
 .list-container ul { list-style: none; padding-left: 0; }
 .list-container li { margin-bottom: 5px; }
-.award-badge { background-color: var(--accent-color-2); color: var(--main-bg); padding: 2px 6px; font-size: 0.8em; font-weight: 700; }
+.award-badge { background-color: var(--accent-color-2); color: var(--main-bg); padding: 2px 6px; font-size: 0.8em; font-weight: 700; display: inline-block; margin-top: 3px;}
 .cert-grid { display: flex; flex-wrap: wrap; gap: 10px; }
 .cert-item { padding: 5px 10px; border: 1px solid var(--border-color); background-color: rgba(137, 221, 255, 0.1); }
-.calendar-container { position: relative; padding-bottom: 75%; height: 0; overflow: hidden; }
+.calendar-container { position: relative; padding-bottom: 75%; height: 0; overflow: hidden; min-height: 500px; }
 .calendar-iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 1px solid var(--border-color); filter: invert(90%) hue-rotate(180deg) contrast(90%); }
 
-/* --- Footer --- */
+/* Footer */
 .footer { border-top: 1px solid var(--border-color); padding: 30px 20px; text-align: center; margin-top: 50px; }
 .footer-content { max-width: 1200px; margin: 0 auto; }
 .footer .social-links a { margin: 0 10px; }
@@ -122,47 +101,27 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 .copyright { font-size: 0.8em; color: rgba(184, 201, 208, 0.5); }
 
 /* --- RWD Media Queries --- */
-/* For tablets and larger screens */
+/* For tablets and larger screens (>= 768px) */
 @media (min-width: 768px) {
-    .col-md-4 { width: 33.33%; }
-    .col-md-5 { width: 41.66%; }
-    .col-md-6 { width: 50%; }
-    .col-md-7 { width: 58.33%; }
-    .col-md-8 { width: 66.66%; }
+    .col-md-4 { width: 33.33%; } .col-md-5 { width: 41.66%; } .col-md-6 { width: 50%; }
+    .col-md-7 { width: 58.33%; } .col-md-8 { width: 66.66%; }
 }
 
-/* For small screens (mobile) */
+/* For small screens (mobile, < 768px) */
 @media (max-width: 767px) {
     .prompt { font-size: 1.5rem; }
-    .navbar-toggler { display: block; } /* 在小屏幕上显示汉堡按钮 */
+    .navbar-toggler { display: block; }
     .navbar-links {
-        display: none; /* 默认隐藏链接 */
-        flex-direction: column;
-        width: 100%;
-        background-color: var(--title-bar-bg);
-        position: absolute;
-        top: 100%;
-        left: 0;
-        border-top: 1px solid var(--border-color);
+        display: none; flex-direction: column; width: 100%;
+        background-color: var(--title-bar-bg); position: absolute;
+        top: 100%; left: 0; border-top: 1px solid var(--border-color);
+        box-shadow: 0 10px 15px rgba(0,0,0,0.3);
     }
-    .navbar-links.active {
-        display: flex; /* 点击后显示 */
-    }
-    .navbar-links a {
-        padding: 10px 20px;
-        width: 100%;
-        text-align: center;
-        border-bottom: 1px solid var(--border-color);
-    }
-    .navbar-links a:last-child {
-        border-bottom: none;
-    }
-    .skill-list .skill-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .skill-list .skill-item .skill-progress-bar {
-        width: 100%;
-        margin: 5px 0;
-    }
+    .navbar-links.active { display: flex; }
+    .navbar-links a { padding: 15px 20px; width: 100%; text-align: center; margin: 0; border-bottom: 1px solid var(--border-color); }
+    .navbar-links a:last-child { border-bottom: none; }
+    .skill-list .skill-item { flex-direction: column; align-items: flex-start; }
+    .skill-list .skill-item .skill-progress-bar { width: 100%; margin: 5px 0; }
+    .row { flex-direction: column; }
+    .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 { width: 100%; }
 }
