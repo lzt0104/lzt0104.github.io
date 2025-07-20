@@ -1,272 +1,117 @@
-// 粒子背景設置
 document.addEventListener('DOMContentLoaded', function() {
-    particlesJS('particles-js', {
-        "particles": {
-            "number": {
-                "value": 80,
-                "density": {
-                    "enable": true,
-                    "value_area": 800
-                }
-            },
-            "color": {
-                "value": "#00bcd4"
-            },
-            "shape": {
-                "type": "circle",
-                "stroke": {
-                    "width": 0,
-                    "color": "#000000"
-                },
-                "polygon": {
-                    "nb_sides": 5
-                }
-            },
-            "opacity": {
-                "value": 0.5,
-                "random": false,
-                "anim": {
-                    "enable": false,
-                    "speed": 1,
-                    "opacity_min": 0.1,
-                    "sync": false
-                }
-            },
-            "size": {
-                "value": 3,
-                "random": true,
-                "anim": {
-                    "enable": false,
-                    "speed": 40,
-                    "size_min": 0.1,
-                    "sync": false
-                }
-            },
-            "line_linked": {
-                "enable": true,
-                "distance": 150,
-                "color": "#3f51b5",
-                "opacity": 0.4,
-                "width": 1
-            },
-            "move": {
-                "enable": true,
-                "speed": 2,
-                "direction": "none",
-                "random": false,
-                "straight": false,
-                "out_mode": "out",
-                "bounce": false,
-                "attract": {
-                    "enable": false,
-                    "rotateX": 600,
-                    "rotateY": 1200
-                }
+
+    // --- 全局功能 ---
+
+    // 訪客計數器 (所有頁面共用)
+    let visitorCount = 12345;
+    const digits = document.querySelectorAll('.visitor-counter .digit');
+    function updateCounter(number) {
+        if (digits.length === 0) return;
+        const numStr = number.toString().padStart(digits.length, '0');
+        digits.forEach((digit, index) => {
+            if (digit.textContent !== numStr[index]) {
+                digit.textContent = numStr[index];
             }
-        },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": true,
-                    "mode": "grab"
-                },
-                "onclick": {
-                    "enable": true,
-                    "mode": "push"
-                },
-                "resize": true
-            },
-            "modes": {
-                "grab": {
-                    "distance": 140,
-                    "line_linked": {
-                        "opacity": 1
-                    }
-                },
-                "bubble": {
-                    "distance": 400,
-                    "size": 40,
-                    "duration": 2,
-                    "opacity": 8,
-                    "speed": 3
-                },
-                "repulse": {
-                    "distance": 200,
-                    "duration": 0.4
-                },
-                "push": {
-                    "particles_nb": 4
-                },
-                "remove": {
-                    "particles_nb": 2
-                }
-            }
-        },
-        "retina_detect": true
-    });
-
-    // 初始化動畫背景
-    initAnimatedBackground();
-
-    // 滾動淡入效果
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // 初始化
-
-    // 導航列滾動效果
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-});
-
-function initAnimatedBackground() {
-    // 創建Three.js場景
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0);
-    document.getElementById('animated-bg').appendChild(renderer.domElement);
-
-    // 添加網格效果
-    const gridSize = 20;
-    const geometry = new THREE.PlaneGeometry(50, 50, gridSize, gridSize);
-    const material = new THREE.MeshBasicMaterial({
-        color: 0x00bcd4,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.15
-    });
-    const grid = new THREE.Mesh(geometry, material);
-    grid.rotation.x = Math.PI / 2;
-    scene.add(grid);
-
-    camera.position.z = 30;
-    camera.position.y = 15;
-    camera.rotation.x = -0.3;
-
-    // 動畫循環
-    function animate() {
-        requestAnimationFrame(animate);
-        grid.rotation.z += 0.001;
-        grid.position.z = Math.sin(Date.now() * 0.001) * 5;
-        renderer.render(scene, camera);
-    }
-    animate();
-
-    // 窗口調整大小
-    window.addEventListener('resize', function() {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        renderer.setSize(width, height);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-    });
-}
-
-function handleScroll() {
-    const fadeElements = document.querySelectorAll('.fade-in');
-    const slideLeftElements = document.querySelectorAll('.slide-in-left');
-    const slideRightElements = document.querySelectorAll('.slide-in-right');
-    
-    const triggerBottom = window.innerHeight * 0.8;
-    
-    // 處理淡入元素
-    fadeElements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        if (elementTop < triggerBottom) {
-            element.classList.add('visible');
-        }
-    });
-    
-    // 處理左側滑入元素
-    slideLeftElements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        if (elementTop < triggerBottom) {
-            element.classList.add('visible');
-        }
-    });
-    
-    // 處理右側滑入元素
-    slideRightElements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        if (elementTop < triggerBottom) {
-            element.classList.add('visible');
-        }
-    });
-}
-
-// 平滑滾動
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
         });
-    });
-});
-document.addEventListener('DOMContentLoaded', function() {
-    // 設置初始計數和隨機增長
-    let visitorCount = 1;  // 設置初始訪客數
-    updateDigitDisplay(visitorCount);
-    
-    // 模擬隨機訪客計數增長
+    }
+    updateCounter(visitorCount);
     setInterval(() => {
-        if (Math.random() > 0.7) {  // 30%的機率增加計數
+        if (Math.random() > 0.5) {
             visitorCount++;
-            updateDigitDisplay(visitorCount);
-            
-            // 同時更新在線人數
+            updateCounter(visitorCount);
             let onlineCount = document.getElementById('online-count');
-            let currentOnline = parseInt(onlineCount.innerText);
-            
-            // 50%的機率增加或減少在線人數
-            if (Math.random() > 0.5) {
-                onlineCount.innerText = Math.min(currentOnline + 1, 12);
-            } else {
-                onlineCount.innerText = Math.max(currentOnline - 1, 1);
-            }
-            
-            // 更新今日訪問
             let todayCount = document.getElementById('today-count');
-            todayCount.innerText = parseInt(todayCount.innerText) + 1;
+            if (onlineCount) onlineCount.innerText = Math.floor(Math.random() * 10) + 1;
+            if (todayCount) todayCount.innerText = parseInt(todayCount.innerText) + 1;
         }
     }, 3000);
-    
-    // 啟用滾動動畫
-    const animateElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
-    
-    const observer = new IntersectionObserver((entries) => {
+
+    // 區塊標題打字機 (所有頁面共用)
+    const typeWriterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                const el = entry.target;
+                const text = el.dataset.text;
+                if (!el.dataset.typed) {
+                    let index = 0;
+                    el.textContent = '';
+                    el.dataset.typed = true;
+                    const interval = setInterval(() => {
+                        if (index < text.length) {
+                            el.textContent += text.charAt(index);
+                            index++;
+                        } else {
+                            clearInterval(interval);
+                        }
+                    }, 50);
+                }
             }
         });
-    }, { threshold: 0.1 });
-    
-    animateElements.forEach(element => {
-        observer.observe(element);
-    });
-});
+    }, { threshold: 0.5 });
 
-// 更新數字顯示
-function updateDigitDisplay(number) {
-    const digits = number.toString().padStart(6, '0');
-    
-    for (let i = 0; i < 6; i++) {
-        const digitElement = document.getElementById(`digit-${6-i}`);
-        
-        // 添加動畫效果
-        digitElement.style.animation = 'none';
-        digitElement.offsetHeight; // 觸發重繪
-        digitElement.innerText = digits[i];
-        digitElement.style.animation = 'pulse 0.5s';
+    document.querySelectorAll('.section-title[data-text]').forEach(el => {
+        typeWriterObserver.observe(el);
+    });
+
+    // --- 頁面專屬功能 ---
+
+    // 首頁 (index.html) 專用
+    const typewriterEl = document.querySelector('.typewriter');
+    if (typewriterEl) {
+        const textToType = "cat welcome.txt";
+        let typeIndex = 0;
+        function type() {
+            if (typeIndex < textToType.length) {
+                typewriterEl.textContent += textToType.charAt(typeIndex);
+                typeIndex++;
+                setTimeout(type, 150);
+            }
+        }
+        type();
     }
-}
+
+    // 關於我頁面 (about.html) 專用
+    const skillContainer = document.getElementById('skill-radar-container');
+    if (skillContainer) {
+        const skills = [
+            { name: 'Python', value: 90 }, { name: 'JavaScript', value: 80 },
+            { name: 'HTML/CSS', value: 85 }, { name: 'Data Science', value: 75 },
+            { name: 'AI / ML', value: 55 }, { name: 'Microsoft Office', value: 99 }
+        ];
+        let skillsHtml = '';
+        const barLength = 20;
+        skills.forEach(skill => {
+            const fillCount = Math.round((skill.value / 100) * barLength);
+            const emptyCount = barLength - fillCount;
+            skillsHtml += `
+                <div class="skill-item">
+                    <span class="skill-name">${skill.name}</span>
+                    <span class="skill-progress-bar">
+                        <span class="fill">${'█'.repeat(fillCount)}</span><span class="empty">${'░'.repeat(emptyCount)}</span>
+                    </span>
+                    <span class="skill-percent">${skill.value}%</span>
+                </div>`;
+        });
+        skillContainer.innerHTML = skillsHtml;
+    }
+
+    // 履歷頁面 (resume.html) 專用
+    const timelineContainer = document.querySelector('.timeline-cmd');
+    if (timelineContainer) {
+        const experiences = {
+            "2025": ["市立豐原高商『辦公室文案排版美編製作工作坊』講師", "國立雲林科技大學 114學年ACT 研修總務組 組長", "114學年四技二專統一入學測驗－命題編校組"],
+            "2024": ["通過113年國科會大專生研究計畫", "國立高雄科技大學113學年智慧商務系學會 顧問", "市立豐原高商『超高效電腦技能教師研習』講師", "國立新竹高商『資訊專業知能文書排版教師研習』講師", "113學年商業類文書處理職種自辦模擬賽負責人兼命題"],
+            "2023": ["國立高雄科技大學112學年智慧商務系學會 會長", "國立高雄科技大學112學年多項校級委員會 學生代表"],
+            "2022": ["國立草屯商工第63屆 鎮長獎", "勞動部勞動力發展署中彰投分署第二屆 青年職涯大使"],
+            "2021": ["SITCON 2021 閃電講講者", "草商63週年校慶園遊會暨社團成果發表 總召", "2021 COSCUP, SITCON Camp, PyConTW 志工"],
+            "2020": ["中投高中職學生聯合會 籌備屆理事長 & 第一屆秘書長", "本校第17屆學生自治會 活動長"]
+        };
+        let timelineHtml = '';
+        for (const year in experiences) {
+            timelineHtml += `<div class="entry"><span class="year">[${year}]</span>`;
+            experiences[year].forEach(item => { timelineHtml += `<p>${item}</p>`; });
+            timelineHtml += `</div>`;
+        }
+        timelineContainer.innerHTML = timelineHtml;
+    }
+});

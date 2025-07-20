@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>劉政廷 | C:\Users\LiuZhengTing\></title>
+    <title>部落格 | 劉政廷</title>
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
@@ -14,20 +14,34 @@
             <div class="navbar-links">
                 <a href="about.html">./about_me</a>
                 <a href="resume.html">./resume</a>
-                <a href="blog.html">./blog</a>
+                <a href="blog.html" class="active">./blog</a>
                 <a href="calendar.html">./calendar</a>
             </div>
         </div>
     </nav>
 
-    <header class="hero" id="home">
-        <div class="hero-content">
-            <div class="prompt">C:\Users\LiuZhengTing> <span class="typewriter"></span></div>
-            <p class="subtitle">第一屆108課綱「白老鼠」，現為雲科大AI技優專班學生。</p>
-            <a href="about.html" class="cmd-button">[ 執行探索 ]</a>
-        </div>
-    </header>
-
+    <main class="container main-content">
+        <section id="blog" class="cmd-section">
+            <div class="cmd-window">
+                <div class="title-bar"><span class="title">/var/log/posts.log - Blog</span></div>
+                <div class="content">
+                    <h2 class="section-title" data-text="> ls -l ./blog..."></h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4>文章列表</h4>
+                            <div id="blog-list" class="file-list"></div>
+                        </div>
+                        <div class="col-md-8">
+                            <div id="blog-content-wrapper" class="blog-reader">
+                                <p class="placeholder">> select a file to read...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
     <footer class="footer">
         <div class="footer-content">
             <div class="social-links">
@@ -55,5 +69,6 @@
     </footer>
 
     <script src="js/index.js"></script>
+    <script src="js/blog.js"></script>
 </body>
 </html>
