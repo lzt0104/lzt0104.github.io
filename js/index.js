@@ -2,9 +2,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- 全局功能 ---
 
-    // 訪客計數器 (所有頁面共用)
-    const digits = document.querySelectorAll('.visitor-counter .digit');
+    // RWD 导航栏汉堡菜单
+    const toggler = document.getElementById('navbar-toggler-btn');
+    const navLinksContainer = document.getElementById('navbar-links-container');
+    if (toggler && navLinksContainer) {
+        toggler.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('active');
+        });
+    }
 
+    // 为当前页面的导航链接添加 active class
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.navbar-links .nav-link');
+    navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href').split('/').pop();
+        if (linkPage === currentPage) {
+            link.classList.add('active');
+        }
+    });
+
+
+    // 访客计 ૩器
+    const digits = document.querySelectorAll('.visitor-counter .digit');
     function updateCounterUI(number) {
         if (digits.length === 0) return;
         const numStr = number.toString().padStart(digits.length, '0');
@@ -15,39 +34,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // NEW: 從 Cloudflare Worker 獲取並更新計數器
     async function fetchAndUpdateVisitorCount() {
-        // ▼▼▼▼▼ 請將此處的網址替換為您自己的 Worker 網址 ▼▼▼▼▼
-        const workerUrl = 'https://visitor-counter.zhengtingliu0104.workers.dev'; 
-        // ▲▲▲▲▲ 請將此處的網址替換為您自己的 Worker 網址 ▲▲▲▲▲
+        const workerUrl = 'visitor-counter.zhengtingliu0104.workers.dev'; 
         
         try {
             const response = await fetch(workerUrl);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-            if (data.count) {
-                updateCounterUI(data.count);
-            }
+            if (data.count) updateCounterUI(data.count);
         } catch (error) {
             console.error('Failed to fetch visitor count:', error);
-            // 如果請求失敗，可以顯示一個錯誤或預設值
             updateCounterUI('------'); 
         }
 
-        // 模擬今日和在線人數
         let onlineCount = document.getElementById('online-count');
         let todayCount = document.getElementById('today-count');
         if (onlineCount) onlineCount.innerText = Math.floor(Math.random() * 10) + 1;
-        if (todayCount) todayCount.innerText = parseInt(todayCount.innerText || 27) + 1;
+        if (todayCount) {
+             const storedTodayCount = localStorage.getItem('todayCount');
+             if(storedTodayCount){
+                todayCount.innerText = parseInt(storedTodayCount) + 1;
+             } else {
+                todayCount.innerText = 27;
+             }
+             localStorage.setItem('todayCount', todayCount.innerText);
+        }
     }
 
-    // 頁面載入時執行一次
     fetchAndUpdateVisitorCount();
 
-
-    // 區塊標題打字機 (所有頁面共用)
+    // 标题打字机效果
     const typeWriterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -74,9 +90,9 @@ document.addEventListener('DOMContentLoaded', function() {
         typeWriterObserver.observe(el);
     });
 
-    // --- 頁面專屬功能 ---
+    // --- 页面专属功能 ---
 
-    // 首頁 (index.html) 專用
+    // 首页 (index.html) 
     const typewriterEl = document.querySelector('.typewriter');
     if (typewriterEl) {
         const textToType = "cat welcome.txt";
@@ -91,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         type();
     }
 
-    // 關於我頁面 (about.html) 專用
+    // 关於我 (about.html)
     const skillContainer = document.getElementById('skill-radar-container');
     if (skillContainer) {
         const skills = [
@@ -116,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
         skillContainer.innerHTML = skillsHtml;
     }
 
-    // 履歷頁面 (resume.html) 專用
+    // 履历 (resume.html)
     const timelineContainer = document.querySelector('.timeline-cmd');
     if (timelineContainer) {
         const experiences = {

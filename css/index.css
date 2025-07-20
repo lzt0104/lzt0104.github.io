@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
 
+/* --- Solarized Dark 佈景主題 --- */
 :root {
     --main-bg: #002b36;
     --main-text: #b8c9d0;
@@ -26,9 +27,9 @@ h1, h2, h3, h4 { text-shadow: 0 0 5px rgba(38, 139, 210, 0.2); }
 a { color: var(--accent-color-1); text-decoration: none; transition: background-color 0.2s, color 0.2s; }
 a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-.main-content { padding-top: 100px; } /* 新增：為非首頁的主體內容增加頂部間距 */
+.main-content { padding-top: 100px; }
 
-/* Navbar */
+/* --- Navbar --- */
 .cmd-navbar {
     position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(7, 54, 66, 0.8);
     backdrop-filter: blur(5px); border-bottom: 1px solid var(--border-color);
@@ -36,19 +37,31 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 }
 .navbar-content {
     display: flex; justify-content: space-between; align-items: center;
-    max-width: 1200px; margin: 0 auto;
+    max-width: 1200px; margin: 0 auto; position: relative;
 }
 .navbar-brand { font-weight: 700; color: var(--accent-color-2) !important; }
-.navbar-links a { margin: 0 10px; }
-.navbar-links a.active { /* 新增：導覽列目前頁面樣式 */
+.navbar-links a { margin: 0 10px; padding: 5px 10px; border-radius: 4px; }
+.navbar-links a.active {
     background-color: var(--accent-color-1);
-    color: var(--main-bg);
+    color: var(--main-bg) !important;
 }
 
-/* Hero Section */
+/* --- RWD: 汉堡菜单 --- */
+.navbar-toggler {
+    display: none; /* 默认隐藏 */
+    background: none; border: 1px solid var(--border-color);
+    cursor: pointer; padding: 8px; border-radius: 4px;
+}
+.navbar-toggler span {
+    display: block; width: 22px; height: 2px;
+    background-color: var(--main-text); margin: 5px 0;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+/* --- Hero Section --- */
 .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: left; padding: 0 20px; }
 .hero-content { max-width: 800px; }
-.prompt { font-size: 2.5rem; font-weight: 700; display: flex; align-items: center; }
+.prompt { font-size: 2.5rem; font-weight: 700; display: flex; align-items: center; flex-wrap: wrap; }
 .typewriter {
     border-right: .15em solid var(--main-text); white-space: nowrap; overflow: hidden;
     animation: typing 3s steps(30, end), blink-caret .75s step-end infinite;
@@ -59,7 +72,7 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 .cmd-button { display: inline-block; padding: 10px 20px; border: 1px solid var(--accent-color-1); color: var(--accent-color-1); background-color: transparent; cursor: pointer; }
 .cmd-button:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 
-/* CMD Window Style */
+/* --- CMD Window Style --- */
 .cmd-section { padding: 40px 0; }
 .cmd-window { border: 1px solid var(--border-color); background-color: var(--window-bg); box-shadow: 0 0 15px rgba(0,0,0,0.5); }
 .title-bar { background-color: var(--title-bar-bg); padding: 5px 10px; border-bottom: 1px solid var(--border-color); }
@@ -68,19 +81,12 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 25px; display: inline-block; color: var(--accent-color-1); }
 .section-title::after { content: '█'; animation: blink-caret .75s step-end infinite; }
 .row { display: flex; flex-wrap: wrap; margin: 0 -15px; }
-.col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 { padding: 0 15px; margin-bottom: 20px; }
-.col-md-4 { width: 33.33%; } .col-md-5 { width: 41.66%; } .col-md-6 { width: 50%; } .col-md-7 { width: 58.33%; } .col-md-8 { width: 66.66%; }
+.col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 { padding: 0 15px; margin-bottom: 20px; width: 100%; }
 
-@media (max-width: 768px) {
-    .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 { width: 100%; }
-    .prompt { font-size: 1.5rem; }
-    .navbar-links { display: none; }
-}
-
-/* Specific Section Styles */
+/* --- Specific Sections --- */
 #whoami ul { list-style-type: ' > '; padding-left: 20px; }
 .code-block { background-color: rgba(0,0,0,0.2); border-left: 3px solid var(--accent-color-1); padding: 15px; margin-top: 10px; font-size: 0.9em; }
-.skill-list .skill-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.9em; }
+.skill-list .skill-item { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.9em; flex-wrap: wrap; }
 .skill-list .skill-item .skill-name { width: 120px; flex-shrink: 0; }
 .skill-list .skill-item .skill-progress-bar { font-family: monospace; letter-spacing: 0; color: var(--accent-color-2); }
 .skill-list .skill-item .skill-progress-bar .fill { text-shadow: 0 0 5px var(--accent-color-2); }
@@ -103,8 +109,10 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 .award-badge { background-color: var(--accent-color-2); color: var(--main-bg); padding: 2px 6px; font-size: 0.8em; font-weight: 700; }
 .cert-grid { display: flex; flex-wrap: wrap; gap: 10px; }
 .cert-item { padding: 5px 10px; border: 1px solid var(--border-color); background-color: rgba(137, 221, 255, 0.1); }
+.calendar-container { position: relative; padding-bottom: 75%; height: 0; overflow: hidden; }
+.calendar-iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 1px solid var(--border-color); filter: invert(90%) hue-rotate(180deg) contrast(90%); }
 
-/* Footer */
+/* --- Footer --- */
 .footer { border-top: 1px solid var(--border-color); padding: 30px 20px; text-align: center; margin-top: 50px; }
 .footer-content { max-width: 1200px; margin: 0 auto; }
 .footer .social-links a { margin: 0 10px; }
@@ -113,22 +121,48 @@ a:hover { background-color: var(--accent-color-1); color: var(--main-bg); }
 .visitor-counter .separator { margin: 0 10px; }
 .copyright { font-size: 0.8em; color: rgba(184, 201, 208, 0.5); }
 
-/* --- 新增在 css/index.css 的最下方 --- */
-
-/* Calendar Page Styles */
-.calendar-container {
-    position: relative;
-    padding-bottom: 75%; /* 4:3 aspect ratio */
-    height: 0;
-    overflow: hidden;
+/* --- RWD Media Queries --- */
+/* For tablets and larger screens */
+@media (min-width: 768px) {
+    .col-md-4 { width: 33.33%; }
+    .col-md-5 { width: 41.66%; }
+    .col-md-6 { width: 50%; }
+    .col-md-7 { width: 58.33%; }
+    .col-md-8 { width: 66.66%; }
 }
 
-.calendar-iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid var(--border-color);
-    filter: invert(90%) hue-rotate(180deg) contrast(90%); /* 使用CSS濾鏡讓日曆配色融入主題 */
+/* For small screens (mobile) */
+@media (max-width: 767px) {
+    .prompt { font-size: 1.5rem; }
+    .navbar-toggler { display: block; } /* 在小屏幕上显示汉堡按钮 */
+    .navbar-links {
+        display: none; /* 默认隐藏链接 */
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--title-bar-bg);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        border-top: 1px solid var(--border-color);
+    }
+    .navbar-links.active {
+        display: flex; /* 点击后显示 */
+    }
+    .navbar-links a {
+        padding: 10px 20px;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .navbar-links a:last-child {
+        border-bottom: none;
+    }
+    .skill-list .skill-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .skill-list .skill-item .skill-progress-bar {
+        width: 100%;
+        margin: 5px 0;
+    }
 }
