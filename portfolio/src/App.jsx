@@ -191,7 +191,7 @@ const HomePage = ({ setPage }) => {
                   { label: '身份', value: '國立雲林科技大學資訊管理系（人工智慧技優專班）' },
                   { label: '現職', value: '源核資訊整合工作室 負責人兼執行長' },
                   { label: '專長', value: '資訊技術 | 選手培訓 | 系統開發' },
-                  { label: '目標', value: '成為優秀的資訊教育工作者' }
+                  { label: '目標', value: '成為優秀的資訊工作者' }
                 ].map((item, i) => (
                   <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                     <span style={{ color: COLORS.warning, fontSize: '1.2rem' }}>➜</span>
@@ -841,7 +841,7 @@ const CalendarPage = () => {
         }}>
           <iframe
             style={{ width: '100%', height: '100%', border: 'none' }}
-            src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FTaipei&showPrint=0&src=emhlbmd0aW5nbGl1MDEwNEBnbWFpbC5jb20"
+            src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FTaipei&showPrint=0&showTitle=0&showTz=0&showCalendars=0&src=emhlbmd0aW5nbGl1MDEwNEBnbWFpbC5jb20&src=NDk2MmFkNGY3N2MxYTBmMDViYTA2YTlhZDJiZGNmMjZmNmY3MmM4ODNjOGFlZDIxYjUwYjQxY2YwYTc1M2Q0ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YjdiMzRlZDI2MjY1NjdjYjkxZjFiYTdhZTM0NmJhNDQzYjkyZTgwNTUxYTkzYWI1MTIzYzc2N2ZhMzk5YzE0YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=dXNqYXN1bWM2NTE4Nm10OGtpYjJrMHRwczlhdGJxODhAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=cTZqamkwOXVwZGN0bmF1ZnM5dGs2djJxdHJsZ2RoZGpAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=emgtdHcudGFpd2FuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23008eaa&color=%23f3f4f7&color=%23e4002b&color=%23616161&color=%23795548&color=%230b8043"
             title="Google Calendar"
           />
         </div>
