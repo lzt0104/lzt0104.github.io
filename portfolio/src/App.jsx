@@ -467,24 +467,10 @@ const ResumePage = () => {
       "國立高雄科技大學112學年智慧商務系學會 會長",
       "國立高雄科技大學112學年系學會委員會 副主席",
       "國立高雄科技大學112學年多項校級委員會 學生代表"
-    ],
-    "2022": [
-      "國立草屯商工第63屆 鎮長獎",
-      "勞動部勞動力發展署中彰投分署第二屆 青年職涯大使"
-    ],
-    "2021": [
-      "SITCON 2021 閃電講講者",
-      "草商63週年校慶園遊會暨社團成果發表 總召",
-      "2021 COSCUP, SITCON Camp, PyConTW 志工"
-    ],
-    "2020": [
-      "中投高中職學生議合會 籌備屆理事長 & 第一屆秘書長",
-      "國立草屯商工第17屆學生自治會 活動長",
-      "2021 學生自治會十一校議合幹部訓練 機動長"
     ]
   };
 
-  const experienceYears = ["2025", "2024", "2023", "2022", "2021", "2020"];
+  const experienceYears = ["2025", "2024", "2023", "2022"];
 
   const competitions = {
     "2025": [
@@ -504,31 +490,20 @@ const ResumePage = () => {
       { name: "技職盃黑客松競賽南區", awards: ["佳作"] },
       { name: "永續金融與淨零創新提案競賽", awards: ["第二名"] },
       { name: "槓桿保證金模擬交易競賽(程式組)", awards: ["第三名"] }
-    ],
-    "2021": [
-      { name: "全國商業類技藝競賽文書處理", awards: ["金手獎第五名"] },
-      { name: "典時盃金邀請賽文書處理", awards: ["金手獎第二名"] },
-      { name: "全民e化秋季賽 資訊科技概論", awards: ["全國第一名"] },
-      { name: "中亞聯大U21 AI競賽", awards: ["第二名", "佳作"] }
     ]
   };
 
   const competitionYears = ["2025", "2024", "2022-2023", "2021"];
 
   const certifications = [
-    "會計事務人工記帳丙級", "電腦軟體應用丙級", "電腦硬體裝修丙級", "門市服務丙級",
-    "商教會計三級", "GLAD BAP Presentations 2016", "GLAD BAP Documents 2016",
-    "GLAD BAP Spreadsheets 2016", "GLAD ICT計算機綜合能力", "GLAD DMT數位多媒體綜合能力",
+    "GLAD ICT計算機綜合能力", "GLAD DMT數位多媒體綜合能力",
     "GLAD 英文看打輸入", "MOCC 電子商務 標準級", "MOCC 計算機概論 標準級",
-    "MOCC App Inventor雲端手機程式設計", "MOCC Word 2016 Enterprise",
-    "PVQC 觀光旅運類專業級", "PVQC 計算機類專業級", "TQC 創意App程式設計-專業級",
-    "TQC 文書處理-專業級", "TQC 雲端技術及網路服務-進階級", "TQC 人工智慧應用與技術-進階級",
-    "TQC 基礎程式語言-專業級(Python 3)", "Google Ads 搜尋廣告認證",
-    "Google Ads 成效評估認證", "程式設計觀念題 五級", "程式設計實作題 四級",
+    "TQC 創意App程式設計-專業級",
+    "TQC 雲端技術及網路服務-進階級", "TQC 人工智慧應用與技術-進階級",
+    "TQC 基礎程式語言-專業級(Python 3)",
     "NVIDIA CUDA Python", "NVIDIA AI on Jetson Nano", "NVIDIA 深度學習基礎理論與實踐",
     "MIT App Inventor Programming", "AWS Educate Cloud Expert",
-    "Microsoft Office Word Expert 2016", "社團經營師", "醫學資訊管理師",
-    "Microsoft Office Word Expert 2019"
+    "社團經營師", "醫學資訊管理師"
   ];
 
   return (
