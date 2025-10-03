@@ -470,7 +470,7 @@ const ResumePage = () => {
     ]
   };
 
-  const experienceYears = ["2025", "2024", "2023", "2022"];
+  const experienceYears = ["2025", "2024", "2023"];
 
   const competitions = {
     "2025": [
@@ -493,7 +493,7 @@ const ResumePage = () => {
     ]
   };
 
-  const competitionYears = ["2025", "2024", "2022-2023", "2021"];
+  const competitionYears = ["2025", "2024", "2022-2023"];
 
   const certifications = [
     "GLAD ICT計算機綜合能力", "GLAD DMT數位多媒體綜合能力",
