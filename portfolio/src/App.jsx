@@ -474,10 +474,13 @@ const ResumePage = () => {
 
   const competitions = {
     "2025": [
-      { name: "2025 Coding 101", awards: ["量化分析應用獎", "人氣獎"] },
-      { name: "2025 MOS Word Expert 初賽", awards: ["優勝"] },
-      { name: "2025 MOS Word Expert 決賽", awards: ["第三名"] },
-      { name: "2025 TUPC 全國程式競賽", awards: ["銅牌"] }
+      { name: "2025 雲創盃AI × ESG創新實作競賽", awards: ["入圍中"] },
+      { name: "第六屆高科盃商業智慧競賽", awards: ["入圍中"] },
+      { name: "FSR 客語語音辨識競賽", awards: ["等待發表"] },
+      { name: "Coding 101", awards: ["量化分析應用獎", "人氣獎"] },
+      { name: "MOS Word Expert 初賽", awards: ["優勝"] },
+      { name: "MOS Word Expert 決賽", awards: ["第三名"] },
+      { name: "TUPC 全國程式競賽", awards: ["銅牌"] }
     ],
     "2024": [
       { name: "高科大社團評鑑", awards: ["自治性特優", "組織運作獎", "資源管理獎", "行政管理獎"] },
