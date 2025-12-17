@@ -15,7 +15,7 @@ const COLORS = {
 };
 
 // API 配置 - 部署後需要更新為你的 Worker URL
-const API_URL = '/api';  // Cloudflare Pages Functions 會自動處理 /api 路徑
+const API_URL = 'https://lzt0104-github-io.pages.dev/api';  // Cloudflare Pages Functions 會自動處理 /api 路徑
 
 // 管理員密碼 - 請修改為你的密碼
 const ADMIN_PASSWORD = '!Zhengting0104';
