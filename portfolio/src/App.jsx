@@ -1258,7 +1258,7 @@ const BlogPage = ({ isAdmin, adminToken }) => {
 
 // 其他頁面
 const ProjectsPage = () => {
-  // 假設 COLORS 與 projects 資料同上
+  // 假設 COLORS 來自你的全域變數或 Context，這裡保留原本的引用方式
   const projects = [
     {
       name: '技職升學社群網站',
@@ -1305,103 +1305,129 @@ const ProjectsPage = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto p-4 md:p-8">
-      {/* 標題區塊 */}
-      <h2 
-        className="text-2xl md:text-3xl mb-8 font-mono"
-        style={{ color: COLORS.secondary }}
-      >
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+      <h2 style={{
+        fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+        marginBottom: '2rem',
+        color: COLORS.secondary,
+        fontFamily: 'monospace'
+      }}>
         $ ls -la ./projects/
       </h2>
 
-      {/* Grid 容器：手機單欄 -> 平板雙欄 -> 桌機三欄 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* 修改 1: Grid 容器設定 */}
+      <div style={{ 
+        display: 'grid', 
+        // 核心修改：自動適應欄寬，最小300px，最大1fr (螢幕夠寬時會自動變成三欄)
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+        gap: '1.5rem',
+        alignItems: 'stretch' // 讓同一列的卡片高度拉伸至相同
+      }}>
         {projects.map((project, idx) => (
-          <div 
-            key={idx} 
-            className="group relative flex flex-col h-full rounded-2xl border-2 p-6 md:p-8 transition-all duration-300 hover:-translate-y-1"
+          <div key={idx} 
             style={{
-              // 背景與顏色依賴變數，維持 inline style 較方便，或是您可以在 tailwind.config 定義顏色
               background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
-              borderColor: project.highlight ? COLORS.highlight : COLORS.secondary,
+              border: `2px solid ${project.highlight ? COLORS.highlight : COLORS.secondary}`,
+              borderRadius: '16px',
+              padding: 'clamp(1.5rem, 3vw, 2rem)',
               boxShadow: `0 8px 32px ${project.highlight ? COLORS.highlight : COLORS.secondary}20`,
+              transition: 'all 0.3s',
+              // 修改 2: 卡片內部改為 Flex column，為了讓按鈕置底
+              display: 'flex',
+              flexDirection: 'column',
+              height: '100%', // 確保佔滿 Grid Cell 高度
+              boxSizing: 'border-box'
             }}
-            // 使用 onMouseEnter/Leave 修改 shadow 較複雜，這裡建議直接用 Tailwind 的 hover:shadow-xl (需自定義 shadow 顏色則保留 inline)
             onMouseEnter={(e) => {
-               e.currentTarget.style.boxShadow = `0 12px 40px ${project.highlight ? COLORS.highlight : COLORS.secondary}40`;
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = `0 12px 40px ${project.highlight ? COLORS.highlight : COLORS.secondary}40`;
             }}
             onMouseLeave={(e) => {
-               e.currentTarget.style.boxShadow = `0 8px 32px ${project.highlight ? COLORS.highlight : COLORS.secondary}20`;
-            }}
-          >
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = `0 8px 32px ${project.highlight ? COLORS.highlight : COLORS.secondary}20`;
+            }}>
             
-            {/* 標題與狀態 */}
-            <div className="flex justify-between items-start mb-4 gap-2 flex-wrap">
-              <h3 
-                className="text-lg md:text-xl font-mono m-0 leading-tight"
-                style={{ color: project.highlight ? COLORS.highlight : COLORS.secondary }}
-              >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <h3 style={{
+                fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
+                color: project.highlight ? COLORS.highlight : COLORS.secondary,
+                fontFamily: 'monospace',
+                margin: 0,
+                lineHeight: 1.4
+              }}>
                 {project.name}
               </h3>
-              
-              <span 
-                className="px-3 py-1 rounded-full text-xs font-bold font-mono whitespace-nowrap"
-                style={{
-                  backgroundColor: project.status === '進行中' ? COLORS.warning : 
-                                 project.status === '已上線' ? COLORS.success : COLORS.accent,
-                  color: COLORS.bg,
-                }}
-              >
+              <span style={{
+                padding: '0.3rem 0.8rem',
+                background: project.status === '進行中' ? COLORS.warning : 
+                           project.status === '已上線' ? COLORS.success : COLORS.accent,
+                color: COLORS.bg,
+                borderRadius: '15px',
+                fontSize: '0.8rem',
+                fontWeight: 'bold',
+                fontFamily: 'monospace',
+                whiteSpace: 'nowrap' // 防止標籤換行
+              }}>
                 {project.status}
               </span>
             </div>
 
-            {/* 描述文字：加上 flex-1 讓它自動佔滿剩餘空間，推擠下方內容到底部 */}
-            <p 
-              className="text-sm md:text-base leading-relaxed mb-6 flex-1"
-              style={{ color: COLORS.text }}
-            >
+            {/* 修改 3: 描述文字區塊 flex: 1，會自動佔據剩餘空間，將下方內容推到底部 */}
+            <p style={{
+              fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
+              color: COLORS.text,
+              lineHeight: '1.7',
+              marginBottom: '1.5rem',
+              flex: '1' 
+            }}>
               {project.description}
             </p>
 
-            {/* 底部區塊：技術標籤與按鈕 */}
-            <div className="mt-auto">
-              <div className="flex gap-2 flex-wrap mb-6">
+            <div style={{ marginTop: 'auto' }}>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
                 {project.tech.map(t => (
-                  <span 
-                    key={t} 
-                    className="px-3 py-1 border rounded text-xs font-mono"
-                    style={{
-                      backgroundColor: `${COLORS.accent}20`,
-                      borderColor: COLORS.accent,
-                      color: COLORS.accent,
-                    }}
-                  >
+                    <span key={t} style={{
+                    padding: '0.3rem 0.7rem',
+                    background: `${COLORS.accent}20`,
+                    border: `1px solid ${COLORS.accent}`,
+                    borderRadius: '4px',
+                    fontSize: '0.75rem',
+                    color: COLORS.accent,
+                    fontFamily: 'monospace'
+                    }}>
                     {t}
-                  </span>
+                    </span>
                 ))}
-              </div>
+                </div>
 
-              {project.link && (
+                {project.link && (
                 <a
-                  href={project.link}
-                  className="inline-block px-4 py-2 border rounded-md text-sm font-mono transition-colors duration-300 hover:text-white"
-                  style={{
-                    borderColor: COLORS.primary,
+                    href={project.link}
+                    style={{
+                    display: 'inline-block',
+                    padding: '0.5rem 1rem',
+                    background: 'transparent',
+                    border: `1px solid ${COLORS.primary}`,
+                    borderRadius: '6px',
                     color: COLORS.primary,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = COLORS.primary;
-                    e.currentTarget.style.color = COLORS.bg;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = COLORS.primary;
-                  }}
+                    textDecoration: 'none',
+                    fontFamily: 'monospace',
+                    fontSize: '0.85rem',
+                    transition: 'all 0.3s',
+                    width: 'fit-content' // 確保按鈕寬度適中
+                    }}
+                    onMouseEnter={(e) => {
+                    e.target.style.background = COLORS.primary;
+                    e.target.style.color = COLORS.bg;
+                    }}
+                    onMouseLeave={(e) => {
+                    e.target.style.background = 'transparent';
+                    e.target.style.color = COLORS.primary;
+                    }}
                 >
-                  查看專案 →
+                    查看專案 →
                 </a>
-              )}
+                )}
             </div>
           </div>
         ))}
