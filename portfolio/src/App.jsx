@@ -570,7 +570,7 @@ const AboutPage = () => {
   const education = [
     { year: '現職', text: '源核資訊整合工作室 執行長', highlight: true },
     { year: '113學年度', text: '國立雲林科技大學 資訊管理系 (人工智慧技優專班)', highlight: true },
-    { year: '112學年度', text: '國立高雄科技大學 智慧商務系 (修業)' },
+    { year: '112學年度', text: '國立高雄科技大學 智慧商務系 (結業)' },
     { year: '111學年度', text: '國立高雄科技大學 智慧商務系 (特殊選才錄取)' },
     { year: '111學年度', text: '國立草屯商工 資料處理科 (畢業)' },
   ];
