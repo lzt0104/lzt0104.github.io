@@ -101,72 +101,6 @@ const ThemeToggle = ({ isDark, toggleTheme }) => {
   );
 };
 
-// API 請求函數
-const api = {
-  // 獲取所有文章
-  async getPosts() {
-    const res = await fetch(`${API_URL}/posts`);
-    if (!res.ok) throw new Error('獲取文章失敗');
-    return res.json();
-  },
-  
-  // 創建文章
-  async createPost(post, token) {
-    const res = await fetch(`${API_URL}/posts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(post)
-    });
-    if (!res.ok) throw new Error('創建文章失敗');
-    return res.json();
-  },
-  
-  // 更新文章
-  async updatePost(id, post, token) {
-    const res = await fetch(`${API_URL}/posts/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(post)
-    });
-    if (!res.ok) throw new Error('更新文章失敗');
-    return res.json();
-  },
-  
-  // 刪除文章
-  async deletePost(id, token) {
-    const res = await fetch(`${API_URL}/posts/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    if (!res.ok) throw new Error('刪除文章失敗');
-    return res.json();
-  },
-  
-  // 上傳圖片
-  async uploadImage(file, token) {
-    const formData = new FormData();
-    formData.append('image', file);
-    
-    const res = await fetch(`${API_URL}/upload`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      },
-      body: formData
-    });
-    if (!res.ok) throw new Error('上傳圖片失敗');
-    return res.json();
-  }
-};
-
 // 導航欄
 const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout, isDark, toggleTheme }) => {
   const COLORS = getColors(isDark);
@@ -196,7 +130,16 @@ const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout, isDar
               color: COLORS.primary
             }}
           >
-            <span><img src={meIcon} alt="Icon" /></span>
+            <span><img 
+  src={meIcon} 
+  alt="Icon" 
+  style={{ 
+    width: '20px', 
+    height: '20px', 
+    verticalAlign: 'middle',
+    marginRight: '5px' 
+  }} 
+/></span>
             <span style={{ color: COLORS.highlight }}>劉政廷</span>
             <span style={{ color: COLORS.primary }}>@</span>
             <span style={{ color: COLORS.secondary }}>blog</span>
