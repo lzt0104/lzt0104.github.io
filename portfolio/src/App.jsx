@@ -195,7 +195,7 @@ const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout, isDar
               color: COLORS.primary
             }}
           >
-            <span><img src="./assets/me.svg" alt="" /></span>
+            <span><img src="/assets/me.svg" alt="" /></span>
             <span style={{ color: COLORS.highlight }}>劉政廷</span>
             <span style={{ color: COLORS.primary }}>@</span>
             <span style={{ color: COLORS.secondary }}>blog</span>
