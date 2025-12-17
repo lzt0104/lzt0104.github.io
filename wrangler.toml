@@ -1,0 +1,18 @@
+name = "blog-portfolio"
+compatibility_date = "2024-01-01"
+
+# D1 資料庫綁定
+[[d1_databases]]
+binding = "blog_database"
+database_name = "blog-database"
+database_id = "caba4a0d-94a5-4ae3-815e-e03df4420bd6"  # 部署後填入
+
+# R2 儲存桶綁定
+[[r2_buckets]]
+binding = "blog_images"
+bucket_name = "blog-images"
+
+# 環境變數
+[vars]
+R2_PUBLIC_URL = "https://images.yourdomain.com"  # R2 公開域名
+ADMIN_PASSWORD = "!Zhengting0104"  # 管理員密碼

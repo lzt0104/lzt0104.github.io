@@ -1,0 +1,26 @@
+{
+  "name": "blog-portfolio",
+  "version": "1.0.0",
+  "description": "個人部落格 - 使用 Cloudflare Pages + D1 + R2",
+  "main": "blog-frontend.jsx",
+  "scripts": {
+    "dev": "wrangler pages dev . --d1 DB=blog-database --r2 BLOG_IMAGES=blog-images",
+    "deploy": "wrangler pages deploy .",
+    "db:init": "wrangler d1 execute blog-database --remote --file=./schema.sql",
+    "db:local": "wrangler d1 execute blog-database --local --file=./schema.sql",
+    "db:backup": "wrangler d1 export blog-database --remote --output=backup-$(date +%Y%m%d).sql"
+  },
+  "keywords": [
+    "blog",
+    "cloudflare",
+    "d1",
+    "r2",
+    "react",
+    "portfolio"
+  ],
+  "author": "Liu Zheng-Ting",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

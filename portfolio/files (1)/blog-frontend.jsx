@@ -18,7 +18,7 @@ const COLORS = {
 const API_URL = '/api';  // Cloudflare Pages Functions 會自動處理 /api 路徑
 
 // 管理員密碼 - 請修改為你的密碼
-const ADMIN_PASSWORD = '!Zhengting0104';
+const ADMIN_PASSWORD = 'your_secure_password_here';
 
 // 掃描線特效
 const Scanlines = () => (
