@@ -97,7 +97,7 @@ const api = {
 // 導航欄
 const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout }) => {
   const [open, setOpen] = useState(false);
-  const items = ['home', 'about', 'blog', 'projects', 'experience', 'calendar'];
+  const items = ['home', 'about', 'projects', 'experience', 'calendar'];
 
   return (
     <nav style={{
@@ -129,7 +129,7 @@ const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout }) => 
           </button>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            {isAdmin ? (
+            {/* {isAdmin ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{
                   padding: '0.3rem 0.8rem',
@@ -180,7 +180,7 @@ const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout }) => 
               >
                 管理員
               </button>
-            )}
+            )} */}
 
             <button
               onClick={() => setOpen(!open)}
@@ -268,157 +268,157 @@ const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout }) => 
   );
 };
 
-// 管理員登入彈窗
-const AdminLoginModal = ({ onClose, onLogin }) => {
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+// // 管理員登入彈窗
+// const AdminLoginModal = ({ onClose, onLogin }) => {
+//   const [password, setPassword] = useState('');
+//   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      onLogin(password);
-      onClose();
-    } else {
-      setError('密碼錯誤');
-      setPassword('');
-    }
-  };
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     if (password === ADMIN_PASSWORD) {
+//       onLogin(password);
+//       onClose();
+//     } else {
+//       setError('密碼錯誤');
+//       setPassword('');
+//     }
+//   };
 
-  return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: 'rgba(0, 0, 0, 0.8)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 100,
-      padding: '1rem'
-    }} onClick={onClose}>
-      <div style={{
-        background: COLORS.bgLight,
-        border: `2px solid ${COLORS.accent}`,
-        borderRadius: '16px',
-        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-        maxWidth: '400px',
-        width: '100%',
-        boxShadow: `0 8px 32px ${COLORS.accent}40`
-      }} onClick={(e) => e.stopPropagation()}>
-        <h2 style={{
-          fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
-          marginBottom: '1.5rem',
-          color: COLORS.accent,
-          fontFamily: 'monospace',
-          textAlign: 'center'
-        }}>
-          $ sudo login
-        </h2>
+//   return (
+//     <div style={{
+//       position: 'fixed',
+//       top: 0,
+//       left: 0,
+//       right: 0,
+//       bottom: 0,
+//       background: 'rgba(0, 0, 0, 0.8)',
+//       display: 'flex',
+//       alignItems: 'center',
+//       justifyContent: 'center',
+//       zIndex: 100,
+//       padding: '1rem'
+//     }} onClick={onClose}>
+//       <div style={{
+//         background: COLORS.bgLight,
+//         border: `2px solid ${COLORS.accent}`,
+//         borderRadius: '16px',
+//         padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+//         maxWidth: '400px',
+//         width: '100%',
+//         boxShadow: `0 8px 32px ${COLORS.accent}40`
+//       }} onClick={(e) => e.stopPropagation()}>
+//         <h2 style={{
+//           fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+//           marginBottom: '1.5rem',
+//           color: COLORS.accent,
+//           fontFamily: 'monospace',
+//           textAlign: 'center'
+//         }}>
+//           $ sudo login
+//         </h2>
 
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{
-              display: 'block',
-              marginBottom: '0.5rem',
-              color: COLORS.text,
-              fontFamily: 'monospace',
-              fontSize: '0.9rem'
-            }}>
-              管理員密碼
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError('');
-              }}
-              placeholder="輸入密碼..."
-              autoFocus
-              style={{
-                width: '100%',
-                padding: '0.8rem',
-                background: COLORS.bg,
-                border: `2px solid ${error ? '#ff5555' : `${COLORS.accent}40`}`,
-                borderRadius: '8px',
-                color: COLORS.text,
-                fontFamily: 'monospace',
-                fontSize: '1rem',
-                outline: 'none'
-              }}
-            />
-            {error && (
-              <div style={{
-                marginTop: '0.5rem',
-                color: '#ff5555',
-                fontSize: '0.85rem',
-                fontFamily: 'monospace'
-              }}>
-                ✕ {error}
-              </div>
-            )}
-          </div>
+//         <form onSubmit={handleSubmit}>
+//           <div style={{ marginBottom: '1.5rem' }}>
+//             <label style={{
+//               display: 'block',
+//               marginBottom: '0.5rem',
+//               color: COLORS.text,
+//               fontFamily: 'monospace',
+//               fontSize: '0.9rem'
+//             }}>
+//               管理員密碼
+//             </label>
+//             <input
+//               type="password"
+//               value={password}
+//               onChange={(e) => {
+//                 setPassword(e.target.value);
+//                 setError('');
+//               }}
+//               placeholder="輸入密碼..."
+//               autoFocus
+//               style={{
+//                 width: '100%',
+//                 padding: '0.8rem',
+//                 background: COLORS.bg,
+//                 border: `2px solid ${error ? '#ff5555' : `${COLORS.accent}40`}`,
+//                 borderRadius: '8px',
+//                 color: COLORS.text,
+//                 fontFamily: 'monospace',
+//                 fontSize: '1rem',
+//                 outline: 'none'
+//               }}
+//             />
+//             {error && (
+//               <div style={{
+//                 marginTop: '0.5rem',
+//                 color: '#ff5555',
+//                 fontSize: '0.85rem',
+//                 fontFamily: 'monospace'
+//               }}>
+//                 ✕ {error}
+//               </div>
+//             )}
+//           </div>
 
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <button
-              type="submit"
-              style={{
-                flex: 1,
-                padding: '0.8rem',
-                background: COLORS.success,
-                color: COLORS.bg,
-                border: 'none',
-                borderRadius: '8px',
-                fontFamily: 'monospace',
-                fontWeight: 'bold',
-                fontSize: '1rem',
-                cursor: 'pointer',
-                transition: 'all 0.3s'
-              }}
-            >
-              登入
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              style={{
-                flex: 1,
-                padding: '0.8rem',
-                background: 'transparent',
-                color: COLORS.text,
-                border: `2px solid ${COLORS.text}40`,
-                borderRadius: '8px',
-                fontFamily: 'monospace',
-                fontWeight: 'bold',
-                fontSize: '1rem',
-                cursor: 'pointer',
-                transition: 'all 0.3s'
-              }}
-            >
-              取消
-            </button>
-          </div>
-        </form>
+//           <div style={{ display: 'flex', gap: '1rem' }}>
+//             <button
+//               type="submit"
+//               style={{
+//                 flex: 1,
+//                 padding: '0.8rem',
+//                 background: COLORS.success,
+//                 color: COLORS.bg,
+//                 border: 'none',
+//                 borderRadius: '8px',
+//                 fontFamily: 'monospace',
+//                 fontWeight: 'bold',
+//                 fontSize: '1rem',
+//                 cursor: 'pointer',
+//                 transition: 'all 0.3s'
+//               }}
+//             >
+//               登入
+//             </button>
+//             <button
+//               type="button"
+//               onClick={onClose}
+//               style={{
+//                 flex: 1,
+//                 padding: '0.8rem',
+//                 background: 'transparent',
+//                 color: COLORS.text,
+//                 border: `2px solid ${COLORS.text}40`,
+//                 borderRadius: '8px',
+//                 fontFamily: 'monospace',
+//                 fontWeight: 'bold',
+//                 fontSize: '1rem',
+//                 cursor: 'pointer',
+//                 transition: 'all 0.3s'
+//               }}
+//             >
+//               取消
+//             </button>
+//           </div>
+//         </form>
 
-        <div style={{
-          marginTop: '1.5rem',
-          padding: '0.8rem',
-          background: `${COLORS.warning}10`,
-          border: `1px solid ${COLORS.warning}40`,
-          borderRadius: '8px',
-          fontSize: '0.8rem',
-          color: COLORS.textDim,
-          fontFamily: 'monospace',
-          textAlign: 'center'
-        }}>
-          ⚠ 僅限網站管理員使用
-        </div>
-      </div>
-    </div>
-  );
-};
+//         <div style={{
+//           marginTop: '1.5rem',
+//           padding: '0.8rem',
+//           background: `${COLORS.warning}10`,
+//           border: `1px solid ${COLORS.warning}40`,
+//           borderRadius: '8px',
+//           fontSize: '0.8rem',
+//           color: COLORS.textDim,
+//           fontFamily: 'monospace',
+//           textAlign: 'center'
+//         }}>
+//           ⚠ 僅限網站管理員使用
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 // 打字機效果
 const Typewriter = ({ text, speed = 80 }) => {
@@ -520,7 +520,7 @@ const HomePage = ({ setPage }) => {
             </div>
 
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button
+              {/* <button
                 onClick={() => setPage('blog')}
                 style={{
                   background: COLORS.primary,
@@ -537,7 +537,7 @@ const HomePage = ({ setPage }) => {
                 }}
               >
                 [ 閱讀文章 ]
-              </button>
+              </button> */}
               
               <button
                 onClick={() => setPage('projects')}
