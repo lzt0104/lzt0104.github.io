@@ -134,8 +134,8 @@ const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout, isDar
   src={meIcon} 
   alt="Icon" 
   style={{ 
-    width: '20px', 
-    height: '20px', 
+    width: '40px', 
+    height: '40px', 
     verticalAlign: 'middle',
     marginRight: '5px' 
   }} 
