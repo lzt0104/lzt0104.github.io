@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import meIcon from './assets/me.svg';
 
 // 深色主題配色 - 科技感十足
 const DARK_THEME = {
@@ -195,7 +196,7 @@ const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout, isDar
               color: COLORS.primary
             }}
           >
-            <span><img src="/assets/me.svg" alt="" /></span>
+            <span><img src={meIcon} alt="Icon" /></span>
             <span style={{ color: COLORS.highlight }}>劉政廷</span>
             <span style={{ color: COLORS.primary }}>@</span>
             <span style={{ color: COLORS.secondary }}>blog</span>
@@ -205,59 +206,6 @@ const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout, isDar
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             {/* 主題切換按鈕 */}
             <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
-
-            {/* {isAdmin ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{
-                  padding: '0.3rem 0.8rem',
-                  background: COLORS.success,
-                  color: COLORS.bg,
-                  borderRadius: '15px',
-                  fontSize: '0.75rem',
-                  fontWeight: 'bold',
-                  fontFamily: 'monospace'
-                }} className="admin-badge">
-                  ADMIN
-                </span>
-                <button
-                  onClick={handleLogout}
-                  style={{
-                    padding: '0.3rem 0.8rem',
-                    background: 'transparent',
-                    border: `1px solid ${COLORS.warning}`,
-                    borderRadius: '15px',
-                    color: COLORS.warning,
-                    fontSize: '0.75rem',
-                    fontWeight: 'bold',
-                    fontFamily: 'monospace',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s'
-                  }}
-                  className="logout-btn"
-                >
-                  登出
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => setShowAdminLogin(true)}
-                style={{
-                  padding: '0.3rem 0.8rem',
-                  background: 'transparent',
-                  border: `1px solid ${COLORS.accent}`,
-                  borderRadius: '15px',
-                  color: COLORS.accent,
-                  fontSize: '0.75rem',
-                  fontWeight: 'bold',
-                  fontFamily: 'monospace',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s'
-                }}
-                className="admin-login-btn"
-              >
-                管理員
-              </button>
-            )} */}
 
             <button
               onClick={() => setOpen(!open)}
