@@ -622,639 +622,639 @@ const AboutPage = () => {
   );
 };
 
-// 部落格頁面（帶圖片上傳）
-const BlogPage = ({ isAdmin, adminToken }) => {
-  const [posts, setPosts] = useState([]);
-  const [selected, setSelected] = useState(null);
-  const [isCreating, setIsCreating] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({ title: '', content: '', tags: '', images: [] });
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
-  const [uploading, setUploading] = useState(false);
+// // 部落格頁面（帶圖片上傳）
+// const BlogPage = ({ isAdmin, adminToken }) => {
+//   const [posts, setPosts] = useState([]);
+//   const [selected, setSelected] = useState(null);
+//   const [isCreating, setIsCreating] = useState(false);
+//   const [isEditing, setIsEditing] = useState(false);
+//   const [formData, setFormData] = useState({ title: '', content: '', tags: '', images: [] });
+//   const [loading, setLoading] = useState(true);
+//   const [filter, setFilter] = useState('all');
+//   const [uploading, setUploading] = useState(false);
 
-  useEffect(() => {
-    loadPosts();
-  }, []);
+//   useEffect(() => {
+//     loadPosts();
+//   }, []);
 
-  const loadPosts = async () => {
-    try {
-      setLoading(true);
-      const data = await api.getPosts();
-      setPosts(data.posts || []);
-    } catch (error) {
-      console.error('載入文章失敗:', error);
-      alert('載入文章失敗: ' + error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+//   const loadPosts = async () => {
+//     try {
+//       setLoading(true);
+//       const data = await api.getPosts();
+//       setPosts(data.posts || []);
+//     } catch (error) {
+//       console.error('載入文章失敗:', error);
+//       alert('載入文章失敗: ' + error.message);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
 
-  const handleImageUpload = async (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length === 0) return;
+//   const handleImageUpload = async (e) => {
+//     const files = Array.from(e.target.files);
+//     if (files.length === 0) return;
 
-    setUploading(true);
-    try {
-      const uploadPromises = files.map(file => api.uploadImage(file, adminToken));
-      const results = await Promise.all(uploadPromises);
-      const imageUrls = results.map(r => r.url);
+//     setUploading(true);
+//     try {
+//       const uploadPromises = files.map(file => api.uploadImage(file, adminToken));
+//       const results = await Promise.all(uploadPromises);
+//       const imageUrls = results.map(r => r.url);
       
-      setFormData(prev => ({
-        ...prev,
-        images: [...prev.images, ...imageUrls]
-      }));
+//       setFormData(prev => ({
+//         ...prev,
+//         images: [...prev.images, ...imageUrls]
+//       }));
       
-      alert(`成功上傳 ${imageUrls.length} 張圖片`);
-    } catch (error) {
-      alert('上傳圖片失敗: ' + error.message);
-    } finally {
-      setUploading(false);
-    }
-  };
+//       alert(`成功上傳 ${imageUrls.length} 張圖片`);
+//     } catch (error) {
+//       alert('上傳圖片失敗: ' + error.message);
+//     } finally {
+//       setUploading(false);
+//     }
+//   };
 
-  const removeImage = (index) => {
-    setFormData(prev => ({
-      ...prev,
-      images: prev.images.filter((_, i) => i !== index)
-    }));
-  };
+//   const removeImage = (index) => {
+//     setFormData(prev => ({
+//       ...prev,
+//       images: prev.images.filter((_, i) => i !== index)
+//     }));
+//   };
 
-  const savePost = async () => {
-    if (!formData.title || !formData.content) {
-      alert('請填寫標題和內容');
-      return;
-    }
+//   const savePost = async () => {
+//     if (!formData.title || !formData.content) {
+//       alert('請填寫標題和內容');
+//       return;
+//     }
 
-    try {
-      const postData = {
-        title: formData.title,
-        content: formData.content,
-        tags: formData.tags.split(',').map(t => t.trim()).filter(t => t).join(','),
-        images: formData.images.join(',')
-      };
+//     try {
+//       const postData = {
+//         title: formData.title,
+//         content: formData.content,
+//         tags: formData.tags.split(',').map(t => t.trim()).filter(t => t).join(','),
+//         images: formData.images.join(',')
+//       };
 
-      if (isEditing) {
-        await api.updatePost(selected.id, postData, adminToken);
-      } else {
-        await api.createPost(postData, adminToken);
-      }
+//       if (isEditing) {
+//         await api.updatePost(selected.id, postData, adminToken);
+//       } else {
+//         await api.createPost(postData, adminToken);
+//       }
 
-      await loadPosts();
-      setIsCreating(false);
-      setIsEditing(false);
-      setFormData({ title: '', content: '', tags: '', images: [] });
-      setSelected(null);
-    } catch (error) {
-      alert('儲存失敗: ' + error.message);
-    }
-  };
+//       await loadPosts();
+//       setIsCreating(false);
+//       setIsEditing(false);
+//       setFormData({ title: '', content: '', tags: '', images: [] });
+//       setSelected(null);
+//     } catch (error) {
+//       alert('儲存失敗: ' + error.message);
+//     }
+//   };
 
-  const deletePost = async (id) => {
-    if (!confirm('確定要刪除這篇文章嗎？')) return;
+//   const deletePost = async (id) => {
+//     if (!confirm('確定要刪除這篇文章嗎？')) return;
     
-    try {
-      await api.deletePost(id, adminToken);
-      await loadPosts();
-      setSelected(null);
-    } catch (error) {
-      alert('刪除失敗: ' + error.message);
-    }
-  };
+//     try {
+//       await api.deletePost(id, adminToken);
+//       await loadPosts();
+//       setSelected(null);
+//     } catch (error) {
+//       alert('刪除失敗: ' + error.message);
+//     }
+//   };
 
-  const startEdit = (post) => {
-    setFormData({
-      title: post.title,
-      content: post.content,
-      tags: post.tags || '',
-      images: post.images ? post.images.split(',').filter(Boolean) : []
-    });
-    setIsEditing(true);
-    setIsCreating(true);
-    setSelected(post);
-  };
+//   const startEdit = (post) => {
+//     setFormData({
+//       title: post.title,
+//       content: post.content,
+//       tags: post.tags || '',
+//       images: post.images ? post.images.split(',').filter(Boolean) : []
+//     });
+//     setIsEditing(true);
+//     setIsCreating(true);
+//     setSelected(post);
+//   };
 
-  const filteredPosts = filter === 'all' 
-    ? posts 
-    : posts.filter(p => p.tags && p.tags.includes(filter));
+//   const filteredPosts = filter === 'all' 
+//     ? posts 
+//     : posts.filter(p => p.tags && p.tags.includes(filter));
 
-  const allTags = [...new Set(posts.flatMap(p => p.tags ? p.tags.split(',').filter(Boolean) : []))];
+//   const allTags = [...new Set(posts.flatMap(p => p.tags ? p.tags.split(',').filter(Boolean) : []))];
 
-  if (loading) {
-    return (
-      <div style={{ 
-        maxWidth: '1200px', 
-        margin: '0 auto', 
-        padding: '2rem',
-        textAlign: 'center',
-        color: COLORS.textDim,
-        fontFamily: 'monospace'
-      }}>
-        載入中...
-      </div>
-    );
-  }
+//   if (loading) {
+//     return (
+//       <div style={{ 
+//         maxWidth: '1200px', 
+//         margin: '0 auto', 
+//         padding: '2rem',
+//         textAlign: 'center',
+//         color: COLORS.textDim,
+//         fontFamily: 'monospace'
+//       }}>
+//         載入中...
+//       </div>
+//     );
+//   }
 
-  return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
-      {!isCreating ? (
-        <>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '2rem',
-            flexWrap: 'wrap',
-            gap: '1rem'
-          }}>
-            <h2 style={{
-              fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
-              color: COLORS.highlight,
-              fontFamily: 'monospace'
-            }}>
-              $ ls -la ./posts/
-            </h2>
-            {isAdmin && (
-              <button
-                onClick={() => {
-                  setIsCreating(true);
-                  setIsEditing(false);
-                  setFormData({ title: '', content: '', tags: '', images: [] });
-                }}
-                style={{
-                  padding: '0.7rem 1.5rem',
-                  background: COLORS.success,
-                  color: COLORS.bg,
-                  border: 'none',
-                  borderRadius: '6px',
-                  fontFamily: 'monospace',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
-                  transition: 'all 0.3s'
-                }}
-              >
-                + 新增文章
-              </button>
-            )}
-          </div>
+//   return (
+//     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+//       {!isCreating ? (
+//         <>
+//           <div style={{
+//             display: 'flex',
+//             justifyContent: 'space-between',
+//             alignItems: 'center',
+//             marginBottom: '2rem',
+//             flexWrap: 'wrap',
+//             gap: '1rem'
+//           }}>
+//             <h2 style={{
+//               fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+//               color: COLORS.highlight,
+//               fontFamily: 'monospace'
+//             }}>
+//               $ ls -la ./posts/
+//             </h2>
+//             {isAdmin && (
+//               <button
+//                 onClick={() => {
+//                   setIsCreating(true);
+//                   setIsEditing(false);
+//                   setFormData({ title: '', content: '', tags: '', images: [] });
+//                 }}
+//                 style={{
+//                   padding: '0.7rem 1.5rem',
+//                   background: COLORS.success,
+//                   color: COLORS.bg,
+//                   border: 'none',
+//                   borderRadius: '6px',
+//                   fontFamily: 'monospace',
+//                   fontWeight: 'bold',
+//                   cursor: 'pointer',
+//                   fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+//                   transition: 'all 0.3s'
+//                 }}
+//               >
+//                 + 新增文章
+//               </button>
+//             )}
+//           </div>
 
-          {allTags.length > 0 && (
-            <div style={{ marginBottom: '2rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-              <button
-                onClick={() => setFilter('all')}
-                style={{
-                  padding: '0.5rem 1rem',
-                  background: filter === 'all' ? COLORS.accent : 'transparent',
-                  color: filter === 'all' ? COLORS.bg : COLORS.text,
-                  border: `1px solid ${COLORS.accent}`,
-                  borderRadius: '20px',
-                  fontFamily: 'monospace',
-                  fontSize: '0.85rem',
-                  cursor: 'pointer'
-                }}
-              >
-                全部
-              </button>
-              {allTags.map(tag => (
-                <button
-                  key={tag}
-                  onClick={() => setFilter(tag)}
-                  style={{
-                    padding: '0.5rem 1rem',
-                    background: filter === tag ? COLORS.accent : 'transparent',
-                    color: filter === tag ? COLORS.bg : COLORS.text,
-                    border: `1px solid ${COLORS.accent}`,
-                    borderRadius: '20px',
-                    fontFamily: 'monospace',
-                    fontSize: '0.85rem',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-          )}
+//           {allTags.length > 0 && (
+//             <div style={{ marginBottom: '2rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+//               <button
+//                 onClick={() => setFilter('all')}
+//                 style={{
+//                   padding: '0.5rem 1rem',
+//                   background: filter === 'all' ? COLORS.accent : 'transparent',
+//                   color: filter === 'all' ? COLORS.bg : COLORS.text,
+//                   border: `1px solid ${COLORS.accent}`,
+//                   borderRadius: '20px',
+//                   fontFamily: 'monospace',
+//                   fontSize: '0.85rem',
+//                   cursor: 'pointer'
+//                 }}
+//               >
+//                 全部
+//               </button>
+//               {allTags.map(tag => (
+//                 <button
+//                   key={tag}
+//                   onClick={() => setFilter(tag)}
+//                   style={{
+//                     padding: '0.5rem 1rem',
+//                     background: filter === tag ? COLORS.accent : 'transparent',
+//                     color: filter === tag ? COLORS.bg : COLORS.text,
+//                     border: `1px solid ${COLORS.accent}`,
+//                     borderRadius: '20px',
+//                     fontFamily: 'monospace',
+//                     fontSize: '0.85rem',
+//                     cursor: 'pointer'
+//                   }}
+//                 >
+//                   {tag}
+//                 </button>
+//               ))}
+//             </div>
+//           )}
 
-          <div style={{
-            background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
-            border: `2px solid ${COLORS.highlight}`,
-            borderRadius: '16px',
-            padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-            boxShadow: `0 8px 32px ${COLORS.highlight}20`
-          }}>
-            <div className="blog-grid" style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '2rem' }}>
-              <div style={{ display: 'grid', gap: '0.5rem', alignContent: 'start' }}>
-                {filteredPosts.length === 0 ? (
-                  <div style={{
-                    padding: '2rem 1rem',
-                    textAlign: 'center',
-                    color: COLORS.textDim,
-                    fontFamily: 'monospace',
-                    fontSize: '0.9rem'
-                  }}>
-                    尚無文章
-                  </div>
-                ) : (
-                  filteredPosts.map((post) => (
-                    <button
-                      key={post.id}
-                      onClick={() => setSelected(post)}
-                      style={{
-                        width: '100%',
-                        textAlign: 'left',
-                        padding: '1rem',
-                        background: selected?.id === post.id ? `${COLORS.highlight}20` : 'transparent',
-                        border: `1px solid ${selected?.id === post.id ? COLORS.highlight : `${COLORS.highlight}30`}`,
-                        borderRadius: '8px',
-                        color: selected?.id === post.id ? COLORS.highlight : COLORS.text,
-                        fontFamily: 'monospace',
-                        fontSize: '0.85rem',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s'
-                      }}
-                    >
-                      {post.created_at?.split('T')[0]}<br/>{post.title}
-                      {post.tags && (
-                        <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
-                          {post.tags.split(',').filter(Boolean).map(tag => (
-                            <span key={tag} style={{
-                              fontSize: '0.7rem',
-                              padding: '0.2rem 0.5rem',
-                              background: `${COLORS.accent}30`,
-                              borderRadius: '10px'
-                            }}>
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </button>
-                  ))
-                )}
-              </div>
+//           <div style={{
+//             background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+//             border: `2px solid ${COLORS.highlight}`,
+//             borderRadius: '16px',
+//             padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+//             boxShadow: `0 8px 32px ${COLORS.highlight}20`
+//           }}>
+//             <div className="blog-grid" style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '2rem' }}>
+//               <div style={{ display: 'grid', gap: '0.5rem', alignContent: 'start' }}>
+//                 {filteredPosts.length === 0 ? (
+//                   <div style={{
+//                     padding: '2rem 1rem',
+//                     textAlign: 'center',
+//                     color: COLORS.textDim,
+//                     fontFamily: 'monospace',
+//                     fontSize: '0.9rem'
+//                   }}>
+//                     尚無文章
+//                   </div>
+//                 ) : (
+//                   filteredPosts.map((post) => (
+//                     <button
+//                       key={post.id}
+//                       onClick={() => setSelected(post)}
+//                       style={{
+//                         width: '100%',
+//                         textAlign: 'left',
+//                         padding: '1rem',
+//                         background: selected?.id === post.id ? `${COLORS.highlight}20` : 'transparent',
+//                         border: `1px solid ${selected?.id === post.id ? COLORS.highlight : `${COLORS.highlight}30`}`,
+//                         borderRadius: '8px',
+//                         color: selected?.id === post.id ? COLORS.highlight : COLORS.text,
+//                         fontFamily: 'monospace',
+//                         fontSize: '0.85rem',
+//                         cursor: 'pointer',
+//                         transition: 'all 0.3s'
+//                       }}
+//                     >
+//                       {post.created_at?.split('T')[0]}<br/>{post.title}
+//                       {post.tags && (
+//                         <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+//                           {post.tags.split(',').filter(Boolean).map(tag => (
+//                             <span key={tag} style={{
+//                               fontSize: '0.7rem',
+//                               padding: '0.2rem 0.5rem',
+//                               background: `${COLORS.accent}30`,
+//                               borderRadius: '10px'
+//                             }}>
+//                               {tag}
+//                             </span>
+//                           ))}
+//                         </div>
+//                       )}
+//                     </button>
+//                   ))
+//                 )}
+//               </div>
 
-              <div>
-                {selected ? (
-                  <div style={{
-                    padding: '2rem',
-                    background: `${COLORS.highlight}08`,
-                    border: `2px solid ${COLORS.highlight}40`,
-                    borderRadius: '12px'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
-                      <div style={{ flex: 1 }}>
-                        <h3 style={{
-                          fontSize: 'clamp(1.1rem, 3.5vw, 1.5rem)',
-                          marginBottom: '0.5rem',
-                          color: COLORS.highlight
-                        }}>
-                          {selected.title}
-                        </h3>
-                        <div style={{
-                          fontSize: '0.85rem',
-                          color: COLORS.textDim,
-                          fontFamily: 'monospace'
-                        }}>
-                          發布: {selected.created_at?.split('T')[0]}
-                        </div>
-                      </div>
-                      {isAdmin && (
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button
-                            onClick={() => startEdit(selected)}
-                            style={{
-                              padding: '0.5rem 1rem',
-                              background: COLORS.warning,
-                              color: COLORS.bg,
-                              border: 'none',
-                              borderRadius: '4px',
-                              fontFamily: 'monospace',
-                              fontSize: '0.8rem',
-                              cursor: 'pointer',
-                              fontWeight: 'bold'
-                            }}
-                          >
-                            編輯
-                          </button>
-                          <button
-                            onClick={() => deletePost(selected.id)}
-                            style={{
-                              padding: '0.5rem 1rem',
-                              background: '#ff5555',
-                              color: COLORS.bg,
-                              border: 'none',
-                              borderRadius: '4px',
-                              fontFamily: 'monospace',
-                              fontSize: '0.8rem',
-                              cursor: 'pointer',
-                              fontWeight: 'bold'
-                            }}
-                          >
-                            刪除
-                          </button>
-                        </div>
-                      )}
-                    </div>
+//               <div>
+//                 {selected ? (
+//                   <div style={{
+//                     padding: '2rem',
+//                     background: `${COLORS.highlight}08`,
+//                     border: `2px solid ${COLORS.highlight}40`,
+//                     borderRadius: '12px'
+//                   }}>
+//                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
+//                       <div style={{ flex: 1 }}>
+//                         <h3 style={{
+//                           fontSize: 'clamp(1.1rem, 3.5vw, 1.5rem)',
+//                           marginBottom: '0.5rem',
+//                           color: COLORS.highlight
+//                         }}>
+//                           {selected.title}
+//                         </h3>
+//                         <div style={{
+//                           fontSize: '0.85rem',
+//                           color: COLORS.textDim,
+//                           fontFamily: 'monospace'
+//                         }}>
+//                           發布: {selected.created_at?.split('T')[0]}
+//                         </div>
+//                       </div>
+//                       {isAdmin && (
+//                         <div style={{ display: 'flex', gap: '0.5rem' }}>
+//                           <button
+//                             onClick={() => startEdit(selected)}
+//                             style={{
+//                               padding: '0.5rem 1rem',
+//                               background: COLORS.warning,
+//                               color: COLORS.bg,
+//                               border: 'none',
+//                               borderRadius: '4px',
+//                               fontFamily: 'monospace',
+//                               fontSize: '0.8rem',
+//                               cursor: 'pointer',
+//                               fontWeight: 'bold'
+//                             }}
+//                           >
+//                             編輯
+//                           </button>
+//                           <button
+//                             onClick={() => deletePost(selected.id)}
+//                             style={{
+//                               padding: '0.5rem 1rem',
+//                               background: '#ff5555',
+//                               color: COLORS.bg,
+//                               border: 'none',
+//                               borderRadius: '4px',
+//                               fontFamily: 'monospace',
+//                               fontSize: '0.8rem',
+//                               cursor: 'pointer',
+//                               fontWeight: 'bold'
+//                             }}
+//                           >
+//                             刪除
+//                           </button>
+//                         </div>
+//                       )}
+//                     </div>
 
-                    {selected.tags && (
-                      <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                        {selected.tags.split(',').filter(Boolean).map(tag => (
-                          <span key={tag} style={{
-                            padding: '0.3rem 0.8rem',
-                            background: `${COLORS.accent}20`,
-                            border: `1px solid ${COLORS.accent}`,
-                            borderRadius: '15px',
-                            fontSize: '0.8rem',
-                            color: COLORS.accent
-                          }}>
-                            #{tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+//                     {selected.tags && (
+//                       <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+//                         {selected.tags.split(',').filter(Boolean).map(tag => (
+//                           <span key={tag} style={{
+//                             padding: '0.3rem 0.8rem',
+//                             background: `${COLORS.accent}20`,
+//                             border: `1px solid ${COLORS.accent}`,
+//                             borderRadius: '15px',
+//                             fontSize: '0.8rem',
+//                             color: COLORS.accent
+//                           }}>
+//                             #{tag}
+//                           </span>
+//                         ))}
+//                       </div>
+//                     )}
 
-                    {/* 顯示圖片 */}
-                    {selected.images && (
-                      <div style={{ marginBottom: '1.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
-                        {selected.images.split(',').filter(Boolean).map((url, idx) => (
-                          <img 
-                            key={idx}
-                            src={url}
-                            alt={`文章圖片 ${idx + 1}`}
-                            style={{
-                              width: '100%',
-                              height: '200px',
-                              objectFit: 'cover',
-                              borderRadius: '8px',
-                              border: `2px solid ${COLORS.accent}40`
-                            }}
-                          />
-                        ))}
-                      </div>
-                    )}
+//                     {/* 顯示圖片 */}
+//                     {selected.images && (
+//                       <div style={{ marginBottom: '1.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+//                         {selected.images.split(',').filter(Boolean).map((url, idx) => (
+//                           <img 
+//                             key={idx}
+//                             src={url}
+//                             alt={`文章圖片 ${idx + 1}`}
+//                             style={{
+//                               width: '100%',
+//                               height: '200px',
+//                               objectFit: 'cover',
+//                               borderRadius: '8px',
+//                               border: `2px solid ${COLORS.accent}40`
+//                             }}
+//                           />
+//                         ))}
+//                       </div>
+//                     )}
 
-                    <div style={{
-                      fontSize: '1rem',
-                      lineHeight: '1.8',
-                      color: COLORS.text,
-                      whiteSpace: 'pre-line'
-                    }}>
-                      {selected.content}
-                    </div>
+//                     <div style={{
+//                       fontSize: '1rem',
+//                       lineHeight: '1.8',
+//                       color: COLORS.text,
+//                       whiteSpace: 'pre-line'
+//                     }}>
+//                       {selected.content}
+//                     </div>
 
-                    <button
-                      onClick={() => setSelected(null)}
-                      style={{
-                        marginTop: '2rem',
-                        padding: '0.7rem 1.5rem',
-                        background: 'transparent',
-                        border: `1px solid ${COLORS.highlight}`,
-                        borderRadius: '6px',
-                        color: COLORS.highlight,
-                        fontFamily: 'monospace',
-                        cursor: 'pointer',
-                        fontSize: '1rem'
-                      }}
-                    >
-                      [ 關閉 ]
-                    </button>
-                  </div>
-                ) : (
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: '100%',
-                    minHeight: '200px',
-                    fontSize: '1rem',
-                    color: COLORS.textDim,
-                    fontFamily: 'monospace'
-                  }}>
-                    $ 選擇一篇文章開始閱讀...
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <div style={{
-          background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
-          border: `2px solid ${COLORS.success}`,
-          borderRadius: '16px',
-          padding: '2.5rem',
-          boxShadow: `0 8px 32px ${COLORS.success}20`
-        }}>
-          <h2 style={{
-            fontSize: '1.8rem',
-            marginBottom: '2rem',
-            color: COLORS.success,
-            fontFamily: 'monospace'
-          }}>
-            $ {isEditing ? 'vim' : 'nano'} new_post.md
-          </h2>
+//                     <button
+//                       onClick={() => setSelected(null)}
+//                       style={{
+//                         marginTop: '2rem',
+//                         padding: '0.7rem 1.5rem',
+//                         background: 'transparent',
+//                         border: `1px solid ${COLORS.highlight}`,
+//                         borderRadius: '6px',
+//                         color: COLORS.highlight,
+//                         fontFamily: 'monospace',
+//                         cursor: 'pointer',
+//                         fontSize: '1rem'
+//                       }}
+//                     >
+//                       [ 關閉 ]
+//                     </button>
+//                   </div>
+//                 ) : (
+//                   <div style={{
+//                     display: 'flex',
+//                     alignItems: 'center',
+//                     justifyContent: 'center',
+//                     height: '100%',
+//                     minHeight: '200px',
+//                     fontSize: '1rem',
+//                     color: COLORS.textDim,
+//                     fontFamily: 'monospace'
+//                   }}>
+//                     $ 選擇一篇文章開始閱讀...
+//                   </div>
+//                 )}
+//               </div>
+//             </div>
+//           </div>
+//         </>
+//       ) : (
+//         <div style={{
+//           background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+//           border: `2px solid ${COLORS.success}`,
+//           borderRadius: '16px',
+//           padding: '2.5rem',
+//           boxShadow: `0 8px 32px ${COLORS.success}20`
+//         }}>
+//           <h2 style={{
+//             fontSize: '1.8rem',
+//             marginBottom: '2rem',
+//             color: COLORS.success,
+//             fontFamily: 'monospace'
+//           }}>
+//             $ {isEditing ? 'vim' : 'nano'} new_post.md
+//           </h2>
 
-          <div style={{ display: 'grid', gap: '1.5rem' }}>
-            <div>
-              <label style={{
-                display: 'block',
-                marginBottom: '0.5rem',
-                color: COLORS.accent,
-                fontFamily: 'monospace'
-              }}>
-                標題
-              </label>
-              <input
-                type="text"
-                value={formData.title}
-                onChange={(e) => setFormData({...formData, title: e.target.value})}
-                placeholder="輸入文章標題..."
-                style={{
-                  width: '100%',
-                  padding: '0.8rem',
-                  background: COLORS.bg,
-                  border: `2px solid ${COLORS.accent}40`,
-                  borderRadius: '8px',
-                  color: COLORS.text,
-                  fontFamily: 'monospace',
-                  fontSize: '1rem'
-                }}
-              />
-            </div>
+//           <div style={{ display: 'grid', gap: '1.5rem' }}>
+//             <div>
+//               <label style={{
+//                 display: 'block',
+//                 marginBottom: '0.5rem',
+//                 color: COLORS.accent,
+//                 fontFamily: 'monospace'
+//               }}>
+//                 標題
+//               </label>
+//               <input
+//                 type="text"
+//                 value={formData.title}
+//                 onChange={(e) => setFormData({...formData, title: e.target.value})}
+//                 placeholder="輸入文章標題..."
+//                 style={{
+//                   width: '100%',
+//                   padding: '0.8rem',
+//                   background: COLORS.bg,
+//                   border: `2px solid ${COLORS.accent}40`,
+//                   borderRadius: '8px',
+//                   color: COLORS.text,
+//                   fontFamily: 'monospace',
+//                   fontSize: '1rem'
+//                 }}
+//               />
+//             </div>
 
-            <div>
-              <label style={{
-                display: 'block',
-                marginBottom: '0.5rem',
-                color: COLORS.accent,
-                fontFamily: 'monospace'
-              }}>
-                標籤 (用逗號分隔)
-              </label>
-              <input
-                type="text"
-                value={formData.tags}
-                onChange={(e) => setFormData({...formData, tags: e.target.value})}
-                placeholder="例如: 技術, 心得, AI..."
-                style={{
-                  width: '100%',
-                  padding: '0.8rem',
-                  background: COLORS.bg,
-                  border: `2px solid ${COLORS.accent}40`,
-                  borderRadius: '8px',
-                  color: COLORS.text,
-                  fontFamily: 'monospace',
-                  fontSize: '1rem'
-                }}
-              />
-            </div>
+//             <div>
+//               <label style={{
+//                 display: 'block',
+//                 marginBottom: '0.5rem',
+//                 color: COLORS.accent,
+//                 fontFamily: 'monospace'
+//               }}>
+//                 標籤 (用逗號分隔)
+//               </label>
+//               <input
+//                 type="text"
+//                 value={formData.tags}
+//                 onChange={(e) => setFormData({...formData, tags: e.target.value})}
+//                 placeholder="例如: 技術, 心得, AI..."
+//                 style={{
+//                   width: '100%',
+//                   padding: '0.8rem',
+//                   background: COLORS.bg,
+//                   border: `2px solid ${COLORS.accent}40`,
+//                   borderRadius: '8px',
+//                   color: COLORS.text,
+//                   fontFamily: 'monospace',
+//                   fontSize: '1rem'
+//                 }}
+//               />
+//             </div>
 
-            <div>
-              <label style={{
-                display: 'block',
-                marginBottom: '0.5rem',
-                color: COLORS.accent,
-                fontFamily: 'monospace'
-              }}>
-                圖片上傳
-              </label>
-              <input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={handleImageUpload}
-                disabled={uploading}
-                style={{
-                  width: '100%',
-                  padding: '0.8rem',
-                  background: COLORS.bg,
-                  border: `2px solid ${COLORS.accent}40`,
-                  borderRadius: '8px',
-                  color: COLORS.text,
-                  fontFamily: 'monospace',
-                  fontSize: '0.9rem'
-                }}
-              />
-              {uploading && (
-                <div style={{ marginTop: '0.5rem', color: COLORS.warning, fontSize: '0.85rem' }}>
-                  上傳中...
-                </div>
-              )}
+//             <div>
+//               <label style={{
+//                 display: 'block',
+//                 marginBottom: '0.5rem',
+//                 color: COLORS.accent,
+//                 fontFamily: 'monospace'
+//               }}>
+//                 圖片上傳
+//               </label>
+//               <input
+//                 type="file"
+//                 multiple
+//                 accept="image/*"
+//                 onChange={handleImageUpload}
+//                 disabled={uploading}
+//                 style={{
+//                   width: '100%',
+//                   padding: '0.8rem',
+//                   background: COLORS.bg,
+//                   border: `2px solid ${COLORS.accent}40`,
+//                   borderRadius: '8px',
+//                   color: COLORS.text,
+//                   fontFamily: 'monospace',
+//                   fontSize: '0.9rem'
+//                 }}
+//               />
+//               {uploading && (
+//                 <div style={{ marginTop: '0.5rem', color: COLORS.warning, fontSize: '0.85rem' }}>
+//                   上傳中...
+//                 </div>
+//               )}
               
-              {formData.images.length > 0 && (
-                <div style={{ marginTop: '1rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem' }}>
-                  {formData.images.map((url, idx) => (
-                    <div key={idx} style={{ position: 'relative' }}>
-                      <img 
-                        src={url}
-                        alt={`預覽 ${idx + 1}`}
-                        style={{
-                          width: '100%',
-                          height: '150px',
-                          objectFit: 'cover',
-                          borderRadius: '8px',
-                          border: `2px solid ${COLORS.accent}40`
-                        }}
-                      />
-                      <button
-                        onClick={() => removeImage(idx)}
-                        style={{
-                          position: 'absolute',
-                          top: '5px',
-                          right: '5px',
-                          padding: '0.3rem 0.6rem',
-                          background: '#ff5555',
-                          color: COLORS.bg,
-                          border: 'none',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                          fontSize: '0.8rem',
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+//               {formData.images.length > 0 && (
+//                 <div style={{ marginTop: '1rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem' }}>
+//                   {formData.images.map((url, idx) => (
+//                     <div key={idx} style={{ position: 'relative' }}>
+//                       <img 
+//                         src={url}
+//                         alt={`預覽 ${idx + 1}`}
+//                         style={{
+//                           width: '100%',
+//                           height: '150px',
+//                           objectFit: 'cover',
+//                           borderRadius: '8px',
+//                           border: `2px solid ${COLORS.accent}40`
+//                         }}
+//                       />
+//                       <button
+//                         onClick={() => removeImage(idx)}
+//                         style={{
+//                           position: 'absolute',
+//                           top: '5px',
+//                           right: '5px',
+//                           padding: '0.3rem 0.6rem',
+//                           background: '#ff5555',
+//                           color: COLORS.bg,
+//                           border: 'none',
+//                           borderRadius: '4px',
+//                           cursor: 'pointer',
+//                           fontSize: '0.8rem',
+//                           fontWeight: 'bold'
+//                         }}
+//                       >
+//                         ✕
+//                       </button>
+//                     </div>
+//                   ))}
+//                 </div>
+//               )}
+//             </div>
 
-            <div>
-              <label style={{
-                display: 'block',
-                marginBottom: '0.5rem',
-                color: COLORS.accent,
-                fontFamily: 'monospace'
-              }}>
-                內容
-              </label>
-              <textarea
-                value={formData.content}
-                onChange={(e) => setFormData({...formData, content: e.target.value})}
-                placeholder="開始撰寫你的文章..."
-                style={{
-                  width: '100%',
-                  minHeight: '300px',
-                  padding: '1rem',
-                  background: COLORS.bg,
-                  border: `2px solid ${COLORS.accent}40`,
-                  borderRadius: '8px',
-                  color: COLORS.text,
-                  fontFamily: 'monospace',
-                  fontSize: '0.95rem',
-                  lineHeight: '1.6',
-                  resize: 'vertical'
-                }}
-              />
-            </div>
+//             <div>
+//               <label style={{
+//                 display: 'block',
+//                 marginBottom: '0.5rem',
+//                 color: COLORS.accent,
+//                 fontFamily: 'monospace'
+//               }}>
+//                 內容
+//               </label>
+//               <textarea
+//                 value={formData.content}
+//                 onChange={(e) => setFormData({...formData, content: e.target.value})}
+//                 placeholder="開始撰寫你的文章..."
+//                 style={{
+//                   width: '100%',
+//                   minHeight: '300px',
+//                   padding: '1rem',
+//                   background: COLORS.bg,
+//                   border: `2px solid ${COLORS.accent}40`,
+//                   borderRadius: '8px',
+//                   color: COLORS.text,
+//                   fontFamily: 'monospace',
+//                   fontSize: '0.95rem',
+//                   lineHeight: '1.6',
+//                   resize: 'vertical'
+//                 }}
+//               />
+//             </div>
 
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <button
-                onClick={savePost}
-                style={{
-                  padding: '0.8rem 2rem',
-                  background: COLORS.success,
-                  color: COLORS.bg,
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontFamily: 'monospace',
-                  fontWeight: 'bold',
-                  fontSize: '1rem',
-                  cursor: 'pointer'
-                }}
-              >
-                {isEditing ? '更新文章' : '發布文章'}
-              </button>
-              <button
-                onClick={() => {
-                  setIsCreating(false);
-                  setIsEditing(false);
-                  setFormData({ title: '', content: '', tags: '', images: [] });
-                }}
-                style={{
-                  padding: '0.8rem 2rem',
-                  background: 'transparent',
-                  color: COLORS.text,
-                  border: `2px solid ${COLORS.text}40`,
-                  borderRadius: '8px',
-                  fontFamily: 'monospace',
-                  fontWeight: 'bold',
-                  fontSize: '1rem',
-                  cursor: 'pointer'
-                }}
-              >
-                取消
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
+//             <div style={{ display: 'flex', gap: '1rem' }}>
+//               <button
+//                 onClick={savePost}
+//                 style={{
+//                   padding: '0.8rem 2rem',
+//                   background: COLORS.success,
+//                   color: COLORS.bg,
+//                   border: 'none',
+//                   borderRadius: '8px',
+//                   fontFamily: 'monospace',
+//                   fontWeight: 'bold',
+//                   fontSize: '1rem',
+//                   cursor: 'pointer'
+//                 }}
+//               >
+//                 {isEditing ? '更新文章' : '發布文章'}
+//               </button>
+//               <button
+//                 onClick={() => {
+//                   setIsCreating(false);
+//                   setIsEditing(false);
+//                   setFormData({ title: '', content: '', tags: '', images: [] });
+//                 }}
+//                 style={{
+//                   padding: '0.8rem 2rem',
+//                   background: 'transparent',
+//                   color: COLORS.text,
+//                   border: `2px solid ${COLORS.text}40`,
+//                   borderRadius: '8px',
+//                   fontFamily: 'monospace',
+//                   fontWeight: 'bold',
+//                   fontSize: '1rem',
+//                   cursor: 'pointer'
+//                 }}
+//               >
+//                 取消
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
 
 // 其他頁面
 const ProjectsPage = () => {
@@ -1438,6 +1438,10 @@ const ProjectsPage = () => {
 
 // 經歷與成就頁面
 const ExperiencePage = () => {
+  // 假設 COLORS 是從外部引入或定義的變數，為避免報錯，請確保您的環境中有定義它
+  // 若沒有，您可以暫時解開下行註解使用預設值
+  // const COLORS = { bg: '#0a0a0a', bgLight: '#1a1a1a', text: '#e0e0e0', accent: '#00ff9d', secondary: '#00ccff', highlight: '#ffffff', warning: '#ffcc00', success: '#00ff9d' };
+
   const experiences = {
     "2025": [
       "市立豐原高商『辦公室文案排版美編製作工作坊』講師",
@@ -1509,6 +1513,7 @@ const ExperiencePage = () => {
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+      {/* --- Experience Section --- */}
       <div style={{
         background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
         border: `2px solid ${COLORS.accent}`,
@@ -1527,7 +1532,8 @@ const ExperiencePage = () => {
         </h2>
 
         <div style={{ display: 'grid', gap: '2rem' }}>
-          {Object.keys(experiences).map((year) => (
+          {/* 修改處：加入 .sort().reverse() 確保年份由大到小排列 */}
+          {Object.keys(experiences).sort().reverse().map((year) => (
             <div key={year} style={{
               borderLeft: `3px solid ${COLORS.accent}`,
               paddingLeft: '1.5rem'
@@ -1559,6 +1565,7 @@ const ExperiencePage = () => {
         </div>
       </div>
 
+      {/* --- Competitions Section --- */}
       <div style={{
         background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
         border: `2px solid ${COLORS.secondary}`,
@@ -1581,7 +1588,8 @@ const ExperiencePage = () => {
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '2rem'
         }}>
-          {Object.keys(competitions).map((year) => (
+          {/* 修改處：加入 .sort().reverse() 確保年份由大到小排列 */}
+          {Object.keys(competitions).sort().reverse().map((year) => (
             <div key={year}>
               <h3 style={{
                 fontSize: 'clamp(1rem, 3vw, 1.2rem)',
@@ -1625,6 +1633,7 @@ const ExperiencePage = () => {
         </div>
       </div>
 
+      {/* --- Certifications Section --- */}
       <div style={{
         background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
         border: `2px solid ${COLORS.warning}`,
