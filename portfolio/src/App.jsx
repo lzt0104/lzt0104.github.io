@@ -1256,10 +1256,421 @@ const BlogPage = ({ isAdmin, adminToken }) => {
   );
 };
 
-// 其他頁面簡化版...
-const ProjectsPage = () => <div style={{ padding: '2rem', textAlign: 'center', color: COLORS.text }}>專案頁面</div>;
-const ExperiencePage = () => <div style={{ padding: '2rem', textAlign: 'center', color: COLORS.text }}>經歷頁面</div>;
-const CalendarPage = () => <div style={{ padding: '2rem', textAlign: 'center', color: COLORS.text }}>行事曆頁面</div>;
+// 其他頁面
+const ProjectsPage = () => {
+  const projects = [
+    {
+      name: '擬人化醫療聊天機器人',
+      description: '國科會研究計畫：針對乳癌病患的智慧照護系統，結合自然語言處理與情感辨識技術',
+      tech: ['Python', 'NLP', 'Machine Learning', 'Flask'],
+      status: '進行中',
+      highlight: true
+    },
+    {
+      name: '源核資訊整合工作室網站',
+      description: '工作室官方網站，提供服務介紹、專案展示與聯絡功能',
+      tech: ['React', 'Next.js', 'Tailwind CSS'],
+      status: '已上線',
+      link: '#'
+    },
+    {
+      name: '技能檢定模擬賽系統',
+      description: '自動化競賽管理平台，包含報名、成績管理、證書生成等功能',
+      tech: ['Python', 'Django', 'PostgreSQL'],
+      status: '已完成'
+    },
+    {
+      name: '客語語音辨識系統',
+      description: 'FSR競賽作品：基於深度學習的客家語音辨識模型',
+      tech: ['Python', 'TensorFlow', 'Speech Recognition'],
+      status: '已發表'
+    }
+  ];
+
+  return (
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+      <h2 style={{
+        fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+        marginBottom: '2rem',
+        color: COLORS.secondary,
+        fontFamily: 'monospace'
+      }}>
+        $ ls -la ./projects/
+      </h2>
+
+      <div style={{ display: 'grid', gap: '1.5rem' }}>
+        {projects.map((project, idx) => (
+          <div key={idx} style={{
+            background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+            border: `2px solid ${project.highlight ? COLORS.highlight : COLORS.secondary}`,
+            borderRadius: '16px',
+            padding: 'clamp(1.5rem, 3vw, 2rem)',
+            boxShadow: `0 8px 32px ${project.highlight ? COLORS.highlight : COLORS.secondary}20`,
+            transition: 'all 0.3s'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-5px)';
+            e.currentTarget.style.boxShadow = `0 12px 40px ${project.highlight ? COLORS.highlight : COLORS.secondary}40`;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = `0 8px 32px ${project.highlight ? COLORS.highlight : COLORS.secondary}20`;
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
+              <h3 style={{
+                fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
+                color: project.highlight ? COLORS.highlight : COLORS.secondary,
+                fontFamily: 'monospace'
+              }}>
+                {project.name}
+              </h3>
+              <span style={{
+                padding: '0.3rem 0.8rem',
+                background: project.status === '進行中' ? COLORS.warning : 
+                           project.status === '已上線' ? COLORS.success : COLORS.accent,
+                color: COLORS.bg,
+                borderRadius: '15px',
+                fontSize: '0.8rem',
+                fontWeight: 'bold',
+                fontFamily: 'monospace'
+              }}>
+                {project.status}
+              </span>
+            </div>
+
+            <p style={{
+              fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
+              color: COLORS.text,
+              lineHeight: '1.7',
+              marginBottom: '1rem'
+            }}>
+              {project.description}
+            </p>
+
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+              {project.tech.map(t => (
+                <span key={t} style={{
+                  padding: '0.3rem 0.7rem',
+                  background: `${COLORS.accent}20`,
+                  border: `1px solid ${COLORS.accent}`,
+                  borderRadius: '4px',
+                  fontSize: '0.75rem',
+                  color: COLORS.accent,
+                  fontFamily: 'monospace'
+                }}>
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            {project.link && (
+              <a
+                href={project.link}
+                style={{
+                  display: 'inline-block',
+                  padding: '0.5rem 1rem',
+                  background: 'transparent',
+                  border: `1px solid ${COLORS.primary}`,
+                  borderRadius: '6px',
+                  color: COLORS.primary,
+                  textDecoration: 'none',
+                  fontFamily: 'monospace',
+                  fontSize: '0.85rem',
+                  transition: 'all 0.3s'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = COLORS.primary;
+                  e.target.style.color = COLORS.bg;
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'transparent';
+                  e.target.style.color = COLORS.primary;
+                }}
+              >
+                查看專案 →
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// 經歷與成就頁面
+const ExperiencePage = () => {
+  const experiences = {
+    "2025": [
+      "市立豐原高商『辦公室文案排版美編製作工作坊』講師",
+      "國立雲林科技大學 2025 YunTech ACT社團幹部培訓營 副召兼研修總務組組長",
+      "114年四技二專統一入學測驗-命題編校組",
+      "國立南投高商『資訊專業知能文書排版教師研習』講師",
+      "國立彰化高商『資訊專業知能文書排版教師研習』講師",
+      "市立臺中家商資料處理科『文書處理職種』培訓講師",
+      "國立花蓮高商資料處理科『文書處理職種』培訓講師",
+      "國立新竹高商資料處理科『文書處理職種』培訓講師",
+      "114學年度自辦模擬賽文書處理職種總負責人兼職種命題",
+      "114學年度自辦模擬賽程式設計職種副負責人"
+    ],
+    "2024": [
+      "通過113年國科會大專生研究計畫",
+      "國立高雄科技大學113學年智慧商務系學會 顧問",
+      "市立豐原高商『超高效電腦技能教師研習』講師",
+      "國立新竹高商『資訊專業知能文書排版教師研習』講師",
+      "113學年度商業類文書處理職種自辦模擬賽負責人兼命題"
+    ],
+    "2023": [
+      "國立高雄科技大學112學年智慧商務系學會 會長",
+      "國立高雄科技大學112學年系學會委員會 副主席",
+      "國立高雄科技大學112學年多項校級委員會 學生代表"
+    ]
+  };
+
+  const competitions = {
+    "2025": [
+      { name: "2025 雲創盃AI × ESG創新實作競賽", awards: ["第三名"] },
+      { name: "第六屆高科盃商業智慧競賽", awards: ["佳作"] },
+      { name: "FSR 客語語音辨識競賽", awards: ["已發表"] },
+      { name: "Coding 101", awards: ["量化分析應用獎", "人氣獎"] },
+      { name: "MOS Word Expert 初賽", awards: ["優勝"] },
+      { name: "MOS Word Expert 決賽", awards: ["第三名"] },
+      { name: "TUPC 全國程式競賽", awards: ["銅牌"] }
+    ],
+    "2024": [
+      { name: "高科大社團評鑑", awards: ["自治性特優", "組織運作獎", "資源管理獎", "行政管理獎"] },
+      { name: "雲科大三實競賽實習組", awards: ["金獎"] }
+    ],
+    "2022-2023": [
+      { name: "資訊月應用技能競賽南區", awards: ["第二名"] },
+      { name: "MOS Word Expert 決賽", awards: ["第六名"] },
+      { name: "技職盃黑客松競賽南區", awards: ["佳作"] },
+      { name: "永續金融與淨零創新提案競賽", awards: ["第二名"] },
+      { name: "槓桿保證金模擬交易競賽(程式組)", awards: ["第三名"] }
+    ]
+  };
+
+  const certifications = [
+    "GLAD ICT計算機綜合能力",
+    "GLAD DMT數位多媒體綜合能力",
+    "GLAD 英文看打輸入",
+    "MOCC 電子商務 標準級",
+    "MOCC 計算機概論 標準級",
+    "TQC 創意App程式設計-專業級",
+    "TQC 雲端技術及網路服務-進階級",
+    "TQC 人工智慧應用與技術-進階級",
+    "TQC 基礎程式語言-專業級(Python 3)",
+    "NVIDIA CUDA Python",
+    "NVIDIA AI on Jetson Nano",
+    "NVIDIA 深度學習基礎理論與實踐",
+    "MIT App Inventor Programming",
+    "AWS Educate Cloud Expert",
+    "社團經營師",
+    "醫學資訊管理師"
+  ];
+
+  return (
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+      <div style={{
+        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+        border: `2px solid ${COLORS.accent}`,
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        marginBottom: '2rem',
+        boxShadow: `0 8px 32px ${COLORS.accent}20`
+      }}>
+        <h2 style={{
+          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+          marginBottom: '2rem',
+          color: COLORS.accent,
+          fontFamily: 'monospace'
+        }}>
+          $ cat /etc/history
+        </h2>
+
+        <div style={{ display: 'grid', gap: '2rem' }}>
+          {Object.keys(experiences).map((year) => (
+            <div key={year} style={{
+              borderLeft: `3px solid ${COLORS.accent}`,
+              paddingLeft: '1.5rem'
+            }}>
+              <div style={{
+                fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+                fontWeight: 'bold',
+                marginBottom: '1rem',
+                color: COLORS.highlight,
+                fontFamily: 'monospace'
+              }}>
+                [{year}]
+              </div>
+              {experiences[year].map((item, idx) => (
+                <div key={idx} style={{
+                  fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
+                  marginBottom: '0.8rem',
+                  color: COLORS.text,
+                  display: 'flex',
+                  gap: '0.5rem',
+                  wordBreak: 'break-word'
+                }}>
+                  <span style={{ color: COLORS.warning, flexShrink: 0 }}>➜</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{
+        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+        border: `2px solid ${COLORS.secondary}`,
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        marginBottom: '2rem',
+        boxShadow: `0 8px 32px ${COLORS.secondary}20`
+      }}>
+        <h2 style={{
+          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+          marginBottom: '2rem',
+          color: COLORS.secondary,
+          fontFamily: 'monospace'
+        }}>
+          $ ./run competitions --all
+        </h2>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '2rem'
+        }}>
+          {Object.keys(competitions).map((year) => (
+            <div key={year}>
+              <h3 style={{
+                fontSize: 'clamp(1rem, 3vw, 1.2rem)',
+                marginBottom: '1rem',
+                color: COLORS.highlight,
+                fontFamily: 'monospace'
+              }}>
+                {year}
+              </h3>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.8rem' }}>
+                {competitions[year].map((comp, idx) => (
+                  <li key={idx} style={{
+                    fontSize: 'clamp(0.8rem, 2.5vw, 0.9rem)',
+                    color: COLORS.text,
+                    lineHeight: '1.6',
+                    wordBreak: 'break-word'
+                  }}>
+                    {comp.name}
+                    <div style={{ marginTop: '0.3rem' }}>
+                      {comp.awards.map((award, aIdx) => (
+                        <span key={aIdx} style={{
+                          display: 'inline-block',
+                          background: COLORS.success,
+                          color: COLORS.bg,
+                          padding: '0.2rem 0.6rem',
+                          borderRadius: '4px',
+                          fontSize: 'clamp(0.7rem, 2vw, 0.75rem)',
+                          marginRight: '0.4rem',
+                          marginBottom: '0.4rem',
+                          fontWeight: 'bold'
+                        }}>
+                          {award}
+                        </span>
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{
+        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+        border: `2px solid ${COLORS.warning}`,
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        boxShadow: `0 8px 32px ${COLORS.warning}20`
+      }}>
+        <h2 style={{
+          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+          marginBottom: '2rem',
+          color: COLORS.warning,
+          fontFamily: 'monospace'
+        }}>
+          $ ./list --certs
+        </h2>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+          gap: '0.8rem'
+        }}>
+          {certifications.map((cert, idx) => (
+            <div key={idx} style={{
+              padding: '0.8rem 1rem',
+              background: `${COLORS.warning}10`,
+              border: `1px solid ${COLORS.warning}40`,
+              borderRadius: '6px',
+              fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
+              color: COLORS.text,
+              transition: 'all 0.3s',
+              wordBreak: 'break-word'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = `${COLORS.warning}20`;
+              e.currentTarget.style.borderColor = COLORS.warning;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = `${COLORS.warning}10`;
+              e.currentTarget.style.borderColor = `${COLORS.warning}40`;
+            }}>
+              {cert}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// 行事曆頁
+const CalendarPage = () => {
+  return (
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+      <div style={{
+        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+        border: `2px solid ${COLORS.success}`,
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        boxShadow: `0 8px 32px ${COLORS.success}20`
+      }}>
+        <h2 style={{
+          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+          marginBottom: '2rem',
+          color: COLORS.success,
+          fontFamily: 'monospace'
+        }}>
+          $ cat schedule.ics
+        </h2>
+
+        <div style={{
+          width: '100%',
+          height: 'clamp(400px, 60vh, 600px)',
+          border: `2px solid ${COLORS.success}50`,
+          borderRadius: '12px',
+          overflow: 'hidden'
+        }}>
+          <iframe
+            style={{ width: '100%', height: '100%', border: 'none' }}
+            src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FTaipei&showPrint=0&showTitle=0&showTz=0&showCalendars=0&src=emhlbmd0aW5nbGl1MDEwNEBnbWFpbC5jb20&src=NDk2MmFkNGY3N2MxYTBmMDViYTA2YTlhZDJiZGNmMjZmNmY3MmM4ODNjOGFlZDIxYjUwYjQxY2YwYTc1M2Q0ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YjdiMzRlZDI2MjY1NjdjYjkxZjFiYTdhZTM0NmJhNDQzYjkyZTgwNTUxYTkzYWI1MTIzYzc2N2ZhMzk5YzE0YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=dXNqYXN1bWM2NTE4Nm10OGtpYjJrMHRwczlhdGJxODhAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=cTZqamkwOXVwZGN0bmF1ZnM5dGs2djJxdHJsZ2RoZGpAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=emgtdHcudGFpd2FuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23008eaa&color=%23f3f4f7&color=%23e4002b&color=%23616161&color=%23795548&color=%230b8043"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // Footer
 const Footer = () => {
