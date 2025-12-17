@@ -659,7 +659,7 @@ const AboutPage = () => {
           fontSize: '1.1rem',
           lineHeight: '1.8',
           color: COLORS.textDim,
-          maxWidth: '800px'
+          maxWidth: 'auto'
         }}>
           我是 108 課綱第一屆的「白老鼠」，熱愛探索各種技術領域並挑戰自我。
           曾在各大社群活躍，對教育與技術有深厚熱情。
