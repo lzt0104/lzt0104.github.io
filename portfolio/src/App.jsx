@@ -14,6 +14,9 @@ const COLORS = {
   textDim: '#8892b0'
 };
 
+// 管理員密碼 (請修改為你的密碼)
+const ADMIN_PASSWORD = 'your_secure_password_here';
+
 // 掃描線特效
 const Scanlines = () => (
   <div className="fixed inset-0 pointer-events-none z-50" style={{
@@ -23,9 +26,9 @@ const Scanlines = () => (
 );
 
 // 導航欄
-const Navbar = ({ page, setPage }) => {
+const Navbar = ({ page, setPage, isAdmin, setShowAdminLogin, handleLogout }) => {
   const [open, setOpen] = useState(false);
-  const items = ['home', 'about', 'resume', 'blog', 'calendar'];
+  const items = ['home', 'about', 'blog', 'projects', 'experience', 'calendar'];
 
   return (
     <nav style={{
@@ -52,57 +55,128 @@ const Navbar = ({ page, setPage }) => {
           >
             <span style={{ color: COLORS.highlight }}>劉政廷</span>
             <span style={{ color: COLORS.primary }}>@</span>
-            <span style={{ color: COLORS.secondary }}>portfolio</span>
+            <span style={{ color: COLORS.secondary }}>blog</span>
             <span style={{ color: COLORS.primary }}> ~$</span>
           </button>
 
-          <button
-            onClick={() => setOpen(!open)}
-            style={{
-              display: 'none',
-              background: 'none',
-              border: 'none',
-              fontSize: '1.5rem',
-              color: COLORS.primary,
-              cursor: 'pointer'
-            }}
-            className="mobile-menu"
-          >
-            {open ? '✕' : '☰'}
-          </button>
-
-          <div style={{ display: 'flex', gap: '2rem' }} className="desktop-nav">
-            {items.filter(i => i !== 'home').map(item => (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            {/* 管理員狀態指示 */}
+            {isAdmin ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{
+                  padding: '0.3rem 0.8rem',
+                  background: COLORS.success,
+                  color: COLORS.bg,
+                  borderRadius: '15px',
+                  fontSize: '0.75rem',
+                  fontWeight: 'bold',
+                  fontFamily: 'monospace'
+                }} className="admin-badge">
+                  ADMIN
+                </span>
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    padding: '0.3rem 0.8rem',
+                    background: 'transparent',
+                    border: `1px solid ${COLORS.warning}`,
+                    borderRadius: '15px',
+                    color: COLORS.warning,
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold',
+                    fontFamily: 'monospace',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = COLORS.warning;
+                    e.target.style.color = COLORS.bg;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'transparent';
+                    e.target.style.color = COLORS.warning;
+                  }}
+                  className="logout-btn"
+                >
+                  登出
+                </button>
+              </div>
+            ) : (
               <button
-                key={item}
-                onClick={() => setPage(item)}
+                onClick={() => setShowAdminLogin(true)}
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
+                  padding: '0.3rem 0.8rem',
+                  background: 'transparent',
+                  border: `1px solid ${COLORS.accent}`,
+                  borderRadius: '15px',
+                  color: COLORS.accent,
+                  fontSize: '0.75rem',
+                  fontWeight: 'bold',
                   fontFamily: 'monospace',
-                  fontSize: '0.95rem',
-                  color: page === item ? COLORS.accent : COLORS.text,
-                  transition: 'all 0.3s',
-                  padding: '0.5rem 1rem',
-                  borderRadius: '4px'
+                  cursor: 'pointer',
+                  transition: 'all 0.3s'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.background = `${COLORS.accent}20`;
-                  e.target.style.color = COLORS.accent;
+                  e.target.style.background = COLORS.accent;
+                  e.target.style.color = COLORS.bg;
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.background = 'none';
-                  e.target.style.color = page === item ? COLORS.accent : COLORS.text;
+                  e.target.style.background = 'transparent';
+                  e.target.style.color = COLORS.accent;
                 }}
+                className="admin-login-btn"
               >
-                ./{item}
+                管理員
               </button>
-            ))}
+            )}
+
+            <button
+              onClick={() => setOpen(!open)}
+              style={{
+                display: 'none',
+                background: 'none',
+                border: 'none',
+                fontSize: '1.5rem',
+                color: COLORS.primary,
+                cursor: 'pointer'
+              }}
+              className="mobile-menu"
+            >
+              {open ? '✕' : '☰'}
+            </button>
+
+            <div style={{ display: 'flex', gap: '2rem' }} className="desktop-nav">
+              {items.filter(i => i !== 'home').map(item => (
+                <button
+                  key={item}
+                  onClick={() => setPage(item)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontFamily: 'monospace',
+                    fontSize: '0.95rem',
+                    color: page === item ? COLORS.accent : COLORS.text,
+                    transition: 'all 0.3s',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '4px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = `${COLORS.accent}20`;
+                    e.target.style.color = COLORS.accent;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'none';
+                    e.target.style.color = page === item ? COLORS.accent : COLORS.text;
+                  }}
+                >
+                  ./{item}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
         
-        {/* 手機選單 */}
         {open && (
           <div className="mobile-nav" style={{
             display: 'none',
@@ -142,9 +216,177 @@ const Navbar = ({ page, setPage }) => {
           .desktop-nav { display: none !important; }
           .mobile-menu { display: block !important; }
           .mobile-nav { display: flex !important; }
+          .admin-badge { font-size: 0.7rem !important; padding: 0.2rem 0.6rem !important; }
+          .logout-btn, .admin-login-btn { font-size: 0.7rem !important; padding: 0.2rem 0.6rem !important; }
         }
       `}</style>
     </nav>
+  );
+};
+
+// 管理員登入彈窗
+const AdminLoginModal = ({ onClose, onLogin }) => {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD) {
+      onLogin();
+      onClose();
+    } else {
+      setError('密碼錯誤');
+      setPassword('');
+    }
+  };
+
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: 'rgba(0, 0, 0, 0.8)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 100,
+      padding: '1rem'
+    }} onClick={onClose}>
+      <div style={{
+        background: COLORS.bgLight,
+        border: `2px solid ${COLORS.accent}`,
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        maxWidth: '400px',
+        width: '100%',
+        boxShadow: `0 8px 32px ${COLORS.accent}40`
+      }} onClick={(e) => e.stopPropagation()}>
+        <h2 style={{
+          fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+          marginBottom: '1.5rem',
+          color: COLORS.accent,
+          fontFamily: 'monospace',
+          textAlign: 'center'
+        }}>
+          $ sudo login
+        </h2>
+
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{
+              display: 'block',
+              marginBottom: '0.5rem',
+              color: COLORS.text,
+              fontFamily: 'monospace',
+              fontSize: '0.9rem'
+            }}>
+              管理員密碼
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError('');
+              }}
+              placeholder="輸入密碼..."
+              autoFocus
+              style={{
+                width: '100%',
+                padding: '0.8rem',
+                background: COLORS.bg,
+                border: `2px solid ${error ? '#ff5555' : `${COLORS.accent}40`}`,
+                borderRadius: '8px',
+                color: COLORS.text,
+                fontFamily: 'monospace',
+                fontSize: '1rem',
+                outline: 'none'
+              }}
+            />
+            {error && (
+              <div style={{
+                marginTop: '0.5rem',
+                color: '#ff5555',
+                fontSize: '0.85rem',
+                fontFamily: 'monospace'
+              }}>
+                ✕ {error}
+              </div>
+            )}
+          </div>
+
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <button
+              type="submit"
+              style={{
+                flex: 1,
+                padding: '0.8rem',
+                background: COLORS.success,
+                color: COLORS.bg,
+                border: 'none',
+                borderRadius: '8px',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                transition: 'all 0.3s'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = `0 4px 12px ${COLORS.success}60`;
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = 'none';
+              }}
+            >
+              登入
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              style={{
+                flex: 1,
+                padding: '0.8rem',
+                background: 'transparent',
+                color: COLORS.text,
+                border: `2px solid ${COLORS.text}40`,
+                borderRadius: '8px',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                transition: 'all 0.3s'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.borderColor = COLORS.text;
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.borderColor = `${COLORS.text}40`;
+              }}
+            >
+              取消
+            </button>
+          </div>
+        </form>
+
+        <div style={{
+          marginTop: '1.5rem',
+          padding: '0.8rem',
+          background: `${COLORS.warning}10`,
+          border: `1px solid ${COLORS.warning}40`,
+          borderRadius: '8px',
+          fontSize: '0.8rem',
+          color: COLORS.textDim,
+          fontFamily: 'monospace',
+          textAlign: 'center'
+        }}>
+          ⚠ 僅限網站管理員使用
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -196,7 +438,7 @@ const HomePage = ({ setPage }) => {
           wordBreak: 'break-word'
         }}>
           <span style={{ color: COLORS.highlight }}>劉政廷</span>
-          <span style={{ color: COLORS.primary }}>@portfolio</span>
+          <span style={{ color: COLORS.primary }}>@blog</span>
           <span style={{ color: COLORS.primary }}>:~$ </span>
           <Typewriter text="cat welcome.txt" />
         </div>
@@ -228,7 +470,7 @@ const HomePage = ({ setPage }) => {
                   { label: '身份', value: '國立雲林科技大學資訊管理系(人工智慧技優專班)' },
                   { label: '現職', value: '源核資訊整合工作室 負責人兼執行長' },
                   { label: '專長', value: '資訊技術 | 選手培訓 | 系統開發' },
-                  { label: '目標', value: '成為優秀的資訊工作者' }
+                  { label: '目標', value: '成為優秀的資訊工作者與教育者' }
                 ].map((item, i) => (
                   <div key={i} style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', textAlign: 'left' }}>
                     <span style={{ color: COLORS.warning, fontSize: '1.2rem', flexShrink: 0 }}>➜</span>
@@ -247,36 +489,65 @@ const HomePage = ({ setPage }) => {
               }} />
             </div>
 
-            <button
-              onClick={() => setPage('about')}
-              style={{
-                background: COLORS.primary,
-                color: COLORS.bg,
-                border: `2px solid ${COLORS.primary}`,
-                padding: 'clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2.5rem)',
-                fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
-                fontWeight: 'bold',
-                fontFamily: 'monospace',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                transition: 'all 0.3s',
-                boxShadow: `0 4px 20px ${COLORS.primary}40`
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = 'transparent';
-                e.target.style.color = COLORS.primary;
-                e.target.style.transform = 'translateY(-3px)';
-                e.target.style.boxShadow = `0 8px 30px ${COLORS.primary}60`;
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = COLORS.primary;
-                e.target.style.color = COLORS.bg;
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = `0 4px 20px ${COLORS.primary}40`;
-              }}
-            >
-              [ EXPLORE SYSTEM ]
-            </button>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setPage('blog')}
+                style={{
+                  background: COLORS.primary,
+                  color: COLORS.bg,
+                  border: `2px solid ${COLORS.primary}`,
+                  padding: 'clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem)',
+                  fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
+                  fontWeight: 'bold',
+                  fontFamily: 'monospace',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s',
+                  boxShadow: `0 4px 20px ${COLORS.primary}40`
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = 'transparent';
+                  e.target.style.color = COLORS.primary;
+                  e.target.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = COLORS.primary;
+                  e.target.style.color = COLORS.bg;
+                  e.target.style.transform = 'translateY(0)';
+                }}
+              >
+                [ 閱讀文章 ]
+              </button>
+              
+              <button
+                onClick={() => setPage('projects')}
+                style={{
+                  background: COLORS.secondary,
+                  color: COLORS.bg,
+                  border: `2px solid ${COLORS.secondary}`,
+                  padding: 'clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem)',
+                  fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
+                  fontWeight: 'bold',
+                  fontFamily: 'monospace',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s',
+                  boxShadow: `0 4px 20px ${COLORS.secondary}40`
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = 'transparent';
+                  e.target.style.color = COLORS.secondary;
+                  e.target.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = COLORS.secondary;
+                  e.target.style.color = COLORS.bg;
+                  e.target.style.transform = 'translateY(0)';
+                }}
+              >
+                [ 查看專案 ]
+              </button>
+            </div>
           </>
         )}
       </div>
@@ -320,7 +591,7 @@ const AboutPage = () => {
           color: COLORS.text,
           marginBottom: '2rem'
         }}>
-          我是108課綱第一屆的「白老鼠」,熱愛探索各種技術領域並挑戰自我。曾在各大社群活躍,對教育與技術有深厚熱情。現在是一位懷抱夢想的資管系學生。我的專長橫跨多個技術領域,正在尋找屬於自己的道路。
+          我是108課綱第一屆的「白老鼠」，熱愛探索各種技術領域並挑戰自我。曾在各大社群活躍，對教育與技術有深厚熱情。現在是一位懷抱夢想的資管系學生，專注於人工智慧與資訊系統開發。我的專長橫跨多個技術領域，正在尋找屬於自己的道路。
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
@@ -349,22 +620,20 @@ const AboutPage = () => {
               $ ./check_skills.sh
             </h3>
             <div style={{ display: 'grid', gap: '0.7rem' }}>
-              {skills.map((skill) => {
-                return (
-                  <div key={skill.name} style={{ display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
-                    <span style={{ width: 'clamp(80px, 20vw, 100px)', fontSize: 'clamp(0.75rem, 2.5vw, 0.85rem)', color: COLORS.textDim }}>{skill.name}</span>
-                    <div style={{ flex: 1, height: '8px', background: `${COLORS.accent}20`, borderRadius: '4px', overflow: 'hidden' }}>
-                      <div style={{
-                        width: `${skill.level}%`,
-                        height: '100%',
-                        background: `linear-gradient(90deg, ${COLORS.success}, ${COLORS.accent})`,
-                        transition: 'width 1s'
-                      }} />
-                    </div>
-                    <span style={{ width: '40px', textAlign: 'right', fontSize: 'clamp(0.75rem, 2.5vw, 0.85rem)', color: COLORS.text }}>{skill.level}%</span>
+              {skills.map((skill) => (
+                <div key={skill.name} style={{ display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
+                  <span style={{ width: 'clamp(80px, 20vw, 100px)', fontSize: 'clamp(0.75rem, 2.5vw, 0.85rem)', color: COLORS.textDim }}>{skill.name}</span>
+                  <div style={{ flex: 1, height: '8px', background: `${COLORS.accent}20`, borderRadius: '4px', overflow: 'hidden' }}>
+                    <div style={{
+                      width: `${skill.level}%`,
+                      height: '100%',
+                      background: `linear-gradient(90deg, ${COLORS.success}, ${COLORS.accent})`,
+                      transition: 'width 1s'
+                    }} />
                   </div>
-                );
-              })}
+                  <span style={{ width: '40px', textAlign: 'right', fontSize: 'clamp(0.75rem, 2.5vw, 0.85rem)', color: COLORS.text }}>{skill.level}%</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -386,6 +655,996 @@ const AboutPage = () => {
               金額:<span style={{ color: COLORS.warning }}>53,000</span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// 部落格頁面（訪客+管理員模式）
+const BlogPage = ({ isAdmin }) => {
+  const [posts, setPosts] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [isCreating, setIsCreating] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({ title: '', content: '', tags: '' });
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('all');
+
+  useEffect(() => {
+    loadPosts();
+  }, []);
+
+  const loadPosts = async () => {
+    try {
+      setLoading(true);
+      const result = await window.storage.list('blog:', true);
+      if (result && result.keys) {
+        const loadedPosts = await Promise.all(
+          result.keys.map(async (key) => {
+            try {
+              const data = await window.storage.get(key, true);
+              return data ? JSON.parse(data.value) : null;
+            } catch {
+              return null;
+            }
+          })
+        );
+        setPosts(loadedPosts.filter(p => p !== null).sort((a, b) => 
+          new Date(b.date) - new Date(a.date)
+        ));
+      }
+    } catch (error) {
+      console.log('載入文章:', error);
+      setPosts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const savePost = async () => {
+    if (!formData.title || !formData.content) {
+      alert('請填寫標題和內容');
+      return;
+    }
+
+    try {
+      const post = {
+        id: isEditing ? selected.id : `post_${Date.now()}`,
+        title: formData.title,
+        content: formData.content,
+        tags: formData.tags.split(',').map(t => t.trim()).filter(t => t),
+        date: isEditing ? selected.date : new Date().toISOString().split('T')[0],
+        updated: new Date().toISOString().split('T')[0]
+      };
+
+      await window.storage.set(`blog:${post.id}`, JSON.stringify(post), true);
+      await loadPosts();
+      setIsCreating(false);
+      setIsEditing(false);
+      setFormData({ title: '', content: '', tags: '' });
+      setSelected(null);
+    } catch (error) {
+      alert('儲存失敗: ' + error.message);
+    }
+  };
+
+  const deletePost = async (id) => {
+    if (!confirm('確定要刪除這篇文章嗎？')) return;
+    
+    try {
+      await window.storage.delete(`blog:${id}`, true);
+      await loadPosts();
+      setSelected(null);
+    } catch (error) {
+      alert('刪除失敗: ' + error.message);
+    }
+  };
+
+  const startEdit = (post) => {
+    setFormData({
+      title: post.title,
+      content: post.content,
+      tags: post.tags.join(', ')
+    });
+    setIsEditing(true);
+    setIsCreating(true);
+    setSelected(post);
+  };
+
+  const filteredPosts = filter === 'all' 
+    ? posts 
+    : posts.filter(p => p.tags.includes(filter));
+
+  const allTags = [...new Set(posts.flatMap(p => p.tags))];
+
+  if (loading) {
+    return (
+      <div style={{ 
+        maxWidth: '1200px', 
+        margin: '0 auto', 
+        padding: '2rem',
+        textAlign: 'center',
+        color: COLORS.textDim,
+        fontFamily: 'monospace'
+      }}>
+        載入中...
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+      {!isCreating ? (
+        <>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '2rem',
+            flexWrap: 'wrap',
+            gap: '1rem'
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+              color: COLORS.highlight,
+              fontFamily: 'monospace'
+            }}>
+              $ ls -la ./posts/
+            </h2>
+            {isAdmin && (
+              <button
+                onClick={() => {
+                  setIsCreating(true);
+                  setIsEditing(false);
+                  setFormData({ title: '', content: '', tags: '' });
+                }}
+                style={{
+                  padding: '0.7rem 1.5rem',
+                  background: COLORS.success,
+                  color: COLORS.bg,
+                  border: 'none',
+                  borderRadius: '6px',
+                  fontFamily: 'monospace',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                  transition: 'all 0.3s'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = `0 4px 12px ${COLORS.success}60`;
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                + 新增文章
+              </button>
+            )}
+          </div>
+
+          {allTags.length > 0 && (
+            <div style={{ marginBottom: '2rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setFilter('all')}
+                style={{
+                  padding: '0.5rem 1rem',
+                  background: filter === 'all' ? COLORS.accent : 'transparent',
+                  color: filter === 'all' ? COLORS.bg : COLORS.text,
+                  border: `1px solid ${COLORS.accent}`,
+                  borderRadius: '20px',
+                  fontFamily: 'monospace',
+                  fontSize: '0.85rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s'
+                }}
+              >
+                全部
+              </button>
+              {allTags.map(tag => (
+                <button
+                  key={tag}
+                  onClick={() => setFilter(tag)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    background: filter === tag ? COLORS.accent : 'transparent',
+                    color: filter === tag ? COLORS.bg : COLORS.text,
+                    border: `1px solid ${COLORS.accent}`,
+                    borderRadius: '20px',
+                    fontFamily: 'monospace',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s'
+                  }}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div style={{
+            background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+            border: `2px solid ${COLORS.highlight}`,
+            borderRadius: '16px',
+            padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+            boxShadow: `0 8px 32px ${COLORS.highlight}20`
+          }}>
+            <div className="blog-grid" style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '2rem' }}>
+              <div style={{ display: 'grid', gap: '0.5rem', alignContent: 'start' }}>
+                {filteredPosts.length === 0 ? (
+                  <div style={{
+                    padding: '2rem 1rem',
+                    textAlign: 'center',
+                    color: COLORS.textDim,
+                    fontFamily: 'monospace',
+                    fontSize: '0.9rem'
+                  }}>
+                    尚無文章
+                  </div>
+                ) : (
+                  filteredPosts.map((post) => (
+                    <button
+                      key={post.id}
+                      onClick={() => setSelected(post)}
+                      style={{
+                        width: '100%',
+                        textAlign: 'left',
+                        padding: 'clamp(0.8rem, 2vw, 1rem)',
+                        background: selected?.id === post.id ? `${COLORS.highlight}20` : 'transparent',
+                        border: `1px solid ${selected?.id === post.id ? COLORS.highlight : `${COLORS.highlight}30`}`,
+                        borderRadius: '8px',
+                        color: selected?.id === post.id ? COLORS.highlight : COLORS.text,
+                        fontFamily: 'monospace',
+                        fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s',
+                        wordBreak: 'break-word'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (selected?.id !== post.id) {
+                          e.target.style.background = `${COLORS.highlight}10`;
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (selected?.id !== post.id) {
+                          e.target.style.background = 'transparent';
+                        }
+                      }}
+                    >
+                      {post.date}<br/>{post.title}
+                      {post.tags.length > 0 && (
+                        <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+                          {post.tags.map(tag => (
+                            <span key={tag} style={{
+                              fontSize: '0.7rem',
+                              padding: '0.2rem 0.5rem',
+                              background: `${COLORS.accent}30`,
+                              borderRadius: '10px'
+                            }}>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </button>
+                  ))
+                )}
+              </div>
+
+              <div>
+                {selected ? (
+                  <div style={{
+                    padding: 'clamp(1rem, 3vw, 2rem)',
+                    background: `${COLORS.highlight}08`,
+                    border: `2px solid ${COLORS.highlight}40`,
+                    borderRadius: '12px'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
+                      <div style={{ flex: 1 }}>
+                        <h3 style={{
+                          fontSize: 'clamp(1.1rem, 3.5vw, 1.5rem)',
+                          marginBottom: '0.5rem',
+                          color: COLORS.highlight,
+                          wordBreak: 'break-word'
+                        }}>
+                          {selected.title}
+                        </h3>
+                        <div style={{
+                          fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
+                          color: COLORS.textDim,
+                          fontFamily: 'monospace'
+                        }}>
+                          發布: {selected.date} {selected.updated !== selected.date && `| 更新: ${selected.updated}`}
+                        </div>
+                      </div>
+                      {isAdmin && (
+                        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                          <button
+                            onClick={() => startEdit(selected)}
+                            style={{
+                              padding: '0.5rem 1rem',
+                              background: COLORS.warning,
+                              color: COLORS.bg,
+                              border: 'none',
+                              borderRadius: '4px',
+                              fontFamily: 'monospace',
+                              fontSize: '0.8rem',
+                              cursor: 'pointer',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            編輯
+                          </button>
+                          <button
+                            onClick={() => deletePost(selected.id)}
+                            style={{
+                              padding: '0.5rem 1rem',
+                              background: '#ff5555',
+                              color: COLORS.bg,
+                              border: 'none',
+                              borderRadius: '4px',
+                              fontFamily: 'monospace',
+                              fontSize: '0.8rem',
+                              cursor: 'pointer',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            刪除
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    {selected.tags.length > 0 && (
+                      <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                        {selected.tags.map(tag => (
+                          <span key={tag} style={{
+                            padding: '0.3rem 0.8rem',
+                            background: `${COLORS.accent}20`,
+                            border: `1px solid ${COLORS.accent}`,
+                            borderRadius: '15px',
+                            fontSize: '0.8rem',
+                            color: COLORS.accent
+                          }}>
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <div style={{
+                      fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
+                      lineHeight: '1.8',
+                      color: COLORS.text,
+                      whiteSpace: 'pre-line'
+                    }}>
+                      {selected.content}
+                    </div>
+
+                    <button
+                      onClick={() => setSelected(null)}
+                      style={{
+                        marginTop: '2rem',
+                        padding: '0.7rem 1.5rem',
+                        background: 'transparent',
+                        border: `1px solid ${COLORS.highlight}`,
+                        borderRadius: '6px',
+                        color: COLORS.highlight,
+                        fontFamily: 'monospace',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s',
+                        fontSize: 'clamp(0.85rem, 2vw, 1rem)'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.background = COLORS.highlight;
+                        e.target.style.color = COLORS.bg;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.background = 'transparent';
+                        e.target.style.color = COLORS.highlight;
+                      }}
+                    >
+                      [ 關閉 ]
+                    </button>
+                  </div>
+                ) : (
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100%',
+                    minHeight: '200px',
+                    fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
+                    color: COLORS.textDim,
+                    fontFamily: 'monospace',
+                    padding: '2rem',
+                    textAlign: 'center'
+                  }}>
+                    $ 選擇一篇文章開始閱讀...
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div style={{
+          background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+          border: `2px solid ${COLORS.success}`,
+          borderRadius: '16px',
+          padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+          boxShadow: `0 8px 32px ${COLORS.success}20`
+        }}>
+          <h2 style={{
+            fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+            marginBottom: '2rem',
+            color: COLORS.success,
+            fontFamily: 'monospace'
+          }}>
+            $ {isEditing ? 'vim' : 'nano'} new_post.md
+          </h2>
+
+          <div style={{ display: 'grid', gap: '1.5rem' }}>
+            <div>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                color: COLORS.accent,
+                fontFamily: 'monospace',
+                fontSize: '0.9rem'
+              }}>
+                標題
+              </label>
+              <input
+                type="text"
+                value={formData.title}
+                onChange={(e) => setFormData({...formData, title: e.target.value})}
+                placeholder="輸入文章標題..."
+                style={{
+                  width: '100%',
+                  padding: '0.8rem',
+                  background: COLORS.bg,
+                  border: `2px solid ${COLORS.accent}40`,
+                  borderRadius: '8px',
+                  color: COLORS.text,
+                  fontFamily: 'monospace',
+                  fontSize: '1rem'
+                }}
+              />
+            </div>
+
+            <div>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                color: COLORS.accent,
+                fontFamily: 'monospace',
+                fontSize: '0.9rem'
+              }}>
+                標籤 (用逗號分隔)
+              </label>
+              <input
+                type="text"
+                value={formData.tags}
+                onChange={(e) => setFormData({...formData, tags: e.target.value})}
+                placeholder="例如: 技術, 心得, AI..."
+                style={{
+                  width: '100%',
+                  padding: '0.8rem',
+                  background: COLORS.bg,
+                  border: `2px solid ${COLORS.accent}40`,
+                  borderRadius: '8px',
+                  color: COLORS.text,
+                  fontFamily: 'monospace',
+                  fontSize: '1rem'
+                }}
+              />
+            </div>
+
+            <div>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                color: COLORS.accent,
+                fontFamily: 'monospace',
+                fontSize: '0.9rem'
+              }}>
+                內容
+              </label>
+              <textarea
+                value={formData.content}
+                onChange={(e) => setFormData({...formData, content: e.target.value})}
+                placeholder="開始撰寫你的文章..."
+                style={{
+                  width: '100%',
+                  minHeight: '300px',
+                  padding: '1rem',
+                  background: COLORS.bg,
+                  border: `2px solid ${COLORS.accent}40`,
+                  borderRadius: '8px',
+                  color: COLORS.text,
+                  fontFamily: 'monospace',
+                  fontSize: '0.95rem',
+                  lineHeight: '1.6',
+                  resize: 'vertical'
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <button
+                onClick={savePost}
+                style={{
+                  padding: '0.8rem 2rem',
+                  background: COLORS.success,
+                  color: COLORS.bg,
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontFamily: 'monospace',
+                  fontWeight: 'bold',
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = `0 4px 12px ${COLORS.success}60`;
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                {isEditing ? '更新文章' : '發布文章'}
+              </button>
+              <button
+                onClick={() => {
+                  setIsCreating(false);
+                  setIsEditing(false);
+                  setFormData({ title: '', content: '', tags: '' });
+                }}
+                style={{
+                  padding: '0.8rem 2rem',
+                  background: 'transparent',
+                  color: COLORS.text,
+                  border: `2px solid ${COLORS.text}40`,
+                  borderRadius: '8px',
+                  fontFamily: 'monospace',
+                  fontWeight: 'bold',
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.borderColor = COLORS.text;
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.borderColor = `${COLORS.text}40`;
+                }}
+              >
+                取消
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// 專案頁面
+const ProjectsPage = () => {
+  const projects = [
+    {
+      name: '擬人化醫療聊天機器人',
+      description: '國科會研究計畫：針對乳癌病患的智慧照護系統，結合自然語言處理與情感辨識技術',
+      tech: ['Python', 'NLP', 'Machine Learning', 'Flask'],
+      status: '進行中',
+      highlight: true
+    },
+    {
+      name: '源核資訊整合工作室網站',
+      description: '工作室官方網站，提供服務介紹、專案展示與聯絡功能',
+      tech: ['React', 'Next.js', 'Tailwind CSS'],
+      status: '已上線',
+      link: '#'
+    },
+    {
+      name: '技能檢定模擬賽系統',
+      description: '自動化競賽管理平台，包含報名、成績管理、證書生成等功能',
+      tech: ['Python', 'Django', 'PostgreSQL'],
+      status: '已完成'
+    },
+    {
+      name: '客語語音辨識系統',
+      description: 'FSR競賽作品：基於深度學習的客家語音辨識模型',
+      tech: ['Python', 'TensorFlow', 'Speech Recognition'],
+      status: '已發表'
+    }
+  ];
+
+  return (
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+      <h2 style={{
+        fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+        marginBottom: '2rem',
+        color: COLORS.secondary,
+        fontFamily: 'monospace'
+      }}>
+        $ ls -la ./projects/
+      </h2>
+
+      <div style={{ display: 'grid', gap: '1.5rem' }}>
+        {projects.map((project, idx) => (
+          <div key={idx} style={{
+            background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+            border: `2px solid ${project.highlight ? COLORS.highlight : COLORS.secondary}`,
+            borderRadius: '16px',
+            padding: 'clamp(1.5rem, 3vw, 2rem)',
+            boxShadow: `0 8px 32px ${project.highlight ? COLORS.highlight : COLORS.secondary}20`,
+            transition: 'all 0.3s'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-5px)';
+            e.currentTarget.style.boxShadow = `0 12px 40px ${project.highlight ? COLORS.highlight : COLORS.secondary}40`;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = `0 8px 32px ${project.highlight ? COLORS.highlight : COLORS.secondary}20`;
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
+              <h3 style={{
+                fontSize: 'clamp(1.1rem, 3vw, 1.4rem)',
+                color: project.highlight ? COLORS.highlight : COLORS.secondary,
+                fontFamily: 'monospace'
+              }}>
+                {project.name}
+              </h3>
+              <span style={{
+                padding: '0.3rem 0.8rem',
+                background: project.status === '進行中' ? COLORS.warning : 
+                           project.status === '已上線' ? COLORS.success : COLORS.accent,
+                color: COLORS.bg,
+                borderRadius: '15px',
+                fontSize: '0.8rem',
+                fontWeight: 'bold',
+                fontFamily: 'monospace'
+              }}>
+                {project.status}
+              </span>
+            </div>
+
+            <p style={{
+              fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
+              color: COLORS.text,
+              lineHeight: '1.7',
+              marginBottom: '1rem'
+            }}>
+              {project.description}
+            </p>
+
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+              {project.tech.map(t => (
+                <span key={t} style={{
+                  padding: '0.3rem 0.7rem',
+                  background: `${COLORS.accent}20`,
+                  border: `1px solid ${COLORS.accent}`,
+                  borderRadius: '4px',
+                  fontSize: '0.75rem',
+                  color: COLORS.accent,
+                  fontFamily: 'monospace'
+                }}>
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            {project.link && (
+              <a
+                href={project.link}
+                style={{
+                  display: 'inline-block',
+                  padding: '0.5rem 1rem',
+                  background: 'transparent',
+                  border: `1px solid ${COLORS.primary}`,
+                  borderRadius: '6px',
+                  color: COLORS.primary,
+                  textDecoration: 'none',
+                  fontFamily: 'monospace',
+                  fontSize: '0.85rem',
+                  transition: 'all 0.3s'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = COLORS.primary;
+                  e.target.style.color = COLORS.bg;
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'transparent';
+                  e.target.style.color = COLORS.primary;
+                }}
+              >
+                查看專案 →
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// 經歷與成就頁面
+const ExperiencePage = () => {
+  const experiences = {
+    "2025": [
+      "市立豐原高商『辦公室文案排版美編製作工作坊』講師",
+      "國立雲林科技大學 2025 YunTech ACT社團幹部培訓營 副召兼研修總務組組長",
+      "114年四技二專統一入學測驗-命題編校組",
+      "國立南投高商『資訊專業知能文書排版教師研習』講師",
+      "國立彰化高商『資訊專業知能文書排版教師研習』講師",
+      "市立臺中家商資料處理科『文書處理職種』培訓講師",
+      "國立花蓮高商資料處理科『文書處理職種』培訓講師",
+      "國立新竹高商資料處理科『文書處理職種』培訓講師",
+      "114學年度自辦模擬賽文書處理職種總負責人兼職種命題",
+      "114學年度自辦模擬賽程式設計職種副負責人"
+    ],
+    "2024": [
+      "通過113年國科會大專生研究計畫",
+      "國立高雄科技大學113學年智慧商務系學會 顧問",
+      "市立豐原高商『超高效電腦技能教師研習』講師",
+      "國立新竹高商『資訊專業知能文書排版教師研習』講師",
+      "113學年度商業類文書處理職種自辦模擬賽負責人兼命題"
+    ],
+    "2023": [
+      "國立高雄科技大學112學年智慧商務系學會 會長",
+      "國立高雄科技大學112學年系學會委員會 副主席",
+      "國立高雄科技大學112學年多項校級委員會 學生代表"
+    ]
+  };
+
+  const competitions = {
+    "2025": [
+      { name: "2025 雲創盃AI × ESG創新實作競賽", awards: ["第三名"] },
+      { name: "第六屆高科盃商業智慧競賽", awards: ["佳作"] },
+      { name: "FSR 客語語音辨識競賽", awards: ["已發表"] },
+      { name: "Coding 101", awards: ["量化分析應用獎", "人氣獎"] },
+      { name: "MOS Word Expert 初賽", awards: ["優勝"] },
+      { name: "MOS Word Expert 決賽", awards: ["第三名"] },
+      { name: "TUPC 全國程式競賽", awards: ["銅牌"] }
+    ],
+    "2024": [
+      { name: "高科大社團評鑑", awards: ["自治性特優", "組織運作獎", "資源管理獎", "行政管理獎"] },
+      { name: "雲科大三實競賽實習組", awards: ["金獎"] }
+    ],
+    "2022-2023": [
+      { name: "資訊月應用技能競賽南區", awards: ["第二名"] },
+      { name: "MOS Word Expert 決賽", awards: ["第六名"] },
+      { name: "技職盃黑客松競賽南區", awards: ["佳作"] },
+      { name: "永續金融與淨零創新提案競賽", awards: ["第二名"] },
+      { name: "槓桿保證金模擬交易競賽(程式組)", awards: ["第三名"] }
+    ]
+  };
+
+  const certifications = [
+    "GLAD ICT計算機綜合能力",
+    "GLAD DMT數位多媒體綜合能力",
+    "GLAD 英文看打輸入",
+    "MOCC 電子商務 標準級",
+    "MOCC 計算機概論 標準級",
+    "TQC 創意App程式設計-專業級",
+    "TQC 雲端技術及網路服務-進階級",
+    "TQC 人工智慧應用與技術-進階級",
+    "TQC 基礎程式語言-專業級(Python 3)",
+    "NVIDIA CUDA Python",
+    "NVIDIA AI on Jetson Nano",
+    "NVIDIA 深度學習基礎理論與實踐",
+    "MIT App Inventor Programming",
+    "AWS Educate Cloud Expert",
+    "社團經營師",
+    "醫學資訊管理師"
+  ];
+
+  return (
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+      <div style={{
+        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+        border: `2px solid ${COLORS.accent}`,
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        marginBottom: '2rem',
+        boxShadow: `0 8px 32px ${COLORS.accent}20`
+      }}>
+        <h2 style={{
+          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+          marginBottom: '2rem',
+          color: COLORS.accent,
+          fontFamily: 'monospace'
+        }}>
+          $ cat /etc/history
+        </h2>
+
+        <div style={{ display: 'grid', gap: '2rem' }}>
+          {Object.keys(experiences).map((year) => (
+            <div key={year} style={{
+              borderLeft: `3px solid ${COLORS.accent}`,
+              paddingLeft: '1.5rem'
+            }}>
+              <div style={{
+                fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+                fontWeight: 'bold',
+                marginBottom: '1rem',
+                color: COLORS.highlight,
+                fontFamily: 'monospace'
+              }}>
+                [{year}]
+              </div>
+              {experiences[year].map((item, idx) => (
+                <div key={idx} style={{
+                  fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
+                  marginBottom: '0.8rem',
+                  color: COLORS.text,
+                  display: 'flex',
+                  gap: '0.5rem',
+                  wordBreak: 'break-word'
+                }}>
+                  <span style={{ color: COLORS.warning, flexShrink: 0 }}>➜</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{
+        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+        border: `2px solid ${COLORS.secondary}`,
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        marginBottom: '2rem',
+        boxShadow: `0 8px 32px ${COLORS.secondary}20`
+      }}>
+        <h2 style={{
+          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+          marginBottom: '2rem',
+          color: COLORS.secondary,
+          fontFamily: 'monospace'
+        }}>
+          $ ./run competitions --all
+        </h2>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '2rem'
+        }}>
+          {Object.keys(competitions).map((year) => (
+            <div key={year}>
+              <h3 style={{
+                fontSize: 'clamp(1rem, 3vw, 1.2rem)',
+                marginBottom: '1rem',
+                color: COLORS.highlight,
+                fontFamily: 'monospace'
+              }}>
+                {year}
+              </h3>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.8rem' }}>
+                {competitions[year].map((comp, idx) => (
+                  <li key={idx} style={{
+                    fontSize: 'clamp(0.8rem, 2.5vw, 0.9rem)',
+                    color: COLORS.text,
+                    lineHeight: '1.6',
+                    wordBreak: 'break-word'
+                  }}>
+                    {comp.name}
+                    <div style={{ marginTop: '0.3rem' }}>
+                      {comp.awards.map((award, aIdx) => (
+                        <span key={aIdx} style={{
+                          display: 'inline-block',
+                          background: COLORS.success,
+                          color: COLORS.bg,
+                          padding: '0.2rem 0.6rem',
+                          borderRadius: '4px',
+                          fontSize: 'clamp(0.7rem, 2vw, 0.75rem)',
+                          marginRight: '0.4rem',
+                          marginBottom: '0.4rem',
+                          fontWeight: 'bold'
+                        }}>
+                          {award}
+                        </span>
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{
+        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+        border: `2px solid ${COLORS.warning}`,
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        boxShadow: `0 8px 32px ${COLORS.warning}20`
+      }}>
+        <h2 style={{
+          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+          marginBottom: '2rem',
+          color: COLORS.warning,
+          fontFamily: 'monospace'
+        }}>
+          $ ./list --certs
+        </h2>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+          gap: '0.8rem'
+        }}>
+          {certifications.map((cert, idx) => (
+            <div key={idx} style={{
+              padding: '0.8rem 1rem',
+              background: `${COLORS.warning}10`,
+              border: `1px solid ${COLORS.warning}40`,
+              borderRadius: '6px',
+              fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
+              color: COLORS.text,
+              transition: 'all 0.3s',
+              wordBreak: 'break-word'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = `${COLORS.warning}20`;
+              e.currentTarget.style.borderColor = COLORS.warning;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = `${COLORS.warning}10`;
+              e.currentTarget.style.borderColor = `${COLORS.warning}40`;
+            }}>
+              {cert}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// 行事曆頁
+const CalendarPage = () => {
+  return (
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
+      <div style={{
+        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
+        border: `2px solid ${COLORS.success}`,
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        boxShadow: `0 8px 32px ${COLORS.success}20`
+      }}>
+        <h2 style={{
+          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
+          marginBottom: '2rem',
+          color: COLORS.success,
+          fontFamily: 'monospace'
+        }}>
+          $ cat schedule.ics
+        </h2>
+
+        <div style={{
+          width: '100%',
+          height: 'clamp(400px, 60vh, 600px)',
+          border: `2px solid ${COLORS.success}50`,
+          borderRadius: '12px',
+          overflow: 'hidden'
+        }}>
+          <iframe
+            style={{ width: '100%', height: '100%', border: 'none' }}
+            src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FTaipei&showPrint=0&showTitle=0&showTz=0&showCalendars=0&src=emhlbmd0aW5nbGl1MDEwNEBnbWFpbC5jb20&src=NDk2MmFkNGY3N2MxYTBmMDViYTA2YTlhZDJiZGNmMjZmNmY3MmM4ODNjOGFlZDIxYjUwYjQxY2YwYTc1M2Q0ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YjdiMzRlZDI2MjY1NjdjYjkxZjFiYTdhZTM0NmJhNDQzYjkyZTgwNTUxYTkzYWI1MTIzYzc2N2ZhMzk5YzE0YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=dXNqYXN1bWM2NTE4Nm10OGtpYjJrMHRwczlhdGJxODhAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=cTZqamkwOXVwZGN0bmF1ZnM5dGs2djJxdHJsZ2RoZGpAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=emgtdHcudGFpd2FuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23008eaa&color=%23f3f4f7&color=%23e4002b&color=%23616161&color=%23795548&color=%230b8043"
+          />
         </div>
       </div>
     </div>
@@ -444,440 +1703,31 @@ const Footer = () => {
   );
 };
 
-// 履歷頁
-const ResumePage = () => {
-  const experiences = {
-    "2025": [
-      "市立豐原高商『辦公室文案排版美編製作工作坊』講師",
-      "國立雲林科技大學 2025 YunTech ACT社團幹部培訓營 副召兼研修總務組組長",
-      "114年四技二專統一入學測驗-命題編校組",
-      "國立南投高商『資訊專業知能文書排版教師研習』講師",
-      "國立彰化高商『資訊專業知能文書排版教師研習』講師",
-      "市立臺中家商資料處理科『文書處理職種』培訓講師",
-      "國立花蓮高商資料處理科『文書處理職種』培訓講師",
-      "國立新竹高商資料處理科『文書處理職種』培訓講師",
-      "114學年度自辦模擬賽文書處理職種總負責人兼職種命題",
-      "114學年度自辦模擬賽程式設計職種副負責人"
-    ],
-    "2024": [
-      "通過113年國科會大專生研究計畫",
-      "國立高雄科技大學113學年智慧商務系學會 顧問",
-      "市立豐原高商『超高效電腦技能教師研習』講師",
-      "國立新竹高商『資訊專業知能文書排版教師研習』講師",
-      "113學年度商業類文書處理職種自辦模擬賽負責人兼命題"
-    ],
-    "2023": [
-      "國立高雄科技大學112學年智慧商務系學會 會長",
-      "國立高雄科技大學112學年系學會委員會 副主席",
-      "國立高雄科技大學112學年多項校級委員會 學生代表"
-    ]
-  };
-
-  const experienceYears = ["2025", "2024", "2023"];
-
-  const competitions = {
-    "2025": [
-      { name: "2025 雲創盃AI × ESG創新實作競賽", awards: ["第三名"] },
-      { name: "第六屆高科盃商業智慧競賽", awards: ["佳作"] },
-      { name: "FSR 客語語音辨識競賽", awards: ["已發表"] },
-      { name: "Coding 101", awards: ["量化分析應用獎", "人氣獎"] },
-      { name: "MOS Word Expert 初賽", awards: ["優勝"] },
-      { name: "MOS Word Expert 決賽", awards: ["第三名"] },
-      { name: "TUPC 全國程式競賽", awards: ["銅牌"] }
-    ],
-    "2024": [
-      { name: "高科大社團評鑑", awards: ["自治性特優", "組織運作獎", "資源管理獎", "行政管理獎"] },
-      { name: "雲科大三實競賽實習組", awards: ["金獎"] },
-      // { name: "臺灣中小企銀/土地銀行 金融科技創意挑戰賽", awards: ["參賽"] }
-    ],
-    "2022-2023": [
-      { name: "資訊月應用技能競賽南區", awards: ["第二名"] },
-      { name: "MOS Word Expert 決賽", awards: ["第六名"] },
-      { name: "技職盃黑客松競賽南區", awards: ["佳作"] },
-      { name: "永續金融與淨零創新提案競賽", awards: ["第二名"] },
-      { name: "槓桿保證金模擬交易競賽(程式組)", awards: ["第三名"] }
-    ]
-  };
-
-  const competitionYears = ["2025", "2024", "2022-2023"];
-
-  const certifications = [
-    "GLAD ICT計算機綜合能力", "GLAD DMT數位多媒體綜合能力",
-    "GLAD 英文看打輸入", "MOCC 電子商務 標準級", "MOCC 計算機概論 標準級",
-    "TQC 創意App程式設計-專業級",
-    "TQC 雲端技術及網路服務-進階級", "TQC 人工智慧應用與技術-進階級",
-    "TQC 基礎程式語言-專業級(Python 3)",
-    "NVIDIA CUDA Python", "NVIDIA AI on Jetson Nano", "NVIDIA 深度學習基礎理論與實踐",
-    "MIT App Inventor Programming", "AWS Educate Cloud Expert",
-    "社團經營師", "醫學資訊管理師"
-  ];
-
-  return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
-      {/* 經歷 */}
-      <div style={{
-        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
-        border: `2px solid ${COLORS.accent}`,
-        borderRadius: '16px',
-        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-        marginBottom: '2rem',
-        boxShadow: `0 8px 32px ${COLORS.accent}20`
-      }}>
-        <h2 style={{
-          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
-          marginBottom: '2rem',
-          color: COLORS.accent,
-          fontFamily: 'monospace'
-        }}>
-          $ cat /etc/history...
-        </h2>
-
-        <div style={{ display: 'grid', gap: '2rem' }}>
-          {experienceYears.map((year) => (
-            <div key={year} style={{
-              borderLeft: `3px solid ${COLORS.accent}`,
-              paddingLeft: '1.5rem'
-            }}>
-              <div style={{
-                fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                fontWeight: 'bold',
-                marginBottom: '1rem',
-                color: COLORS.highlight,
-                fontFamily: 'monospace'
-              }}>
-                [{year}]
-              </div>
-              {experiences[year].map((item, idx) => (
-                <div key={idx} style={{
-                  fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
-                  marginBottom: '0.8rem',
-                  color: COLORS.text,
-                  display: 'flex',
-                  gap: '0.5rem',
-                  wordBreak: 'break-word'
-                }}>
-                  <span style={{ color: COLORS.warning, flexShrink: 0 }}>➜</span>
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 競賽成績 */}
-      <div style={{
-        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
-        border: `2px solid ${COLORS.secondary}`,
-        borderRadius: '16px',
-        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-        marginBottom: '2rem',
-        boxShadow: `0 8px 32px ${COLORS.secondary}20`
-      }}>
-        <h2 style={{
-          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
-          marginBottom: '2rem',
-          color: COLORS.secondary,
-          fontFamily: 'monospace'
-        }}>
-          $ ./run competitions --all
-        </h2>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '2rem'
-        }}>
-          {competitionYears.map((year) => (
-            <div key={year}>
-              <h3 style={{
-                fontSize: 'clamp(1rem, 3vw, 1.2rem)',
-                marginBottom: '1rem',
-                color: COLORS.highlight,
-                fontFamily: 'monospace'
-              }}>
-                {year}
-              </h3>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.8rem' }}>
-                {competitions[year].map((comp, idx) => (
-                  <li key={idx} style={{
-                    fontSize: 'clamp(0.8rem, 2.5vw, 0.9rem)',
-                    color: COLORS.text,
-                    lineHeight: '1.6',
-                    wordBreak: 'break-word'
-                  }}>
-                    {comp.name}
-                    <div style={{ marginTop: '0.3rem' }}>
-                      {comp.awards.map((award, aIdx) => (
-                        <span key={aIdx} style={{
-                          display: 'inline-block',
-                          background: COLORS.success,
-                          color: COLORS.bg,
-                          padding: '0.2rem 0.6rem',
-                          borderRadius: '4px',
-                          fontSize: 'clamp(0.7rem, 2vw, 0.75rem)',
-                          marginRight: '0.4rem',
-                          marginBottom: '0.4rem',
-                          fontWeight: 'bold'
-                        }}>
-                          {award}
-                        </span>
-                      ))}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 證照 */}
-      <div style={{
-        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
-        border: `2px solid ${COLORS.warning}`,
-        borderRadius: '16px',
-        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-        boxShadow: `0 8px 32px ${COLORS.warning}20`
-      }}>
-        <h2 style={{
-          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
-          marginBottom: '2rem',
-          color: COLORS.warning,
-          fontFamily: 'monospace'
-        }}>
-          $ ./list --certs
-        </h2>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-          gap: '0.8rem'
-        }}>
-          {certifications.map((cert, idx) => (
-            <div key={idx} style={{
-              padding: '0.8rem 1rem',
-              background: `${COLORS.warning}10`,
-              border: `1px solid ${COLORS.warning}40`,
-              borderRadius: '6px',
-              fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
-              color: COLORS.text,
-              transition: 'all 0.3s',
-              wordBreak: 'break-word'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = `${COLORS.warning}20`;
-              e.currentTarget.style.borderColor = COLORS.warning;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = `${COLORS.warning}10`;
-              e.currentTarget.style.borderColor = `${COLORS.warning}40`;
-            }}>
-              {cert}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// 部落格頁
-const BlogPage = () => {
-  const [selected, setSelected] = useState(null);
-
-  const posts = [
-    {
-      id: 1,
-      title: '108課綱白老鼠的生存之道',
-      date: '2023-06-01',
-      content: '身為第一屆108課綱的學生,我們無疑是教育改革浪潮中的「白老鼠」。\n\n最大的改變莫過於「學習歷程檔案」。它強迫我們提早思考自己的方向,並學習如何將過程與成果系統化地記錄下來。\n\n建議:\n1. 勇於嘗試,不要怕失敗\n2. 提早規劃,但保持彈性\n3. 將每一次的經歷都視為學習的養分'
-    },
-    {
-      id: 2,
-      title: '從高科大到雲科大',
-      date: '2024-06-17',
-      content: '在高科大智慧商務系的兩年,我學習到了許多商管與程式結合的知識,也擔任了系學會會長。\n\n然而,我發現自己對於資訊技術的底層原理和人工智慧的深入應用有著更強烈的渴望。\n\n這促使我做出了轉向雲科大資管系AI技優專班的決定。'
-    }
-  ];
-
-  return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
-      <div style={{
-        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
-        border: `2px solid ${COLORS.highlight}`,
-        borderRadius: '16px',
-        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-        boxShadow: `0 8px 32px ${COLORS.highlight}20`
-      }}>
-        <h2 style={{
-          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
-          marginBottom: '2rem',
-          color: COLORS.highlight,
-          fontFamily: 'monospace'
-        }}>
-          $ ls -la ./posts/
-        </h2>
-
-        <div className="blog-grid" style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '2rem' }}>
-          {/* 文章列表 */}
-          <div style={{ display: 'grid', gap: '0.5rem' }}>
-            {posts.map((post) => (
-              <button
-                key={post.id}
-                onClick={() => setSelected(post)}
-                style={{
-                  width: '100%',
-                  textAlign: 'left',
-                  padding: 'clamp(0.8rem, 2vw, 1rem)',
-                  background: selected?.id === post.id ? `${COLORS.highlight}20` : 'transparent',
-                  border: `1px solid ${selected?.id === post.id ? COLORS.highlight : `${COLORS.highlight}30`}`,
-                  borderRadius: '8px',
-                  color: selected?.id === post.id ? COLORS.highlight : COLORS.text,
-                  fontFamily: 'monospace',
-                  fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s',
-                  wordBreak: 'break-word'
-                }}
-                onMouseEnter={(e) => {
-                  if (selected?.id !== post.id) {
-                    e.target.style.background = `${COLORS.highlight}10`;
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (selected?.id !== post.id) {
-                    e.target.style.background = 'transparent';
-                  }
-                }}
-              >
-                {post.date}<br/>{post.title}.md
-              </button>
-            ))}
-          </div>
-
-          {/* 文章內容 */}
-          <div>
-            {selected ? (
-              <div style={{
-                padding: 'clamp(1rem, 3vw, 2rem)',
-                background: `${COLORS.highlight}08`,
-                border: `2px solid ${COLORS.highlight}40`,
-                borderRadius: '12px'
-              }}>
-                <h3 style={{
-                  fontSize: 'clamp(1.1rem, 3.5vw, 1.5rem)',
-                  marginBottom: '0.5rem',
-                  color: COLORS.highlight,
-                  wordBreak: 'break-word'
-                }}>
-                  {selected.title}
-                </h3>
-                <div style={{
-                  fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
-                  marginBottom: '1.5rem',
-                  color: COLORS.textDim,
-                  fontFamily: 'monospace'
-                }}>
-                  Modified: {selected.date}
-                </div>
-                <div style={{
-                  fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-                  lineHeight: '1.8',
-                  color: COLORS.text,
-                  whiteSpace: 'pre-line'
-                }}>
-                  {selected.content}
-                </div>
-                <button
-                  onClick={() => setSelected(null)}
-                  style={{
-                    marginTop: '2rem',
-                    padding: '0.7rem 1.5rem',
-                    background: 'transparent',
-                    border: `1px solid ${COLORS.highlight}`,
-                    borderRadius: '6px',
-                    color: COLORS.highlight,
-                    fontFamily: 'monospace',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s',
-                    fontSize: 'clamp(0.85rem, 2vw, 1rem)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.background = COLORS.highlight;
-                    e.target.style.color = COLORS.bg;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.background = 'transparent';
-                    e.target.style.color = COLORS.highlight;
-                  }}
-                >
-                  [ CLOSE ]
-                </button>
-              </div>
-            ) : (
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '100%',
-                minHeight: '200px',
-                fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-                color: COLORS.textDim,
-                fontFamily: 'monospace',
-                padding: '2rem',
-                textAlign: 'center'
-              }}>
-                $ select a file to read...
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// 行事曆頁
-const CalendarPage = () => {
-  return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
-      <div style={{
-        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
-        border: `2px solid ${COLORS.success}`,
-        borderRadius: '16px',
-        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-        boxShadow: `0 8px 32px ${COLORS.success}20`
-      }}>
-        <h2 style={{
-          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
-          marginBottom: '2rem',
-          color: COLORS.success,
-          fontFamily: 'monospace'
-        }}>
-          $ cat schedule.ics
-        </h2>
-
-        <div style={{
-          width: '100%',
-          height: 'clamp(400px, 60vh, 600px)',
-          border: `2px solid ${COLORS.success}50`,
-          borderRadius: '12px',
-          overflow: 'hidden'
-        }}>
-          <iframe
-            style={{ width: '100%', height: '100%', border: 'none' }}
-            src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FTaipei&showPrint=0&showTitle=0&showTz=0&showCalendars=0&src=emhlbmd0aW5nbGl1MDEwNEBnbWFpbC5jb20&src=NDk2MmFkNGY3N2MxYTBmMDViYTA2YTlhZDJiZGNmMjZmNmY3MmM4ODNjOGFlZDIxYjUwYjQxY2YwYTc1M2Q0ZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YjdiMzRlZDI2MjY1NjdjYjkxZjFiYTdhZTM0NmJhNDQzYjkyZTgwNTUxYTkzYWI1MTIzYzc2N2ZhMzk5YzE0YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=dXNqYXN1bWM2NTE4Nm10OGtpYjJrMHRwczlhdGJxODhAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=cTZqamkwOXVwZGN0bmF1ZnM5dGs2djJxdHJsZ2RoZGpAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=emgtdHcudGFpd2FuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23008eaa&color=%23f3f4f7&color=%23e4002b&color=%23616161&color=%23795548&color=%230b8043"
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // 主應用
 export default function App() {
   const [page, setPage] = useState('home');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+
+  // 檢查 localStorage 是否有管理員 session
+  useEffect(() => {
+    const adminSession = localStorage.getItem('admin_session');
+    if (adminSession === 'logged_in') {
+      setIsAdmin(true);
+    }
+  }, []);
+
+  const handleLogin = () => {
+    setIsAdmin(true);
+    localStorage.setItem('admin_session', 'logged_in');
+  };
+
+  const handleLogout = () => {
+    if (confirm('確定要登出嗎？')) {
+      setIsAdmin(false);
+      localStorage.removeItem('admin_session');
+    }
+  };
 
   return (
     <div style={{
@@ -889,15 +1739,30 @@ export default function App() {
       position: 'relative'
     }}>
       <Scanlines />
-      <Navbar page={page} setPage={setPage} />
+      <Navbar 
+        page={page} 
+        setPage={setPage} 
+        isAdmin={isAdmin}
+        setShowAdminLogin={setShowAdminLogin}
+        handleLogout={handleLogout}
+      />
       <div style={{ flex: 1 }}>
         {page === 'home' && <HomePage setPage={setPage} />}
         {page === 'about' && <AboutPage />}
-        {page === 'resume' && <ResumePage />}
-        {page === 'blog' && <BlogPage />}
+        {page === 'blog' && <BlogPage isAdmin={isAdmin} />}
+        {page === 'projects' && <ProjectsPage />}
+        {page === 'experience' && <ExperiencePage />}
         {page === 'calendar' && <CalendarPage />}
       </div>
       <Footer />
+      
+      {showAdminLogin && (
+        <AdminLoginModal 
+          onClose={() => setShowAdminLogin(false)}
+          onLogin={handleLogin}
+        />
+      )}
+
       <style>{`
         @keyframes blink {
           0%, 50% { opacity: 1; }
