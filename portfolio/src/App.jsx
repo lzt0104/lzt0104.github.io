@@ -1260,6 +1260,14 @@ const BlogPage = ({ isAdmin, adminToken }) => {
 const ProjectsPage = () => {
   const projects = [
     {
+      name:'技職升學社群網站',
+      description: '提供技職學生交流、資源分享與升學資訊的平台，促進技職教育發展',
+      tech: ['React', 'Node.js', 'Express', 'MongoDB'],
+      status: '進行中',
+      highlight: true,
+      link: 'https://skillstouniversity.uk/'
+    },
+    {
       name: '馬路三寶，別來撞我',
       description: '結合影像辨識與即時警示系統，提升道路安全，減少交通事故發生',
       tech: ['Python', 'OpenCV', 'TensorFlow', 'Flask'],
