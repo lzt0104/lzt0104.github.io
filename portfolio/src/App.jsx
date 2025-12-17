@@ -1260,28 +1260,36 @@ const BlogPage = ({ isAdmin, adminToken }) => {
 const ProjectsPage = () => {
   const projects = [
     {
+      name: '馬路三寶，別來撞我',
+      description: '結合影像辨識與即時警示系統，提升道路安全，減少交通事故發生',
+      tech: ['Python', 'OpenCV', 'TensorFlow', 'Flask'],
+      status: '已結案',
+      highlight: false,
+      link: 'https://demox.tw/idea/detail/?id=1851'
+    },
+    {
       name: '擬人化醫療聊天機器人',
       description: '國科會研究計畫：針對乳癌病患的智慧照護系統，結合自然語言處理與情感辨識技術',
       tech: ['Python', 'NLP', 'Machine Learning', 'Flask'],
-      status: '進行中',
-      highlight: true
+      status: '已結案',
+      highlight: false
     },
     {
       name: '源核資訊整合工作室網站',
       description: '工作室官方網站，提供服務介紹、專案展示與聯絡功能',
       tech: ['React', 'Next.js', 'Tailwind CSS'],
       status: '已上線',
-      link: '#'
+      link: 'https://yuanhe.tw/'
     },
     {
-      name: '技能檢定模擬賽系統',
-      description: '自動化競賽管理平台，包含報名、成績管理、證書生成等功能',
+      name: '技藝競賽模擬賽系統',
+      description: '自動化競賽管理平台，包含成績管理、證書生成等功能',
       tech: ['Python', 'Django', 'PostgreSQL'],
       status: '已完成'
     },
     {
-      name: '客語語音辨識系統',
-      description: 'FSR競賽作品：基於深度學習的客家語音辨識模型',
+      name: 'A Study on a Low-Resource Speech Recognition System for Taiwan Hakka Based on Whisper and LoRA',
+      description: 'The 37th Conference on Computational Linguistics and Speech Processing (ROCLING 2025) 論文發表',
       tech: ['Python', 'TensorFlow', 'Speech Recognition'],
       status: '已發表'
     }
