@@ -565,59 +565,193 @@ const HomePage = ({ setPage }) => {
   );
 };
 
-// 關於頁面 (簡化版，完整版太長)
 const AboutPage = () => {
+  // 1. 資料抽離：方便未來修改，不需深入 JSX
+  const education = [
+    { year: '現職', text: '源核資訊整合工作室 執行長', highlight: true },
+    { year: '113學年度', text: '國立雲林科技大學 資訊管理系 (人工智慧技優專班)', highlight: true },
+    { year: '112學年度', text: '國立高雄科技大學 智慧商務系 (修業)' },
+    { year: '111學年度', text: '國立高雄科技大學 智慧商務系 (特殊選才錄取)' },
+    { year: '111學年度', text: '國立草屯商工 資料處理科 (畢業)' },
+  ];
+
   const skills = [
     { name: 'Python', level: 90 },
     { name: 'JavaScript', level: 80 },
     { name: 'HTML/CSS', level: 85 },
     { name: 'Data Science', level: 75 },
     { name: 'AI / ML', level: 55 },
-    { name: 'MS Office', level: 99 }
+    { name: 'MS Office', level: 99 },
   ];
 
+  const research = {
+    title: '擬人化醫療聊天機器人於乳癌病患之照護',
+    id: '113-2813-C992-027-H',
+    grade: 'A',
+    amount: '53,000'
+  };
+
+  // 2. 樣式封裝：減少 JSX 髒亂
+  const styles = {
+    container: {
+      maxWidth: '1200px',
+      margin: '0 auto',
+      padding: 'clamp(1rem, 3vw, 2rem)',
+    },
+    card: {
+      background: `linear-gradient(135deg, ${COLORS.bgLight}F2, ${COLORS.bg}F2)`, // F2 = 95% opacity
+      backdropFilter: 'blur(10px)', // 毛玻璃效果
+      border: `1px solid ${COLORS.accent}40`,
+      borderRadius: '20px',
+      padding: 'clamp(1.5rem, 4vw, 3rem)',
+      boxShadow: `0 10px 40px -10px ${COLORS.accent}20`,
+      position: 'relative',
+      overflow: 'hidden',
+    },
+    terminalHeader: {
+      fontFamily: '"Fira Code", "JetBrains Mono", monospace', // 建議使用的字體
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      marginBottom: '1.5rem',
+      borderBottom: `1px solid ${COLORS.accent}30`,
+      paddingBottom: '1rem',
+    },
+    gridSection: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', // 優化的 RWD
+      gap: '3rem',
+      marginTop: '2.5rem',
+    },
+    logEntry: {
+      display: 'flex',
+      gap: '1rem',
+      padding: '0.5rem 0',
+      borderLeft: `2px solid ${COLORS.bgLight}`,
+      paddingLeft: '1rem',
+      position: 'relative',
+      transition: 'all 0.3s ease',
+    },
+    researchBox: {
+      marginTop: '2.5rem',
+      padding: '1.5rem',
+      background: `linear-gradient(90deg, ${COLORS.secondary}10, transparent)`,
+      borderLeft: `4px solid ${COLORS.secondary}`,
+      borderRadius: '0 8px 8px 0',
+    }
+  };
+
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: 'clamp(1rem, 3vw, 2rem)' }}>
-      <div style={{
-        background: `linear-gradient(135deg, ${COLORS.bgLight}ee, ${COLORS.bg}ee)`,
-        border: `2px solid ${COLORS.accent}`,
-        borderRadius: '16px',
-        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-        boxShadow: `0 8px 32px ${COLORS.accent}20`
-      }}>
-        <h2 style={{
-          fontSize: 'clamp(1.3rem, 4vw, 1.8rem)',
-          marginBottom: '1.5rem',
-          color: COLORS.accent,
-          fontFamily: 'monospace'
-        }}>
-          $ whoami
-        </h2>
-        <p style={{
-          fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-          lineHeight: '1.8',
-          color: COLORS.text,
-          marginBottom: '2rem'
-        }}>
-          我是108課綱第一屆的「白老鼠」，熱愛探索各種技術領域並挑戰自我。現在是一位懷抱夢想的資管系學生，專注於人工智慧與資訊系統開發。
-        </p>
-        <div style={{ display: 'grid', gap: '0.7rem' }}>
-          {skills.map((skill) => (
-            <div key={skill.name} style={{ display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
-              <span style={{ width: '100px', fontSize: '0.85rem', color: COLORS.textDim }}>{skill.name}</span>
-              <div style={{ flex: 1, height: '8px', background: `${COLORS.accent}20`, borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{
-                  width: `${skill.level}%`,
-                  height: '100%',
-                  background: `linear-gradient(90deg, ${COLORS.success}, ${COLORS.accent})`,
-                  transition: 'width 1s'
-                }} />
-              </div>
-              <span style={{ width: '40px', textAlign: 'right', fontSize: '0.85rem', color: COLORS.text }}>{skill.level}%</span>
-            </div>
-          ))}
+    <div style={styles.container}>
+      <div style={styles.card}>
+        
+        {/* Header Section */}
+        <div style={styles.terminalHeader}>
+          <span style={{ color: COLORS.success }}>➜</span>
+          <span style={{ color: COLORS.accent }}>~</span>
+          <h2 style={{ margin: 0, fontSize: '1.5rem', color: COLORS.text }}>
+            whoami
+            <span className="blinking-cursor">_</span>
+          </h2>
         </div>
+
+        <p style={{
+          fontSize: '1.1rem',
+          lineHeight: '1.8',
+          color: COLORS.textDim,
+          maxWidth: '800px'
+        }}>
+          我是 108 課綱第一屆的「白老鼠」，熱愛探索各種技術領域並挑戰自我。
+          曾在各大社群活躍，對教育與技術有深厚熱情。
+          <br />
+          <strong style={{ color: COLORS.text }}>目前身分：</strong> 資管系學生 / 接案開發者 / 追夢人
+        </p>
+
+        {/* Main Grid: Education & Skills */}
+        <div style={styles.gridSection}>
+          
+          {/* Left Column: Education */}
+          <div>
+            <h3 style={{ ...styles.terminalHeader, borderBottom: 'none', fontSize: '1.2rem', color: COLORS.secondary }}>
+              $ cat education.log
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+              {education.map((item, i) => (
+                <div key={i} style={styles.logEntry}>
+                  <div style={{ 
+                    minWidth: '85px', 
+                    fontFamily: 'monospace', 
+                    color: item.highlight ? COLORS.accent : COLORS.textDim,
+                    fontWeight: item.highlight ? 'bold' : 'normal'
+                  }}>
+                    {item.year}
+                  </div>
+                  <div style={{ color: item.highlight ? COLORS.text : COLORS.textDim }}>
+                    {item.text}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column: Skills */}
+          <div>
+            <h3 style={{ ...styles.terminalHeader, borderBottom: 'none', fontSize: '1.2rem', color: COLORS.secondary }}>
+              $ ./check_skills.sh
+            </h3>
+            <div style={{ display: 'grid', gap: '1.2rem' }}>
+              {skills.map((skill) => (
+                <div key={skill.name}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem', fontSize: '0.9rem' }}>
+                    <span style={{ color: COLORS.text }}>{skill.name}</span>
+                    <span style={{ fontFamily: 'monospace', color: COLORS.accent }}>{skill.level}%</span>
+                  </div>
+                  <div style={{ height: '6px', background: `${COLORS.bgLight}`, borderRadius: '3px', overflow: 'hidden' }}>
+                    <div style={{
+                      width: `${skill.level}%`,
+                      height: '100%',
+                      background: `linear-gradient(90deg, ${COLORS.accent}, ${COLORS.secondary})`,
+                      boxShadow: `0 0 10px ${COLORS.accent}66`,
+                      borderRadius: '3px'
+                    }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer: Research Project */}
+        <div style={styles.researchBox}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+            <span style={{ background: COLORS.highlight, color: '#000', padding: '2px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>
+              NSTC PROJECT
+            </span>
+            <span style={{ color: COLORS.highlight, fontFamily: 'monospace', fontSize: '0.9rem' }}>
+              {research.id}
+            </span>
+          </div>
+          <h4 style={{ margin: '0 0 0.5rem 0', color: COLORS.text, fontSize: '1.1rem' }}>
+            {research.title}
+          </h4>
+          <div style={{ fontSize: '0.9rem', color: COLORS.textDim, fontFamily: 'monospace' }}>
+            Result: <span style={{ color: COLORS.success, fontWeight: 'bold' }}>Grade {research.grade}</span> 
+            {' | '}
+            Grant: <span style={{ color: COLORS.warning }}>${research.amount}</span>
+          </div>
+        </div>
+
       </div>
+      
+      {/* 若你想加入游標閃爍效果，可以在全域 CSS 加入這個 keyframe，或者用 style tag 注入 */}
+      <style>{`
+        .blinking-cursor {
+          animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+          50% { opacity: 0; }
+        }
+      `}</style>
     </div>
   );
 };
