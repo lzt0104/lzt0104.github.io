@@ -1414,7 +1414,8 @@ const ProjectsPage = ({ isDark }) => {
       name: 'A Study on a Low-Resource Speech Recognition System',
       description: 'The 37th Conference on Computational Linguistics and Speech Processing (ROCLING 2025) 論文發表',
       tech: ['Python', 'TensorFlow', 'Speech Recognition'],
-      status: '已發表'
+      status: '已發表',
+      link:'https://aclanthology.org/2025.rocling-main.54/'
     }
   ];
 
