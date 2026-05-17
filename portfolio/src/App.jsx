@@ -1367,12 +1367,20 @@ const ProjectsPage = ({ isDark }) => {
   // 假設 COLORS 來自你的全域變數或 Context，這裡保留原本的引用方式
   const projects = [
     {
+      name: '115學年度四技二專統一入學測驗成績排名估算系統',
+      description: '提供技職學生查詢自身統測落點排名的工具，幫助學生了解自己的競爭力並做出更明智的升學選擇',
+      tech: ['HTML', 'CSS', 'Javascript'],
+      status: '進行中',
+      highlight: true,
+      link: 'https://score.skillstudnet.work/'
+    },
+    {
       name: '技職升學社群網站',
       description: '提供技職學生交流、資源分享與升學資訊的平台，促進技職教育發展',
       tech: ['React', 'Node.js', 'Express', 'MongoDB'],
       status: '進行中',
       highlight: true,
-      link: 'https://skillstouniversity.uk/'
+      link: 'https://skillstudnet.work/'
     },
     {
       name: '馬路三寶，別來撞我',
