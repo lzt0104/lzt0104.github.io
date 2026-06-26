@@ -5,6 +5,7 @@ import MatrixRain from './components/MatrixRain';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import TerminalHomePage from './pages/TerminalHomePage';
+import CustomCursor from './components/CustomCursor';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ExperiencePage from './pages/ExperiencePage';
@@ -43,6 +44,7 @@ export default function App() {
       position: 'relative',
       transition: 'background 0.5s, color 0.5s',
     }}>
+      <CustomCursor isDark={isDark} />
       <MatrixRain isDark={isDark} />
       <Scanlines isDark={isDark} />
       <Navbar page={page} setPage={navigate} isDark={isDark} toggleTheme={toggleTheme} />
@@ -71,7 +73,9 @@ export default function App() {
           50%       { box-shadow: 0 0 24px var(--glow, #00d9ff88); }
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; cursor: none; }
+        a, button, input, [role="button"] { cursor: none; }
+        @keyframes cursorPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
       `}</style>
     </div>
   );
