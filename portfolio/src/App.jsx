@@ -4,7 +4,7 @@ import Scanlines from './components/Scanlines';
 import MatrixRain from './components/MatrixRain';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
+import TerminalHomePage from './pages/TerminalHomePage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ExperiencePage from './pages/ExperiencePage';
@@ -48,7 +48,7 @@ export default function App() {
       <Navbar page={page} setPage={navigate} isDark={isDark} toggleTheme={toggleTheme} />
 
       <div key={transKey} style={{ flex: 1, animation: 'pageIn 0.45s cubic-bezier(0.22,1,0.36,1)', position: 'relative', zIndex: 1 }}>
-        {page === 'home'       && <HomePage       setPage={navigate} isDark={isDark} />}
+        {page === 'home'       && <TerminalHomePage setPage={navigate} isDark={isDark} />}
         {page === 'about'      && <AboutPage      isDark={isDark} />}
         {page === 'projects'   && <ProjectsPage   isDark={isDark} />}
         {page === 'experience' && <ExperiencePage isDark={isDark} />}
