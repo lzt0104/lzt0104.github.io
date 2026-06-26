@@ -28,20 +28,29 @@ export const profile = {
   ],
 
   skills: [
-    { name: 'Python',      level: 90 },
-    { name: 'JavaScript',  level: 80 },
-    { name: 'HTML/CSS',    level: 85 },
-    { name: 'Data Science',level: 75 },
-    { name: 'AI / ML',     level: 55 },
-    { name: 'MS Office',   level: 99 },
+    { name: 'Python',       level: 90 },
+    { name: 'JavaScript',   level: 80 },
+    { name: 'HTML/CSS',     level: 85 },
+    { name: 'Data Science', level: 75 },
+    { name: 'AI / ML',      level: 55 },
+    { name: 'MS Office',    level: 99 },
   ],
 
-  research: {
-    title: '擬人化醫療聊天機器人於乳癌病患之照護',
-    id: '113-2813-C992-027-H',
-    grade: 'A',
-    amount: '53,000',
-  },
+  // 可新增多筆，每筆格式如下。grade 和 amount 都是選填。
+  research: [
+    {
+      title: '擬人化醫療聊天機器人於乳癌病患之照護',
+      id: '113-2813-C992-027-H',
+      grade: 'A',
+      amount: '53,000',
+    },
+    {
+      title: '結合RAG與擬人化對話代理之隱私感知衛教資訊系統設計與有用性評估研究：以女性更年期為應用情境',
+      id: '115-2813-C-224-028-H',
+      grade: 'B',    
+      amount: '58,000', 
+    },
+  ],
 
   links: [
     { name: 'GitHub',    url: 'https://github.com/lzt0104' },

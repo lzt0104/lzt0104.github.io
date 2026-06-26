@@ -20,7 +20,7 @@ export default function AboutPage({ isDark }) {
 
         {/* Header */}
         <div style={{ fontFamily: 'monospace', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', borderBottom: `1px solid ${COLORS.accent}30`, paddingBottom: '1rem' }}>
-          <span style={{ color: COLORS.success }}>➜</span>
+          <span style={{ color: COLORS.success }}>&#x279E;</span>
           <span style={{ color: COLORS.accent }}>~</span>
           <h2 style={{ margin: 0, fontSize: '1.5rem', color: COLORS.text }}>
             whoami<span className="blinking-cursor">_</span>
@@ -82,22 +82,30 @@ export default function AboutPage({ isDark }) {
           </div>
         </div>
 
-        {/* 研究計畫 */}
-        <div style={{ marginTop: '2.5rem', padding: '1.5rem', background: `linear-gradient(90deg, ${COLORS.secondary}10, transparent)`, borderLeft: `4px solid ${COLORS.secondary}`, borderRadius: '0 8px 8px 0' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-            <span style={{ background: COLORS.highlight, color: '#000', padding: '2px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>
-              NSTC PROJECT
-            </span>
-            <span style={{ color: COLORS.highlight, fontFamily: 'monospace', fontSize: '0.9rem' }}>
-              {research.id}
-            </span>
-          </div>
-          <h4 style={{ margin: '0 0 0.5rem 0', color: COLORS.text, fontSize: '1.1rem' }}>{research.title}</h4>
-          <div style={{ fontSize: '0.9rem', color: COLORS.textDim, fontFamily: 'monospace' }}>
-            Result: <span style={{ color: COLORS.success, fontWeight: 'bold' }}>Grade {research.grade}</span>
-            {' | '}
-            Grant: <span style={{ color: COLORS.warning }}>${research.amount}</span>
-          </div>
+        {/* 研究計畫（支援多筆） */}
+        <div style={{ marginTop: '2.5rem', display: 'grid', gap: '1rem' }}>
+          {research.map((r, i) => (
+            <div key={i} style={{ padding: '1.5rem', background: `linear-gradient(90deg, ${COLORS.secondary}10, transparent)`, borderLeft: `4px solid ${COLORS.secondary}`, borderRadius: '0 8px 8px 0' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <span style={{ background: COLORS.highlight, color: '#000', padding: '2px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold' }}>
+                  NSTC PROJECT
+                </span>
+                <span style={{ color: COLORS.highlight, fontFamily: 'monospace', fontSize: '0.9rem' }}>
+                  {r.id}
+                </span>
+              </div>
+              <h4 style={{ margin: '0 0 0.5rem 0', color: COLORS.text, fontSize: '1.1rem' }}>{r.title}</h4>
+              <div style={{ fontSize: '0.9rem', color: COLORS.textDim, fontFamily: 'monospace' }}>
+                {r.grade && (
+                  <span>Result: <span style={{ color: COLORS.success, fontWeight: 'bold' }}>Grade {r.grade}</span></span>
+                )}
+                {r.grade && r.amount && ' | '}
+                {r.amount && (
+                  <span>Grant: <span style={{ color: COLORS.warning }}>${r.amount}</span></span>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
 
       </div>

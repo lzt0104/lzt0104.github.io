@@ -46,6 +46,7 @@ export const projects = [
     description: '自動化競賽管理平台，包含成績管理、證書生成等功能',
     tech: ['Python', 'Django', 'PostgreSQL'],
     status: '已完成',
+    link:'https://k12.skillstudnet.work/',
   },
   {
     name: 'A Study on a Low-Resource Speech Recognition System',
