@@ -9,4 +9,4 @@ bucket_name = "blog-images"
 # 環境變數
 [vars]
 R2_PUBLIC_URL = "https://904695c6e6b330c9bf089ad2f2fa00da.r2.cloudflarestorage.com/blog-images"  # R2 公開域名
-ADMIN_PASSWORD = "!Zhengting0104"  # 管理員密碼
+# ADMIN_PASSWORD 不放在這裡，請用 `wrangler secret put ADMIN_PASSWORD` 設定
