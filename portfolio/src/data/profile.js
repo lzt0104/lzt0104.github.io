@@ -1,73 +1,118 @@
 // =============================================
-// 個人基本資料 - 只需修改這個檔案即可更新資訊
+// 個人基本資料
 // =============================================
 
 export const profile = {
   name: '劉政廷',
   nameEn: 'Liu Zheng-Ting',
-  tagline: 'cat welcome.txt',
-  copyright: '© 2026 Liu Zheng-Ting. All rights reserved.',
+  handle: 'lzt0104',
+  tagline: '寫系統、帶選手、做研究。',
+  location: '雲林 斗六',
+  headline: '雲科大資管 · 源核資訊整合工作室',
+  nowAsOf: '2026 年 9 月',
 
-  intro: [
-    { label: '身份', value: '國立雲林科技大學資訊管理系(人工智慧技優專班)' },
-    { label: '現職', value: '源核資訊整合工作室 負責人兼執行長' },
-    { label: '專長', value: '資訊技術 | 選手培訓 | 系統開發' },
-    { label: '目標', value: '成為優秀的資訊工作者與教育者' },
+  // 首頁自我介紹，一個字串一段
+  bio: [
+    '108 課綱第一屆的「白老鼠」。高職念草屯商工資料處理科，靠特殊選才進了高科大智慧商務系，一年後轉到雲科大資管系的人工智慧技優專班。',
+    '平常大概在做三件事：幫學校寫系統、到高職帶文書處理選手、做國科會計畫。系統多半是很實際的需求——午餐點餐、資源班點名、實習申請文件、模擬賽報名，做完部署在 Cloudflare 上直接給師生使用。帶選手則是從自己比 MOS Word Expert 開始的，後來也開始幫老師上排版研習。',
+    '另外開了一間小工作室「源核資訊整合」接案，也在火心壬新創當 EPM 實習生，學怎麼把程式跟專案時程一起顧好。',
   ],
 
-  bio: '我是 108 課綱第一屆的「白老鼠」，熱愛探索各種技術領域並挑戰自我。曾在各大社群活躍，對教育與技術有深厚熱情。',
-  currentRole: '資管系學生 / 接案開發者 / 追夢人',
-
-  education: [
-    { year: '現職', text: '源核資訊整合工作室 執行長', highlight: true },
-    { year: '現職', text: '火心壬新創股份有限公司 實習生 (EPM)', highlight: true },
-    { year: '113學年度', text: '國立雲林科技大學 資訊管理系 (人工智慧技優專班)', highlight: true },
-    { year: '112學年度', text: '國立高雄科技大學 智慧商務系 (結業)' },
-    { year: '111學年度', text: '國立高雄科技大學 智慧商務系 (特殊選才錄取)' },
-    { year: '111學年度', text: '國立草屯商工 資料處理科 (畢業)' },
+  // 右側規格表
+  spec: [
+    ['就讀', '國立雲林科技大學 資訊管理系（人工智慧技優專班）'],
+    ['工作室', '源核資訊整合工作室 負責人'],
+    ['實習', '火心壬新創股份有限公司 EPM'],
+    ['研究', '國科會大專生研究計畫 × 2'],
+    ['所在', '雲林 斗六 · UTC+8'],
   ],
 
-  skills: [
-    { name: 'Python',       level: 90 },
-    { name: 'JavaScript',   level: 80 },
-    { name: 'HTML/CSS',     level: 85 },
-    { name: 'Data Science', level: 75 },
-    { name: 'AI / ML',      level: 55 },
-    { name: 'MS Office',    level: 99 },
+  // 「現在」區塊，status 會顯示在右側
+  now: [
+    {
+      org: '國立雲林科技大學',
+      role: '資訊管理系 人工智慧技優專班',
+      note: '課業之外負責 113、114 學年技優專班實務專題競賽的籌辦。',
+      status: '就讀中',
+    },
+    {
+      org: '源核資訊整合工作室',
+      role: '負責人',
+      note: '校園系統與網站開發接案。這個網站上大部分的系統都是從這裡出去的。',
+      status: '營運中',
+      link: 'https://yuanhe.tw/',
+    },
+    {
+      org: '火心壬新創股份有限公司',
+      role: '實習生 · EPM（Engineer Project Manager）',
+      note: '一邊寫程式，一邊排時程、追進度、對需求。',
+      status: '實習中',
+    },
+    {
+      org: '國科會 115 年大專生研究計畫',
+      role: '計畫主持人',
+      note: '結合 RAG 與擬人化對話代理的隱私感知衛教系統，情境是女性更年期。',
+      status: '執行中',
+    },
+    {
+      org: '雲科大第二十四屆學生會',
+      role: '學生評議委員會 委員長',
+      note: '處理學生會法規解釋與爭議案件。',
+      status: '任期中',
+    },
+    {
+      org: '臺中家商、豐原高商',
+      role: '文書處理職種 選手指導',
+      note: '114 學年技藝競賽培訓。',
+      status: '培訓中',
+    },
   ],
 
-  // 可新增多筆，每筆格式如下。grade 和 amount 都是選填。
+  // 技術（不標百分比，只列實際用過的）
+  stack: [
+    { group: '語言',     items: ['Python', 'JavaScript', 'SQL', 'HTML / CSS'] },
+    { group: '前後端',   items: ['React', 'Node.js', 'Express', 'Flask', 'Django'] },
+    { group: 'AI / 資料', items: ['TensorFlow', 'OpenCV', 'RAG', '語音辨識'] },
+    { group: '部署',     items: ['Cloudflare Pages', 'Cloudflare Workers', 'D1 / R2'] },
+    { group: '文書',     items: ['Word（MOS Expert 國手資格）', 'Excel', 'PowerPoint'] },
+  ],
+
+  // 研究計畫，grade 和 amount 都是選填
   research: [
     {
-      title: '擬人化醫療聊天機器人於乳癌病患之照護',
+      year: '115',
+      title: '結合RAG與擬人化對話代理之隱私感知衛教資訊系統設計與有用性評估研究：以女性更年期為應用情境',
+      id: '115-2813-C-224-028-H',
+      grade: 'B',
+      amount: '58,000',
+      status: '執行中',
+    },
+    {
+      year: '113',
+      title: '擬人化醫療聊天機器人於乳癌病患之照護：系統設計與有用性評估研究',
       id: '113-2813-C992-027-H',
       grade: 'A',
       amount: '53,000',
-    },
-    {
-      title: '結合RAG與擬人化對話代理之隱私感知衛教資訊系統設計與有用性評估研究：以女性更年期為應用情境',
-      id: '115-2813-C-224-028-H',
-      grade: 'B',    
-      amount: '58,000', 
+      status: '已結案',
     },
   ],
 
-  // 歷年學期成績（school 用於標示就讀學校）
-  academics: [
-    { term: '111-1', school: '高科大', score: 88.39, conduct: 82, rank: '第三名' },
-    { term: '111-2', school: '高科大', score: 89.74, conduct: 82, rank: '第二名' },
-    { term: '112-1', school: '高科大', score: 90.76, conduct: 95, rank: '第三名' },
-    { term: '113-1', school: '雲科大', score: 89.69, conduct: 85, rank: '第一名' },
-    { term: '113-2', school: '雲科大', score: 94,    conduct: 85, rank: '第二名' },
-    { term: '114-1', school: '雲科大', score: 92.31, conduct: 84, rank: '第一名' },
-    { term: '114-2', school: '雲科大', score: 86.31, conduct: 89, rank: '第十一名' },
+  publications: [
+    {
+      year: '2025',
+      title: 'A Study on a Low-Resource Speech Recognition System',
+      venue: 'ROCLING 2025 · The 37th Conference on Computational Linguistics and Speech Processing',
+      note: 'FSR 客語語音辨識競賽完賽並發表',
+      link: 'https://aclanthology.org/2025.rocling-main.54/',
+    },
   ],
 
   links: [
-    { name: 'GitHub',    url: 'https://github.com/lzt0104' },
-    { name: 'Facebook',  url: 'https://www.facebook.com/zhengting0104' },
-    { name: 'Email',     url: 'mailto:zhengtingliu0104@gmail.com' },
-    { name: 'Instagram', url: 'https://www.instagram.com/lie.1131/' },
+    { name: 'Email',     label: 'zhengtingliu0104@gmail.com', url: 'mailto:zhengtingliu0104@gmail.com' },
+    { name: 'GitHub',    label: 'github.com/lzt0104',          url: 'https://github.com/lzt0104' },
+    { name: 'Facebook',  label: 'zhengting0104',               url: 'https://www.facebook.com/zhengting0104' },
+    { name: 'Instagram', label: '@lie.1131',                   url: 'https://www.instagram.com/lie.1131/' },
+    { name: '工作室',     label: 'yuanhe.tw',                   url: 'https://yuanhe.tw/' },
   ],
 
   calendar: {
