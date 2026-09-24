@@ -1,32 +1,37 @@
-import Section from '../components/Section';
+import Title from '../components/Title';
 import { competitions } from '../data/experience';
 
 export default function Awards() {
   const top = competitions.filter(c => c.featured);
-  const rest = competitions.filter(c => !c.featured);
+  const byYear = competitions.filter(c => !c.featured).reduce((acc, c) => {
+    (acc[c.year] ||= []).push(c);
+    return acc;
+  }, {});
 
   return (
-    <Section id="awards" aside="文書處理和程式競賽為主，偶爾跨去金融、ESG 和微電影。">
-      <div className="podium">
-        {top.map(c => (
-          <div key={c.name}>
-            <span className="mono">{c.year}</span>
-            <b>{c.result}</b>
-            <p>{c.name}</p>
-          </div>
-        ))}
-      </div>
+    <section id="awards" className="sec">
+      <div className="page">
+        <Title>得獎</Title>
+        <div className="wins">
+          {top.map(c => (
+            <div key={c.name} className="note">
+              <span className="tape" style={{ '--tape': 'var(--tape-b)', width: '60px' }} />
+              <span className="date">{c.year}</span>
+              <b>{c.result}</b>
+              <p>{c.name}</p>
+            </div>
+          ))}
+        </div>
 
-      <div className="sub" style={{ marginTop: 44 }}>完整紀錄 · {competitions.length}</div>
-      <div>
-        {rest.map((c, i) => (
-          <div key={c.year + c.name} className={`award${i > 0 && rest[i - 1].year !== c.year ? ' gap' : ''}`}>
-            <span className="y">{c.year}</span>
-            <span>{c.name}</span>
-            <span className="r">{c.result}</span>
+        {Object.keys(byYear).sort().reverse().map(y => (
+          <div key={y} className="list-year">
+            <span>{y}</span>
+            <ul>
+              {byYear[y].map(c => <li key={c.name}>{c.name}<em>{c.result}</em></li>)}
+            </ul>
           </div>
         ))}
       </div>
-    </Section>
+    </section>
   );
 }

@@ -1,6 +1,6 @@
 // =============================================
 // 專案資料
-// featured: true 會顯示成上方的大卡片
+// shot：src/assets/shots/ 裡的截圖檔名（不含副檔名），沒有就不顯示圖
 // status: 進行中 / 已上線 / 已完成 / 已結案
 // =============================================
 
@@ -8,20 +8,20 @@ export const projects = [
   {
     name: '115學年度技優甄審資訊平台',
     for: '技職考生',
-    description: '整理技優甄審簡章、校系條件與升學資訊，讓考生不用在十幾個學校網站之間來回翻。',
+    description: '把 115 學年度 1,044 筆官方科系清單、歷屆甄審成績和備審資料放在一起查。目前 68 所大專院校、36 個技優類別，社群有 1,552 人。',
     tech: ['React', 'Node.js', 'Express', 'MongoDB'],
     status: '進行中',
-    featured: true,
     link: 'https://skillstudnet.work/',
+    shot: 'skillstudnet',
   },
   {
     name: '全國商業類科學生技藝競賽自辦模擬賽資訊平臺',
     for: '商業類科選手與指導老師',
-    description: '自辦模擬賽的報名、成績與證書流程。我同時是文書處理職種的命題負責人，所以這套系統是自己出題自己用。',
+    description: '模擬賽辦到第 3 屆，報名、公告、歷年作品和得獎名單都在這裡。115 學年度有 40 所學校參賽，文書處理職種的題目也是我出的。',
     tech: ['Python', 'Django', 'PostgreSQL'],
     status: '已上線',
-    featured: true,
     link: 'https://k12.skillstudnet.work/',
+    shot: 'k12',
   },
   {
     name: '115學年度四技二專統測成績排名估算系統',
@@ -29,32 +29,35 @@ export const projects = [
     description: '輸入統測各科成績，估算在全國考生中的大概落點，作為填志願前的參考。',
     tech: ['HTML', 'CSS', 'JavaScript'],
     status: '已上線',
-    featured: true,
     link: 'https://115testscore.pages.dev/',
+    shot: 'testscore',
   },
   {
     name: 'NYUST 雲科大課程評價網',
     for: '雲科大學生',
-    description: '選課前查學長姐對課程的評價，也可以留下自己的心得。',
+    description: '可以依部別、推薦度、點名頻率篩課，每門課標上「甜課」或「硬扎實」。',
     tech: ['Cloudflare Pages'],
     status: '已上線',
     link: 'https://nyust-reviews-frontend.pages.dev/',
+    shot: 'reviews',
   },
   {
     name: '雲科大技優專班實習申請文件製表系統',
     for: '雲科大技優專班',
-    description: '填一次資料，自動產出實習申請需要的各式表單。',
+    description: '技優專班的實習申請表，填左邊的欄位，右邊直接產出排好版的表格。',
     tech: ['Cloudflare Pages'],
     status: '已上線',
     link: 'https://nyust-ai-doc.pages.dev/',
+    shot: 'aidoc',
   },
   {
     name: '115學年雲科新生手冊',
     for: '雲科大新生',
-    description: '把新生入學會遇到的選課、宿舍、行政流程整理成一本線上手冊。',
+    description: '非官方。官方新生網資訊太多，我把新生真正會卡關的問題整理成一頁，答案直接附上。',
     tech: ['Web'],
     status: '已上線',
     link: 'https://freshman.schooltools.uk/',
+    shot: 'freshman',
   },
   {
     name: '114學年度百社拾光社團評鑑人氣獎投票系統',
@@ -63,6 +66,7 @@ export const projects = [
     tech: ['Cloudflare Workers'],
     status: '已完成',
     link: 'https://114-club-voting.zhengtingliu0104.workers.dev/',
+    shot: 'voting',
   },
   {
     name: '國立新竹高工午餐點餐系統',
@@ -71,6 +75,7 @@ export const projects = [
     tech: ['Cloudflare Pages'],
     status: '已上線',
     link: 'https://hcvs-meal-web.pages.dev/login',
+    shot: 'meal',
   },
   {
     name: '國立埔里高工資源班點名系統',
@@ -79,14 +84,16 @@ export const projects = [
     tech: ['Cloudflare Pages'],
     status: '已上線',
     link: 'https://plvs.pages.dev/login',
+    shot: 'plvs',
   },
   {
     name: '旭光高中網球隊加強訓練出席表',
     for: '旭光高中網球隊',
-    description: '加強訓練的出席紀錄與統計。',
+    description: '網球隊加強訓練的出席表，一格一格打勾，可以直接匯出 PDF。',
     tech: ['Cloudflare Pages'],
     status: '已上線',
     link: 'https://judytennis.pages.dev/',
+    shot: 'tennis',
   },
   {
     name: 'Python 從零開始基礎程式設計講義',
@@ -95,14 +102,16 @@ export const projects = [
     tech: ['Python'],
     status: '已上線',
     link: 'https://zero-to-python.pages.dev/',
+    shot: 'python',
   },
   {
     name: '雲林美食地圖・美食天降轉盤',
     for: '不知道要吃什麼的人',
-    description: '雲林在地美食地圖，外加一個幫你決定下一餐的轉盤。',
+    description: '勾選想吃的分類，轉盤幫你決定下一餐吃什麼。',
     tech: ['Cloudflare Pages'],
     status: '已上線',
     link: 'https://yunlinfood.pages.dev/',
+    shot: 'food',
   },
   {
     name: '源核資訊整合工作室網站',
@@ -111,6 +120,7 @@ export const projects = [
     tech: ['React', 'Next.js', 'Tailwind CSS'],
     status: '已上線',
     link: 'https://yuanhe.tw/',
+    shot: 'yuanhe',
   },
   {
     name: '馬路三寶，別來撞我',
@@ -119,5 +129,6 @@ export const projects = [
     tech: ['Python', 'OpenCV', 'TensorFlow', 'Flask'],
     status: '已結案',
     link: 'https://demox.tw/idea/detail/?id=1851',
+    shot: 'demox',
   },
 ];

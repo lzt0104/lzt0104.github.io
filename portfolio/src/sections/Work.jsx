@@ -1,57 +1,44 @@
-import Section from '../components/Section';
+import Title from '../components/Title';
 import { projects } from '../data/projects';
-import { hostOf, statusClass } from '../lib/site';
+import { statusClass, tilt } from '../lib/site';
 
-const pad = (n) => String(n).padStart(2, '0');
+const shots = import.meta.glob('../assets/shots/*.webp', { eager: true, import: 'default' });
+const shotOf = (name) => shots[`../assets/shots/${name}.webp`];
+const TAPES = ['var(--tape-y)', 'var(--tape-m)', 'var(--tape-p)', 'var(--tape-b)'];
 
 export default function Work() {
-  const featured = projects.filter(p => p.featured);
-  const rest = projects.filter(p => !p.featured);
-
   return (
-    <Section id="work" aside="大部分是學校或身邊的人遇到問題，我寫個系統把它解掉。有網址的都可以直接點進去用。">
-      <div className="sub">主要專案</div>
-      <div className="featured">
-        {featured.map((p, i) => (
-          <a key={p.name} className="card" href={p.link} target="_blank" rel="noopener noreferrer">
-            <div className="card-bar">
-              <span className="url">{hostOf(p.link)}</span>
-              <span className="arrow">↗</span>
-            </div>
-            <div className="card-body">
-              <span className="card-no">{pad(i + 1)}</span>
-              <h3>{p.name}</h3>
-              <div className="for">給 {p.for}</div>
-              <p>{p.description}</p>
-              <div className="card-foot">
-                <div className="tags">{p.tech.map(t => <span key={t} className="tag">{t}</span>)}</div>
-                <span className={`status ${statusClass(p.status)}`}>{p.status}</span>
-              </div>
-            </div>
-          </a>
-        ))}
+    <section id="work" className="sec">
+      <div className="page">
+        <Title note="點照片可以直接打開網站。">做過的東西</Title>
+        <div className="shots">
+          {projects.map((p, i) => {
+            const Card = p.link ? 'a' : 'div';
+            const src = p.shot && shotOf(p.shot);
+            return (
+              <Card
+                key={p.name}
+                className="polaroid"
+                style={{ '--r': tilt(i, 1.6) }}
+                {...(p.link ? { href: p.link, target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                <span className={`tape${i % 3 === 1 ? ' stripe' : ''}`} style={{ '--tape': TAPES[i % 4], '--tr': tilt(i + 3, 5) }} />
+                <div className={`shot-img${src ? '' : ' empty'}`}>
+                  {src ? <img src={src} alt={`${p.name} 的網站畫面`} loading="lazy" width="800" height="500" /> : '（還沒有截圖）'}
+                </div>
+                <div className="shot-cap">
+                  <h3>{p.name}</h3>
+                  <p>{p.description}</p>
+                  <div className="shot-meta">
+                    <span>給 {p.for} <span className={`badge ${statusClass(p.status)}`}>{p.status}</span></span>
+                    {p.link && <span className="go">打開 ↗</span>}
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
       </div>
-
-      <div className="sub" style={{ marginTop: 44 }}>其他專案 · {rest.length}</div>
-      <div className="index">
-        {rest.map((p, i) => {
-          const Row = p.link ? 'a' : 'div';
-          return (
-            <Row key={p.name} className="index-row" {...(p.link ? { href: p.link, target: '_blank', rel: 'noopener noreferrer' } : {})}>
-              <span className="index-no">{pad(featured.length + i + 1)}</span>
-              <div className="index-main">
-                <span className="index-name">{p.name}</span>
-                <span className="index-desc">{p.description}</span>
-              </div>
-              <div className="index-meta">
-                <span className="index-for">{p.for}</span>
-                <span className="mono" style={{ fontSize: 11 }}>{p.tech.join(' · ')}</span>
-              </div>
-              <span className={`status ${statusClass(p.status)}`}>{p.status}</span>
-            </Row>
-          );
-        })}
-      </div>
-    </Section>
+    </section>
   );
 }

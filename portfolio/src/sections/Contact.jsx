@@ -1,23 +1,27 @@
-import Section from '../components/Section';
+import Title from '../components/Title';
 import { profile } from '../data/profile';
 
 export default function Contact() {
   const email = profile.links.find(l => l.name === 'Email');
   return (
-    <Section id="contact" aside="系統開發、文書處理培訓或研習邀約，都歡迎來信。">
-      <p className="contact-big">
-        最快找到我的方式是寫信：<br />
-        <a href={email.url}>{email.label}</a>
-      </p>
-      <div className="contacts">
-        {profile.links.filter(l => l !== email).map(l => (
-          <a key={l.name} href={l.url} target="_blank" rel="noopener noreferrer">
-            <span>{l.name}</span>
-            <span>{l.label}</span>
-            <span>↗</span>
-          </a>
-        ))}
+    <section id="contact" className="sec">
+      <div className="page">
+        <Title>聯絡</Title>
+        <div className="letter">
+          <span className="tape" style={{ '--tape': 'var(--tape-p)' }} />
+          <p>有事找我的話，寫信最快：</p>
+          <a className="mail" href={email.url}>{email.label}</a>
+          <p>其他地方也找得到我：</p>
+          <ul>
+            {profile.links.filter(l => l !== email).map(l => (
+              <li key={l.name}>
+                <a href={l.url} target="_blank" rel="noopener noreferrer"><span>{l.name}</span>{l.label} ↗</a>
+              </li>
+            ))}
+          </ul>
+          <p className="sign">— 政廷</p>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
