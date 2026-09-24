@@ -6,7 +6,7 @@ export const profile = {
   name: '劉政廷',
   nameEn: 'Liu Zheng-Ting',
   tagline: 'cat welcome.txt',
-  copyright: '© 2025 Liu Zheng-Ting. All rights reserved.',
+  copyright: '© 2026 Liu Zheng-Ting. All rights reserved.',
 
   intro: [
     { label: '身份', value: '國立雲林科技大學資訊管理系(人工智慧技優專班)' },
@@ -20,7 +20,7 @@ export const profile = {
 
   education: [
     { year: '現職', text: '源核資訊整合工作室 執行長', highlight: true },
-    { year: '現職', text: '火心壬新創股份有限公司 工程師兼PM', highlight: true },
+    { year: '現職', text: '火心壬新創股份有限公司 實習生 (EPM)', highlight: true },
     { year: '113學年度', text: '國立雲林科技大學 資訊管理系 (人工智慧技優專班)', highlight: true },
     { year: '112學年度', text: '國立高雄科技大學 智慧商務系 (結業)' },
     { year: '111學年度', text: '國立高雄科技大學 智慧商務系 (特殊選才錄取)' },
@@ -50,6 +50,17 @@ export const profile = {
       grade: 'B',    
       amount: '58,000', 
     },
+  ],
+
+  // 歷年學期成績（school 用於標示就讀學校）
+  academics: [
+    { term: '111-1', school: '高科大', score: 88.39, conduct: 82, rank: '第三名' },
+    { term: '111-2', school: '高科大', score: 89.74, conduct: 82, rank: '第二名' },
+    { term: '112-1', school: '高科大', score: 90.76, conduct: 95, rank: '第三名' },
+    { term: '113-1', school: '雲科大', score: 89.69, conduct: 85, rank: '第一名' },
+    { term: '113-2', school: '雲科大', score: 94,    conduct: 85, rank: '第二名' },
+    { term: '114-1', school: '雲科大', score: 92.31, conduct: 84, rank: '第一名' },
+    { term: '114-2', school: '雲科大', score: 86.31, conduct: 89, rank: '第十一名' },
   ],
 
   links: [

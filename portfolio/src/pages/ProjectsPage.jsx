@@ -39,8 +39,8 @@ export default function ProjectsPage({ isDark }) {
             <div key={i} style={{ display: 'flex', gap: 'clamp(0.6rem, 2vw, 1.5rem)', fontSize: 'clamp(0.68rem, 1.6vw, 0.76rem)', color: C.textDim, padding: '0.2rem 0', alignItems: 'center', flexWrap: 'wrap' }}>
               <span style={{ color: C.accent + '99' }}>-rwxr--r--</span>
               <span style={{ color: C.textDim }}>1</span>
-              <span style={{ color: C.textDim + '99', minWidth: '3.5rem', textAlign: 'right' }}>{FAKE_SIZES[i]}</span>
-              <span style={{ color: C.textDim + '80' }}>{FAKE_DATES[i]}</span>
+              <span style={{ color: C.textDim + '99', minWidth: '3.5rem', textAlign: 'right' }}>{FAKE_SIZES[i % FAKE_SIZES.length]}</span>
+              <span style={{ color: C.textDim + '80' }}>{FAKE_DATES[i % FAKE_DATES.length]}</span>
               <span style={{ color: p.highlight ? C.highlight : C.text }}>{p.name}</span>
               {p.highlight && <span style={{ color: C.success, fontSize: '0.65rem' }}>★ highlight</span>}
             </div>

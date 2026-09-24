@@ -65,7 +65,8 @@ function SkillRow({ skill, isDark }) {
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function AboutPage({ isDark }) {
   const C = getColors(isDark);
-  const { education, skills, research, bio, currentRole, intro } = profile;
+  const { education, skills, research, academics, bio, currentRole, intro } = profile;
+  const avgScore = (academics.reduce((sum, a) => sum + a.score, 0) / academics.length).toFixed(2);
 
   // Typewriter — activate when bio section enters viewport
   const bioRef = useRef(null);
@@ -85,7 +86,7 @@ export default function AboutPage({ isDark }) {
   const processes = [
     { pid: '1131', name: 'college.edu',        status: '雲科大 資管系' },
     { pid: '2024', name: 'yuanhe.studio',      status: '源核工作室 CEO' },
-    { pid: '2025', name: 'huoxinren.co',       status: '火心壬 工程師' },
+    { pid: '2025', name: 'huoxinren.co',       status: '火心壬 EPM 實習生' },
     { pid: '2026', name: 'nstc.research',      status: 'NSTC 計畫研究員' },
   ];
 
@@ -225,6 +226,42 @@ export default function AboutPage({ isDark }) {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* ── Academic record ──────────────────────────────────────────── */}
+      <AnimatedSection delay={320}>
+        <div style={{ ...card(C.success), marginTop: '1.5rem' }}>
+          <h3 style={{ fontFamily: 'monospace', color: C.success, marginBottom: '0.5rem', fontSize: 'clamp(0.95rem, 2.5vw, 1.1rem)' }}>
+            $ cat transcript.csv | column -t
+          </h3>
+          <div style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: C.textDim, marginBottom: '1.25rem' }}>
+            {academics.length} terms · avg <span style={{ color: C.success }}>{avgScore}</span> · top-1 × <span style={{ color: C.highlight }}>{academics.filter(a => a.rank === '第一名').length}</span>
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <div style={{ minWidth: '420px', fontFamily: 'monospace', fontSize: 'clamp(0.72rem, 2vw, 0.85rem)', background: `${C.bgLight}99`, border: `1px solid ${C.success}20`, borderRadius: '10px', overflow: 'hidden' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '4rem 4.5rem 1fr 4rem 5rem', gap: '0.3rem', padding: '0.5rem 1rem', background: `${C.success}12`, color: C.textDim, borderBottom: `1px solid ${C.success}15`, fontSize: '0.72rem', letterSpacing: '0.06em' }}>
+                <span>TERM</span><span>SCHOOL</span><span>SCORE</span><span>操行</span><span>RANK</span>
+              </div>
+              {academics.map((a, i) => {
+                const top = a.rank === '第一名';
+                return (
+                  <div key={a.term} style={{ display: 'grid', gridTemplateColumns: '4rem 4.5rem 1fr 4rem 5rem', gap: '0.3rem', alignItems: 'center', padding: '0.45rem 1rem', borderBottom: i < academics.length - 1 ? `1px solid ${C.success}10` : 'none', color: C.text }}>
+                    <span style={{ color: C.textDim }}>{a.term}</span>
+                    <span style={{ color: C.primary }}>{a.school}</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <span style={{ minWidth: '3rem' }}>{a.score}</span>
+                      <span style={{ flex: 1, height: '5px', background: `${C.success}15`, borderRadius: '3px', overflow: 'hidden' }}>
+                        <span style={{ display: 'block', height: '100%', width: `${Math.max(0, (a.score - 80) * 5)}%`, background: C.success, borderRadius: '3px' }} />
+                      </span>
+                    </span>
+                    <span>{a.conduct}</span>
+                    <span style={{ color: top ? C.highlight : C.text, fontWeight: top ? 'bold' : 'normal' }}>{top ? '★ ' : ''}{a.rank}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </AnimatedSection>
