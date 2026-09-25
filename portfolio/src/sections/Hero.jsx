@@ -14,6 +14,15 @@ export default function Hero() {
           {profile.bio.map((p, i) => <p key={i}>{p}</p>)}
         </div>
 
+        <ol className="edu">
+          {profile.education.map(e => (
+            <li key={e.school}>
+              <span className="date">{e.from} – {e.to || '現在'}</span>
+              <b>{e.school}</b> {e.dept}<small>{e.note}</small>
+            </li>
+          ))}
+        </ol>
+
         <div className="facts">
           {facts().map(f => <span key={f.label}><b>{f.value}</b>{f.label}</span>)}
         </div>

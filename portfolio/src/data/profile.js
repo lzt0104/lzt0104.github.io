@@ -10,8 +10,15 @@ export const profile = {
 
   // 首頁自我介紹。建議改成你自己平常講話的方式，一個字串一段
   bio: [
-    '108 課綱第一屆的白老鼠，草屯商工資料處理科畢業，現在在雲科大資管系的 AI 技優專班。',
+    '我叫劉政廷，目前是 108 課綱第一屆白老鼠。',
     '平常就是寫寫系統、到高職帶文書處理選手、做國科會計畫，還有顧自己的小工作室「源核資訊整合」。',
+  ],
+
+  // 求學歷程
+  education: [
+    { from: '2019.09', to: '2022.06', school: '國立草屯商工', dept: '資料處理科', note: '畢業' },
+    { from: '2022.09', to: '2024.06', school: '國立高雄科技大學', dept: '智慧商務系', note: '特殊選才' },
+    { from: '2024.09', to: '',        school: '國立雲林科技大學', dept: '資訊管理系（人工智慧技優專班）', note: '技優甄審' },
   ],
 
   // 首頁便利貼「最近在忙」，done: true 會打勾
@@ -55,9 +62,9 @@ export const profile = {
   publications: [
     {
       year: '2025',
-      title: 'A Study on a Low-Resource Speech Recognition System',
+      title: 'A Study on a Low-Resource Speech Recognition System for Taiwan Hakka Based on Whisper and LoRA',
       venue: 'ROCLING 2025 · The 37th Conference on Computational Linguistics and Speech Processing',
-      note: 'FSR 客語語音辨識競賽完賽並發表',
+      note: '2025 FSR 客語語音辨認競賽完賽並發表研討會論文',
       link: 'https://aclanthology.org/2025.rocling-main.54/',
     },
   ],
